@@ -3,6 +3,72 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "SERVER",
+      "type": "shell",
+      "command": "cls; ng serve --port 4100",
+      "isBackground": true,
+      "problemMatcher": ["$tsc-watch"],
+      "icon": {
+        "id": "server",
+        "color": "terminal.ansiGreen"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "focus": false,
+        "clear": true,
+        "showReuseMessage": false
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "GIT",
+      "type": "shell",
+      "command": "cls; opencode --model \"opencode/big-pickle\"",
+      "isBackground": true,
+      "icon": {
+        "id": "logo-github",
+        "color": "terminal.ansiMagenta"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "focus": false,
+        "clear": true
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "AGENT",
+      "type": "shell",
+      "command": "cls; opencode --model \"opencode-go/minimax-m2.7\"",
+      "isBackground": true,
+      "icon": {
+        "id": "rocket",
+        "color": "terminal.ansiBlue"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "focus": false,
+        "clear": true
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "BOOT",
+      "dependsOn": ["SERVER", "AGENT", "GIT"],
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
       "type": "npm",
       "script": "start",
       "isBackground": true,
