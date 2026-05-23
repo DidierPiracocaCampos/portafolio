@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@200;300;400;500;600;700&display=swap');
 @import "tailwindcss";
+@plugin "daisyui";
 
 @theme {
   --font-sans: 'Cascadia Code', ui-monospace, monospace;
@@ -31,7 +32,7 @@
   --color-error-content: oklch(18% 0.05 25);
   --radius-selector: 2rem;
   --radius-field: 2rem;
-  --radius-box: 2rem;
+  --radius-box: 1rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
