@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@200;300;400;500;600;700&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui";
 
 @theme {
   --font-sans: 'Cascadia Code', ui-monospace, monospace;
 }
 @plugin "daisyui/theme" {
-  name: "gold";
+  name: 'gold';
   default: false;
   prefersdark: true;
-  color-scheme: "dark";
+  color-scheme: 'dark';
   --color-base-100: oklch(9% 0.004 286);
   --color-base-200: oklch(12% 0.005 286);
   --color-base-300: oklch(16% 0.006 286);
@@ -41,8 +41,8 @@
 }
 
 @plugin "daisyui/theme" {
-  name: "goldlight";
-  color-scheme: "light";
+  name: 'goldlight';
+  color-scheme: 'light';
   --color-base-100: oklch(98% 0.004 286);
   --color-base-200: oklch(96% 0.005 286);
   --color-base-300: oklch(92% 0.006 286);
