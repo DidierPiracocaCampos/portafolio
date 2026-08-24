@@ -65,4 +65,20 @@ describe('Presentation', () => {
     expect(el.querySelector('.presentation__subtitle')).toBeTruthy();
     expect(el.querySelector('.presentation__description')).toBeTruthy();
   });
+
+  it('should keep description as semantic paragraphs not aria-hidden', async () => {
+    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
+    const fixture = TestBed.createComponent(Presentation);
+    fixture.detectChanges();
+    const desc = fixture.nativeElement.querySelector('.presentation__description');
+    expect(desc.getAttribute('aria-hidden')).toBeNull();
+    expect(desc.querySelectorAll('p').length).toBe(2);
+  });
+
+  it('should not have more than one h1', async () => {
+    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
+    const fixture = TestBed.createComponent(Presentation);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('h1').length).toBe(1);
+  });
 });
