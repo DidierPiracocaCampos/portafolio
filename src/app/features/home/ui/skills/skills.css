@@ -1,0 +1,133 @@
+:host {
+  display: block;
+}
+
+.skills {
+  display: flex;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+}
+
+.skills__inner {
+  width: min(100%, 72rem);
+}
+
+.skills__heading {
+  display: grid;
+  gap: 0.55rem;
+  margin-block-end: clamp(1.75rem, 5vw, 2.75rem);
+}
+
+.skills__rule {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-secondary);
+}
+
+.skills__heading h2 {
+  margin: 0;
+  color: var(--color-base-content);
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.75rem, 5vw, 3rem) clamp(1rem, 4vw, 2.5rem);
+  align-items: start;
+}
+
+.skills__group {
+  min-width: 0;
+}
+
+.skills__group h3 {
+  margin: 0 0 0.75rem;
+  color: var(--color-accent);
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.skills__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0;
+  padding-inline-start: 1.15rem;
+  color: color-mix(in oklch, var(--color-base-content) 88%, transparent);
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.7rem, 1.8vw, 0.82rem);
+  line-height: 1.55;
+  list-style: square;
+}
+
+.skills__items li {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.skills__items li::marker {
+  color: var(--color-success);
+  font-size: 0.72em;
+}
+
+.skills__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.skills__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.skills__icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  flex: 0 0 auto;
+  color: var(--color-success);
+}
+
+.skills__separator {
+  color: color-mix(in oklch, var(--color-base-content) 70%, transparent);
+}
+
+@media (max-width: 52rem) {
+  .skills__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 36rem) {
+  .skills {
+    padding-inline: 0.75rem;
+  }
+
+  .skills__heading h2 {
+    letter-spacing: 0.24em;
+  }
+
+  .skills__grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}

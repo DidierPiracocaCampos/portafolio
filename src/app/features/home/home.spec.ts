@@ -46,6 +46,54 @@ describe('Home', () => {
           },
         },
       },
+      skills: {
+        heading: 'SKILLS',
+        groups: {
+          frontend: {
+            heading: 'Frontend',
+            items: {
+              angular: 'Angular',
+              tailwind: 'TailwindCSS',
+              bootstrap: 'Bootstrap',
+            },
+          },
+          backend: {
+            heading: 'Backend',
+            items: {
+              java: 'Java',
+              spring: 'Spring',
+            },
+          },
+          tools: {
+            heading: 'Tools',
+            items: {
+              git: 'Git',
+              gitlab: 'GitLab',
+              github: 'GitHub',
+              vsCode: 'VS Code',
+              eclipse: 'Eclipse',
+              opencode: 'OpenCode',
+              figma: 'Figma',
+            },
+          },
+          database: {
+            heading: 'Database',
+            items: {
+              firebase: 'Firebase',
+              oracleDb: 'OracleDB',
+              sql: 'SQL',
+            },
+          },
+          mobile: {
+            heading: 'Mobile',
+            items: {
+              androidStudio: 'Android Studio',
+              ionic: 'Ionic',
+              cordova: 'Cordova',
+            },
+          },
+        },
+      },
       language: {
         label: 'Language',
         es: 'Spanish',
@@ -86,6 +134,54 @@ describe('Home', () => {
               'Diseño de bases de datos y SQL',
               'Desarrollo de interfaces de usuario',
             ],
+          },
+        },
+      },
+      skills: {
+        heading: 'HABILIDADES',
+        groups: {
+          frontend: {
+            heading: 'Frontend',
+            items: {
+              angular: 'Angular',
+              tailwind: 'TailwindCSS',
+              bootstrap: 'Bootstrap',
+            },
+          },
+          backend: {
+            heading: 'Backend',
+            items: {
+              java: 'Java',
+              spring: 'Spring',
+            },
+          },
+          tools: {
+            heading: 'Herramientas',
+            items: {
+              git: 'Git',
+              gitlab: 'GitLab',
+              github: 'GitHub',
+              vsCode: 'VS Code',
+              eclipse: 'Eclipse',
+              opencode: 'OpenCode',
+              figma: 'Figma',
+            },
+          },
+          database: {
+            heading: 'Base de datos',
+            items: {
+              firebase: 'Firebase',
+              oracleDb: 'OracleDB',
+              sql: 'SQL',
+            },
+          },
+          mobile: {
+            heading: 'Móvil',
+            items: {
+              androidStudio: 'Android Studio',
+              ionic: 'Ionic',
+              cordova: 'Cordova',
+            },
           },
         },
       },
@@ -143,5 +239,34 @@ describe('Home', () => {
     await fixture.whenStable();
     expect(el.querySelector('#experience-title')?.textContent?.trim()).toBe('EXPERIENCIA');
     expect(el.textContent).toContain('Desarrollador Angular');
+  });
+
+  it('should render skills after experience', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const experience = el.querySelector('app-experience');
+    const skills = el.querySelector('app-skills');
+    expect(skills).toBeTruthy();
+    expect(experience?.nextElementSibling).toBe(skills);
+  });
+
+  it('should render skills heading and bilingual content', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const translate = TestBed.inject(TranslateService);
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('#skills-title')?.textContent?.trim()).toBe('SKILLS');
+    expect(el.textContent).toContain('Angular');
+    expect(el.textContent).toContain('Git');
+    expect(el.querySelectorAll('svg.skills__icon').length).toBe(18);
+    await firstValueFrom(translate.use('es'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(el.querySelector('#skills-title')?.textContent?.trim()).toBe('HABILIDADES');
+    expect(el.textContent).toContain('Herramientas');
+    expect(el.textContent).toContain('Móvil');
   });
 });
