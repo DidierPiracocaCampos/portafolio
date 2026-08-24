@@ -1,0 +1,47 @@
+:host {
+  display: block;
+}
+
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+}
+
+.language-switcher__swap {
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid color-mix(in oklch, var(--color-base-content) 12%, transparent);
+  background: color-mix(in oklch, var(--color-base-100) 95%, transparent);
+  color: var(--color-base-content);
+  min-width: 3.5rem;
+  height: 2rem;
+  padding-inline: 0.6rem;
+}
+
+.language-switcher__swap:has(input:checked) {
+  border-color: color-mix(in oklch, var(--color-primary) 35%, transparent);
+  color: var(--color-primary);
+}
+
+.language-switcher__swap input {
+  /* hide native checkbox but keep accessible */
+}
+
+.language-switcher__on,
+.language-switcher__off {
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

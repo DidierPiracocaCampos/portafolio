@@ -1,0 +1,20 @@
+<div class="language-switcher" role="group" [attr.aria-label]="'language.label' | translate">
+  <label
+    class="swap swap-flip btn btn-ghost btn-sm language-switcher__swap"
+    [attr.aria-label]="ariaLabel()"
+  >
+    <input
+      type="checkbox"
+      [checked]="isEnglish()"
+      (change)="toggle()"
+      [attr.aria-checked]="isEnglish()"
+      role="switch"
+      [attr.aria-label]="ariaLabel()"
+    />
+    <span class="swap-on language-switcher__on" lang="en" aria-hidden="true">EN</span>
+    <span class="swap-off language-switcher__off" lang="es" aria-hidden="true">ES</span>
+  </label>
+  <span class="language-switcher__hint sr-only" aria-live="polite">
+    {{ isEnglish() ? ('language.en' | translate) : ('language.es' | translate) }}
+  </span>
+</div>
