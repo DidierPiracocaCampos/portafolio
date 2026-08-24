@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import Presentation from './ui/presentation/presentation';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [Presentation],
   templateUrl: './home.html',
   styleUrl: './home.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
