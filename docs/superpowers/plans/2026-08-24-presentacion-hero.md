@@ -31,18 +31,21 @@
 ## File Structure
 
 **Crear:**
+
 - `src/app/features/home/ui/presentation/presentation.ts` — componente standalone `app-presentation`, OnPush, lógica nula (solo estático)
 - `src/app/features/home/ui/presentation/presentation.html` — markup semántico ordenado
 - `src/app/features/home/ui/presentation/presentation.css` — layout centrado columna estrecha, tipografía fluida, dorado glitch sutil, prompt mono, responsive sin alturas fijas
 - `src/app/features/home/ui/presentation/presentation.spec.ts` — tests Vitest/Angular TestBed para contenido, semántica, aria y orden DOM
 
 **Modificar:**
+
 - `src/app/features/home/home.ts:1-10` — importar `Presentation` y añadirlo a `imports`
 - `src/app/features/home/home.html:1-15` — reemplazar ASCII art placeholder (dos `<p>` con bloques `█`) por `<app-presentation />` dentro de layout existente
 - `src/app/app.html:1-7` — mantener `mockup-code` global (decisión usuario: sí mantener)
 - `src/styles.css:1-7` — no tocar salvo añadir `@utility` si se requiere, pero respetar tokens existentes
 
 **No tocar:**
+
 - `angular.json`, `package.json`, `tsconfig.json` (salvo fix de `test` target `buildTarget` si bloquea `ng test`)
 
 ---
@@ -50,6 +53,7 @@
 ### Task 1: Esqueleto del componente `Presentation` (TDD bootstrap)
 
 **Files:**
+
 - Create: `src/app/features/home/ui/presentation/presentation.ts`
 - Create: `src/app/features/home/ui/presentation/presentation.html` (placeholder vacío inicial)
 - Create: `src/app/features/home/ui/presentation/presentation.css` (vacío inicial)
@@ -57,6 +61,7 @@
 - Test: `src/app/features/home/ui/presentation/presentation.spec.ts`
 
 **Interfaces:**
+
 - Consumes: Angular 20 standalone, `ChangeDetectionStrategy.OnPush`
 - Produces: `export default class Presentation` selector `app-presentation` importable por `Home`
 
@@ -103,10 +108,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export default class Presentation {}
 ```
+
 ```html
 <!-- src/app/features/home/ui/presentation/presentation.html -->
 <p>placeholder</p>
 ```
+
 ```css
 /* src/app/features/home/ui/presentation/presentation.css */
 /* vacío intencional - estilos en Task 3 */
@@ -129,10 +136,12 @@ git commit -m "feat(presentation): bootstrap standalone Presentation component s
 ### Task 2: Markup semántico estático con orden DOM correcto
 
 **Files:**
+
 - Modify: `src/app/features/home/ui/presentation/presentation.html:1-1`
 - Test: `src/app/features/home/ui/presentation/presentation.spec.ts` (ampliar)
 
 **Interfaces:**
+
 - Consumes: `Presentation` de Task 1
 - Produces: DOM con `section[aria-labelledby] > p[aria-hidden] prompt (3 líneas) + h1#presentation-title + p.subtitle + div.description(2 p)` en orden exacto
 
@@ -156,7 +165,11 @@ it('should render subtitle and two description lines in correct DOM order', asyn
   const fixture = TestBed.createComponent(Presentation);
   fixture.detectChanges();
   const el = fixture.nativeElement;
-  const order = Array.from(el.querySelectorAll('.presentation__prompt, h1, .presentation__subtitle, .presentation__description p')).map((n: Element) => n.textContent?.trim());
+  const order = Array.from(
+    el.querySelectorAll(
+      '.presentation__prompt, h1, .presentation__subtitle, .presentation__description p',
+    ),
+  ).map((n: Element) => n.textContent?.trim());
   expect(order[0]).toContain('initializing');
   expect(order[1]).toBe('DIDIER PIRACOCA');
   expect(order[2]).toBe('Multiplatform Application Developer');
@@ -220,10 +233,12 @@ git commit -m "feat(presentation): add semantic static markup with correct DOM o
 ### Task 3: Estilos encapsulados — layout, tipografía fluida y efecto dorado glitch sutil
 
 **Files:**
+
 - Modify: `src/app/features/home/ui/presentation/presentation.css:1-1`
 - Test: `src/app/features/home/ui/presentation/presentation.spec.ts` (opcional test visual regresión no requerido, pero añadir test de clase)
 
 **Interfaces:**
+
 - Consumes: tokens CSS `src/styles.css` (`--color-base-100`, `--color-base-content`, `--color-primary`, `--font-sans Cascadia Code`)
 - Produces: columna centrada estrecha `min(100%,55ch)`, fondo oscuro, prompt mono `clamp(0.7rem,2vw,0.875rem)` opacity, titular `clamp(2.2rem,10vw,5.2rem)` dorado con contorno+glitch sutil, subtítulo `clamp(1rem,3vw,1.35rem)`, descripción `clamp(0.875rem,2.4vw,1rem)` natural wrap, gaps breves, sin alturas fijas
 
@@ -360,11 +375,13 @@ git commit -m "feat(presentation): fluid layout centered column and gold glitch 
 ### Task 4: Accesibilidad (WCAG AA) y responsive hardening
 
 **Files:**
+
 - Modify: `src/app/features/home/ui/presentation/presentation.html:1-13` (si añade `role`/`aria` adicional)
 - Modify: `src/app/features/home/ui/presentation/presentation.css:1-70` (ajustes contraste/line-height)
 - Test: `src/app/features/home/ui/presentation/presentation.spec.ts` (añadir axe test si disponible, si no manual)
 
 **Interfaces:**
+
 - Consumes: markup Task 2, estilos Task 3
 - Produces: WCAG AA verificado, `aria-hidden` correcto, `h1` único, foco visible heredado, responsive sin recorte, line-height ≥1.5 para body
 
@@ -401,6 +418,7 @@ Expected: PASS
 - [ ] **Step 4: Verificación responsive manual**
 
 Run: `pnpm start` + Chrome DevTools Device Toolbar
+
 - 320px: titular no overflow, prompt legible, descripción wrap natural, columna ~90% ancho
 - 768px: columna centrada, gaps breves, titular ~4rem
 - 1440px: columna max 55ch, no estirada, titular max 5.2rem
@@ -418,6 +436,7 @@ git commit -m "feat(presentation): a11y and responsive hardening WCAG AA"
 ### Task 5: Integración en `Home`, limpieza placeholder y verificación final
 
 **Files:**
+
 - Modify: `src/app/features/home/home.ts:1-10`
 - Modify: `src/app/features/home/home.html:1-15`
 - Modify: `src/app/features/home/home.css:1-0` (dejar vacío o añadir host padding si needed)
@@ -425,6 +444,7 @@ git commit -m "feat(presentation): a11y and responsive hardening WCAG AA"
 - Test: `src/app/features/home/home.spec.ts` (crear si no existe) + `src/app/app.spec.ts`
 
 **Interfaces:**
+
 - Consumes: `Presentation` terminado
 - Produces: `Home` renderiza `<app-presentation />` como primera sección de la página vertical `Desktop - 1`
 
