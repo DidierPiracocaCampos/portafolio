@@ -1,0 +1,22 @@
+{
+  "presentation": {
+    "prompt": ["> inicializando portafolio ...", "> cargando proyectos ...", "> sistema listo"],
+    "title": "DIDIER PIRACOCA",
+    "subtitle": "Desarrollador de Aplicaciones Multiplataforma",
+    "description": [
+      "Actualmente enfocado en Angular y desarrollo frontend moderno.",
+      "Experiencia con sistemas Java, Spring MVC y SQL."
+    ]
+  },
+  "language": {
+    "label": "Idioma",
+    "es": "Español",
+    "en": "Inglés",
+    "switchToEs": "Cambiar a español",
+    "switchToEn": "Cambiar a inglés"
+  },
+  "seo": {
+    "title": "Didier Piracoca — Portafolio",
+    "description": "Desarrollador de Aplicaciones Multiplataforma enfocado en Angular y frontend moderno. Experiencia con Java, Spring MVC y SQL."
+  }
+}
