@@ -1,0 +1,33 @@
+<section class="experience" aria-labelledby="experience-title">
+  <div class="experience__inner">
+    <div class="experience__heading">
+      <span class="experience__rule" aria-hidden="true"></span>
+      <h2 id="experience-title">{{ 'experience.heading' | translate }}</h2>
+      <span class="experience__rule" aria-hidden="true"></span>
+    </div>
+
+    <div class="experience__timeline">
+      @for (entry of entries; track entry.id) {
+        <article class="experience__entry" [attr.aria-labelledby]="'experience-entry-' + entry.id + '-title'">
+          <p class="experience__period">{{ entry.periodKey | translate }}</p>
+
+          <h3 class="experience__title" [id]="'experience-entry-' + entry.id + '-title'">
+            @if (entry.companyKey && entry.roleKey) {
+              <span class="experience__company">{{ entry.companyKey | translate }}</span>
+              <span> - </span>
+              <span class="experience__role">{{ entry.roleKey | translate }}</span>
+            } @else if (entry.titleKey) {
+              {{ entry.titleKey | translate }}
+            }
+          </h3>
+
+          <ul class="experience__items">
+            @for (itemKey of entry.itemKeys; track itemKey) {
+              <li>{{ itemKey | translate }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </div>
+</section>

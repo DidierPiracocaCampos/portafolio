@@ -15,6 +15,31 @@
     "switchToEs": "Switch to Spanish",
     "switchToEn": "Switch to English"
   },
+  "experience": {
+    "heading": "EXPERIENCE",
+    "entries": {
+      "axpe": {
+        "period": "2023-present",
+        "company": "AXPE Consulting",
+        "role": "Angular Developer",
+        "items": [
+          "Development of web applications using Spring MVC and Ionic",
+          "Oracle SQL integration (optimized queries & data modeling)",
+          "Maintenance, bug fixing and production support",
+          "Full-stack feature delivery (frontend + backend)"
+        ]
+      },
+      "education": {
+        "period": "2021 - 2023",
+        "title": "Multiplatform Application Development Degree",
+        "items": [
+          "Software engineering fundamentals",
+          "Database design and SQL",
+          "UI development and interfaces"
+        ]
+      }
+    }
+  },
   "seo": {
     "title": "Didier Piracoca — Portfolio",
     "description": "Multiplatform Application Developer focused on Angular and modern frontend. Experience with Java, Spring MVC and SQL."
