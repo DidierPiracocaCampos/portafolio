@@ -1,25 +1,64 @@
+import { provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
+import { firstValueFrom } from 'rxjs';
 import Presentation from './presentation';
 
+const enTranslations = {
+  presentation: {
+    prompt: ['> initializing portfolio ...', '> loading projects ...', '> system ready'],
+    title: 'DIDIER PIRACOCA',
+    subtitle: 'Multiplatform Application Developer',
+    description: [
+      'Currently focused on Angular and modern frontend development.',
+      'Experience with Java, Spring MVC and SQL systems.',
+    ],
+  },
+};
+
+async function setupTranslate(): Promise<void> {
+  const translate = TestBed.inject(TranslateService);
+  translate.setTranslation('en', enTranslations);
+  translate.setTranslation('es', {
+    presentation: {
+      prompt: ['> inicializando portafolio ...', '> cargando proyectos ...', '> sistema listo'],
+      title: 'DIDIER PIRACOCA',
+      subtitle: 'Desarrollador de Aplicaciones Multiplataforma',
+      description: [
+        'Actualmente enfocado en Angular y desarrollo frontend moderno.',
+        'Experiencia con sistemas Java, Spring MVC y SQL.',
+      ],
+    },
+  });
+  await firstValueFrom(translate.use('en'));
+}
+
 describe('Presentation', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Presentation],
+      providers: [provideRouter([]), provideTranslateService({ fallbackLang: 'en' })],
+    }).compileComponents();
+    await setupTranslate();
+  });
+
   it('should create', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('should render h1 with DIDIER PIRACOCA', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
+    await fixture.whenStable();
     const h1 = fixture.nativeElement.querySelector('h1');
     expect(h1?.textContent?.trim()).toBe('DIDIER PIRACOCA');
   });
 
   it('should render prompt with 3 lines and aria-hidden', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
+    await fixture.whenStable();
     const prompt = fixture.nativeElement.querySelector('.presentation__prompt');
     expect(prompt.getAttribute('aria-hidden')).toBe('true');
     const lines = prompt.textContent;
@@ -29,12 +68,14 @@ describe('Presentation', () => {
   });
 
   it('should render subtitle and two description lines in correct DOM order', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
+    await fixture.whenStable();
     const el = fixture.nativeElement;
     const order = Array.from(
-      el.querySelectorAll('.presentation__prompt, h1, .presentation__subtitle, .presentation__description p'),
+      el.querySelectorAll(
+        '.presentation__prompt, h1, .presentation__subtitle, .presentation__description p',
+      ),
     ).map((n) => (n as Element).textContent?.trim());
     expect(order[0]).toContain('initializing');
     expect(order[1]).toBe('DIDIER PIRACOCA');
@@ -44,9 +85,9 @@ describe('Presentation', () => {
   });
 
   it('should use section with aria-labelledby pointing to h1', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
+    await fixture.whenStable();
     const section = fixture.nativeElement.querySelector('section');
     const h1 = fixture.nativeElement.querySelector('h1');
     expect(section.getAttribute('aria-labelledby')).toBe(h1.id);
@@ -54,9 +95,9 @@ describe('Presentation', () => {
   });
 
   it('should apply BEM classes for styling hooks', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
+    await fixture.whenStable();
     const el = fixture.nativeElement;
     expect(el.querySelector('.presentation')).toBeTruthy();
     expect(el.querySelector('.presentation__inner')).toBeTruthy();
@@ -67,18 +108,32 @@ describe('Presentation', () => {
   });
 
   it('should keep description as semantic paragraphs not aria-hidden', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
+    await fixture.whenStable();
     const desc = fixture.nativeElement.querySelector('.presentation__description');
     expect(desc.getAttribute('aria-hidden')).toBeNull();
     expect(desc.querySelectorAll('p').length).toBe(2);
   });
 
   it('should not have more than one h1', async () => {
-    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelectorAll('h1').length).toBe(1);
+  });
+
+  it('should switch to Spanish when language changes', async () => {
+    const fixture = TestBed.createComponent(Presentation);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const translate = TestBed.inject(TranslateService);
+    await firstValueFrom(translate.use('es'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement;
+    expect(el.querySelector('.presentation__subtitle')?.textContent?.trim()).toBe(
+      'Desarrollador de Aplicaciones Multiplataforma',
+    );
   });
 });
