@@ -88,6 +88,36 @@
       }
     }
   },
+  "projects": {
+    "heading": "PROYECTOS",
+    "labels": {
+      "status": "ESTADO",
+      "tech": "TECNOLOGÍAS",
+      "link": "ENLACE"
+    },
+    "status": {
+      "completed": "completado"
+    },
+    "actions": {
+      "github": "Ver código en GitHub",
+      "figma": "Ver diseño en Figma",
+      "projectLinks": "Enlaces de"
+    },
+    "items": {
+      "devhelper": {
+        "description": "Aplicación de escritorio para el desarrollo de aplicaciones.",
+        "imageAlt": "Vista previa de DevHelper"
+      },
+      "spot": {
+        "description": "Aplicación de escritorio para el desarrollo de aplicaciones.",
+        "imageAlt": "Vista previa de SPOT"
+      },
+      "devformfx": {
+        "description": "Aplicación de escritorio para el desarrollo de aplicaciones.",
+        "imageAlt": "Vista previa de DevFormFX"
+      }
+    }
+  },
   "seo": {
     "title": "Didier Piracoca — Portafolio",
     "description": "Desarrollador de Aplicaciones Multiplataforma enfocado en Angular y frontend moderno. Experiencia con Java, Spring MVC y SQL."

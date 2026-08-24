@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Project image placeholder</title>
+  <desc id="desc">Placeholder image to replace with a project screenshot</desc>
+  <rect width="640" height="420" fill="#17151a" />
+  <rect x="44" y="48" width="552" height="276" fill="#211f27" stroke="#f4c842" stroke-width="4" />
+  <path
+    d="M84 108h472M84 148h310M84 188h430M84 228h260"
+    stroke="#4dd9ff"
+    stroke-width="12"
+    opacity=".8"
+  />
+  <rect x="84" y="272" width="140" height="20" fill="#e95bd6" />
+  <text
+    x="320"
+    y="370"
+    fill="#f4c842"
+    font-family="monospace"
+    font-size="28"
+    text-anchor="middle"
+  >
+    PROJECT IMAGE
+  </text>
+</svg>

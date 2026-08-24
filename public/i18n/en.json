@@ -88,6 +88,36 @@
       }
     }
   },
+  "projects": {
+    "heading": "PROJECTS",
+    "labels": {
+      "status": "STATUS",
+      "tech": "TECH",
+      "link": "LINK"
+    },
+    "status": {
+      "completed": "completed"
+    },
+    "actions": {
+      "github": "View code on GitHub",
+      "figma": "View design on Figma",
+      "projectLinks": "Links for"
+    },
+    "items": {
+      "devhelper": {
+        "description": "Desktop application for application development.",
+        "imageAlt": "DevHelper preview"
+      },
+      "spot": {
+        "description": "Desktop application for application development.",
+        "imageAlt": "SPOT preview"
+      },
+      "devformfx": {
+        "description": "Desktop application for application development.",
+        "imageAlt": "DevFormFX preview"
+      }
+    }
+  },
   "seo": {
     "title": "Didier Piracoca — Portfolio",
     "description": "Multiplatform Application Developer focused on Angular and modern frontend. Experience with Java, Spring MVC and SQL."

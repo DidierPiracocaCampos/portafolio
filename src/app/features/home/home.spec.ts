@@ -101,6 +101,36 @@ describe('Home', () => {
         switchToEs: 'Switch to Spanish',
         switchToEn: 'Switch to English',
       },
+      projects: {
+        heading: 'PROJECTS',
+        labels: {
+          status: 'STATUS',
+          tech: 'TECH',
+          link: 'LINK',
+        },
+        status: {
+          completed: 'completed',
+        },
+        actions: {
+          github: 'View code on GitHub',
+          figma: 'View design on Figma',
+          projectLinks: 'Links for',
+        },
+        items: {
+          devhelper: {
+            description: 'Desktop application for application development.',
+            imageAlt: 'DevHelper preview',
+          },
+          spot: {
+            description: 'Desktop application for application development.',
+            imageAlt: 'SPOT preview',
+          },
+          devformfx: {
+            description: 'Desktop application for application development.',
+            imageAlt: 'DevFormFX preview',
+          },
+        },
+      },
     });
     translate.setTranslation('es', {
       presentation: {
@@ -192,6 +222,36 @@ describe('Home', () => {
         switchToEs: 'Cambiar a español',
         switchToEn: 'Cambiar a inglés',
       },
+      projects: {
+        heading: 'PROYECTOS',
+        labels: {
+          status: 'ESTADO',
+          tech: 'TECNOLOGÍAS',
+          link: 'ENLACE',
+        },
+        status: {
+          completed: 'completado',
+        },
+        actions: {
+          github: 'Ver código en GitHub',
+          figma: 'Ver diseño en Figma',
+          projectLinks: 'Enlaces de',
+        },
+        items: {
+          devhelper: {
+            description: 'Aplicación de escritorio para el desarrollo de aplicaciones.',
+            imageAlt: 'Vista previa de DevHelper',
+          },
+          spot: {
+            description: 'Aplicación de escritorio para el desarrollo de aplicaciones.',
+            imageAlt: 'Vista previa de SPOT',
+          },
+          devformfx: {
+            description: 'Aplicación de escritorio para el desarrollo de aplicaciones.',
+            imageAlt: 'Vista previa de DevFormFX',
+          },
+        },
+      },
     });
     await firstValueFrom(translate.use('en'));
   });
@@ -268,5 +328,35 @@ describe('Home', () => {
     expect(el.querySelector('#skills-title')?.textContent?.trim()).toBe('HABILIDADES');
     expect(el.textContent).toContain('Herramientas');
     expect(el.textContent).toContain('Móvil');
+  });
+
+  it('should render projects after skills', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const skills = el.querySelector('app-skills');
+    const projects = el.querySelector('app-projects');
+    expect(projects).toBeTruthy();
+    expect(skills?.nextElementSibling).toBe(projects);
+  });
+
+  it('should render projects heading and bilingual content', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const translate = TestBed.inject(TranslateService);
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('#projects-title')?.textContent?.trim()).toBe('PROJECTS');
+    expect(el.textContent).toContain('DevHelper');
+    expect(el.textContent).toContain('Angular, Tailwind, Firebase');
+    await firstValueFrom(translate.use('es'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(el.querySelector('#projects-title')?.textContent?.trim()).toBe('PROYECTOS');
+    expect(el.textContent).toContain('completado');
+    expect(el.textContent).toContain(
+      'Aplicación de escritorio para el desarrollo de aplicaciones.',
+    );
   });
 });

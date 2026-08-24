@@ -1,0 +1,94 @@
+<section class="projects" aria-labelledby="projects-title">
+  <div class="projects__inner">
+    <div class="projects__heading">
+      <span class="projects__rule" aria-hidden="true"></span>
+      <h2 id="projects-title">{{ 'projects.heading' | translate }}</h2>
+      <span class="projects__rule" aria-hidden="true"></span>
+    </div>
+
+    <div class="projects__list">
+      @for (project of projects; track project.id) {
+        <article class="projects__card" [attr.aria-labelledby]="'project-' + project.id + '-title'">
+          <figure class="projects__preview">
+            <div class="projects__image-frame">
+              <img
+                class="projects__image"
+                [ngSrc]="project.imageSrc"
+                fill
+                [alt]="project.imageAltKey | translate"
+              />
+            </div>
+            <figcaption class="projects__caption">{{ project.name }}</figcaption>
+          </figure>
+
+          <div class="projects__panel">
+            <header class="projects__panel-header">
+              <h3 [id]="'project-' + project.id + '-title'">{{ project.name }}</h3>
+            </header>
+
+            <dl class="projects__metadata">
+              <div class="projects__field">
+                <dt>{{ 'projects.labels.status' | translate }}</dt>
+                <dd class="projects__status">{{ project.statusKey | translate }}</dd>
+              </div>
+
+              <div class="projects__field">
+                <dt>{{ 'projects.labels.tech' | translate }}</dt>
+                <dd>{{ project.technologies }}</dd>
+              </div>
+
+              <div class="projects__field">
+                <dt>{{ 'projects.labels.link' | translate }}</dt>
+                <dd>{{ project.descriptionKey | translate }}</dd>
+              </div>
+            </dl>
+
+            @if (project.githubUrl || project.figmaUrl) {
+              <nav
+                class="projects__actions"
+                [attr.aria-label]="
+                  ('projects.actions.projectLinks' | translate) + ' ' + project.name
+                "
+              >
+                @if (project.githubUrl; as githubUrl) {
+                  <a
+                    class="projects__action"
+                    [href]="githubUrl"
+                    target="_blank"
+                    rel="noreferrer"
+                    [attr.aria-label]="('projects.actions.github' | translate) + ' ' + project.name"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path
+                        fill="currentColor"
+                        d="M12 2.5a9.5 9.5 0 0 0-3 18.51c.47.09.64-.2.64-.45v-1.73c-2.61.57-3.16-1.25-3.16-1.25-.43-1.1-1.04-1.39-1.04-1.39-.85-.58.06-.57.06-.57.94.07 1.44.97 1.44.97.83 1.43 2.18 1.02 2.71.78.08-.61.33-1.02.59-1.25-2.08-.24-4.27-1.04-4.27-4.62 0-1.02.36-1.85.97-2.5-.1-.24-.42-1.2.09-2.5 0 0 .79-.25 2.6.96a8.94 8.94 0 0 1 4.74 0c1.8-1.21 2.59-.96 2.59-.96.51 1.3.19 2.26.1 2.5.6.65.96 1.48.96 2.5 0 3.59-2.2 4.38-4.29 4.61.34.29.64.85.64 1.72v2.54c0 .25.17.55.65.45A9.5 9.5 0 0 0 12 2.5Z"
+                      />
+                    </svg>
+                  </a>
+                }
+
+                @if (project.figmaUrl; as figmaUrl) {
+                  <a
+                    class="projects__action"
+                    [href]="figmaUrl"
+                    target="_blank"
+                    rel="noreferrer"
+                    [attr.aria-label]="('projects.actions.figma' | translate) + ' ' + project.name"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <circle cx="9" cy="5" r="3" fill="currentColor" />
+                      <circle cx="15" cy="5" r="3" fill="currentColor" />
+                      <circle cx="9" cy="11" r="3" fill="currentColor" />
+                      <circle cx="15" cy="11" r="3" fill="currentColor" />
+                      <circle cx="9" cy="17" r="3" fill="currentColor" />
+                    </svg>
+                  </a>
+                }
+              </nav>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
