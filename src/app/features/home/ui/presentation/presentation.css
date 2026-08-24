@@ -25,7 +25,7 @@
   flex-direction: column;
   gap: 0.15rem;
   font-family: var(--font-sans), ui-monospace, monospace;
-  font-size: clamp(0.7rem, 1.8vw, 0.875rem);
+  font-size: clamp(0.75rem, 1.8vw, 0.875rem);
   line-height: 1.6;
   color: color-mix(in oklch, var(--color-base-content) 70%, transparent);
   letter-spacing: 0.02em;
@@ -39,11 +39,11 @@
   font-weight: 800;
   text-transform: uppercase;
   color: var(--color-primary);
-  -webkit-text-stroke: 0.6px oklch(75% 0.16 85 / 0.9);
+  -webkit-text-stroke: 0.6px color-mix(in oklch, var(--color-primary) 90%, transparent);
   text-shadow:
-    2px 0 0 oklch(75% 0.16 85 / 0.35),
-    -2px 0 0 oklch(63% 0.24 305 / 0.18),
-    0 0 18px oklch(75% 0.16 85 / 0.25);
+    2px 0 0 color-mix(in oklch, var(--color-primary) 35%, transparent),
+    -2px 0 0 color-mix(in oklch, var(--color-secondary) 18%, transparent),
+    0 0 18px color-mix(in oklch, var(--color-primary) 25%, transparent);
   text-wrap: balance;
   max-width: 100%;
   overflow-wrap: break-word;
@@ -78,7 +78,7 @@
     font-size: clamp(1.8rem, 11vw, 2.6rem);
     -webkit-text-stroke-width: 0.4px;
     text-shadow:
-      1px 0 0 oklch(75% 0.16 85 / 0.3),
-      -1px 0 0 oklch(63% 0.24 305 / 0.15);
+      1px 0 0 color-mix(in oklch, var(--color-primary) 30%, transparent),
+      -1px 0 0 color-mix(in oklch, var(--color-secondary) 15%, transparent);
   }
 }
