@@ -1,1 +1,84 @@
-/* vacío intencional - estilos en Task 3 */
+:host {
+  display: block;
+}
+
+.presentation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+}
+
+.presentation__inner {
+  width: min(100%, 55ch);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(0.5rem, 2vw, 0.9rem);
+}
+
+.presentation__prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.7rem, 1.8vw, 0.875rem);
+  line-height: 1.6;
+  color: color-mix(in oklch, var(--color-base-content) 70%, transparent);
+  letter-spacing: 0.02em;
+}
+
+.presentation__title {
+  margin: 0;
+  font-size: clamp(2.2rem, 10vw, 5.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  -webkit-text-stroke: 0.6px oklch(75% 0.16 85 / 0.9);
+  text-shadow:
+    2px 0 0 oklch(75% 0.16 85 / 0.35),
+    -2px 0 0 oklch(63% 0.24 305 / 0.18),
+    0 0 18px oklch(75% 0.16 85 / 0.25);
+  text-wrap: balance;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.presentation__subtitle {
+  margin: 0;
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--color-base-content);
+  text-wrap: balance;
+}
+
+.presentation__description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 60ch;
+  font-size: clamp(0.875rem, 2.4vw, 1rem);
+  line-height: 1.65;
+  color: color-mix(in oklch, var(--color-base-content) 78%, transparent);
+}
+
+.presentation__description p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+@media (max-width: 360px) {
+  .presentation__title {
+    font-size: clamp(1.8rem, 11vw, 2.6rem);
+    -webkit-text-stroke-width: 0.4px;
+    text-shadow:
+      1px 0 0 oklch(75% 0.16 85 / 0.3),
+      -1px 0 0 oklch(63% 0.24 305 / 0.15);
+  }
+}

@@ -52,4 +52,17 @@ describe('Presentation', () => {
     expect(section.getAttribute('aria-labelledby')).toBe(h1.id);
     expect(h1.id).toBe('presentation-title');
   });
+
+  it('should apply BEM classes for styling hooks', async () => {
+    await TestBed.configureTestingModule({ imports: [Presentation] }).compileComponents();
+    const fixture = TestBed.createComponent(Presentation);
+    fixture.detectChanges();
+    const el = fixture.nativeElement;
+    expect(el.querySelector('.presentation')).toBeTruthy();
+    expect(el.querySelector('.presentation__inner')).toBeTruthy();
+    expect(el.querySelector('.presentation__prompt')).toBeTruthy();
+    expect(el.querySelector('.presentation__title')).toBeTruthy();
+    expect(el.querySelector('.presentation__subtitle')).toBeTruthy();
+    expect(el.querySelector('.presentation__description')).toBeTruthy();
+  });
 });
