@@ -6,8 +6,8 @@ import Presentation from './presentation';
 
 const enTranslations = {
   presentation: {
-    prompt: ['> initializing portfolio ...', '> loading projects ...', '> system ready'],
-    title: 'DIDIER PIRACOCA',
+    prompt: ['> initializing portfolio ', '> loading projects ', '> system ready'],
+    title: 'Angular Developer and Frontend Developer',
     subtitle: 'Multiplatform Application Developer',
     description: [
       'Currently focused on Angular and modern frontend development.',
@@ -21,8 +21,8 @@ async function setupTranslate(): Promise<void> {
   translate.setTranslation('en', enTranslations);
   translate.setTranslation('es', {
     presentation: {
-      prompt: ['> inicializando portafolio ...', '> cargando proyectos ...', '> sistema listo'],
-      title: 'DIDIER PIRACOCA',
+      prompt: ['> inicializando portafolio ', '> cargando proyectos ', '> sistema listo'],
+      title: 'Programador Angular y Desarrollador Frontend',
       subtitle: 'Desarrollador de Aplicaciones Multiplataforma',
       description: [
         'Actualmente enfocado en Angular y desarrollo frontend moderno.',
@@ -47,15 +47,34 @@ describe('Presentation', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render h1 with DIDIER PIRACOCA', async () => {
+  it('should render h1 with Angular Developer role not DIDIER', async () => {
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
     await fixture.whenStable();
     const h1 = fixture.nativeElement.querySelector('h1');
-    expect(h1?.textContent?.trim()).toBe('DIDIER PIRACOCA');
+    expect(h1?.textContent?.trim()).toBe('Angular Developer and Frontend Developer');
+    expect(h1?.textContent?.trim()).not.toBe('DIDIER PIRACOCA');
   });
 
-  it('should render prompt with 3 lines and aria-hidden', async () => {
+  it('should render single visual ASCII art with DIDIER and PIRACOCA blocks and accessible label', async () => {
+    const fixture = TestBed.createComponent(Presentation);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const ascii = fixture.nativeElement.querySelector('.presentation__ascii');
+    expect(ascii).toBeTruthy();
+    expect(ascii.getAttribute('role')).toBe('img');
+    expect(ascii.getAttribute('aria-label')).toBe('Didier Piracoca');
+    const didier = fixture.nativeElement.querySelector('.presentation__ascii-didier');
+    const piracoca = fixture.nativeElement.querySelector('.presentation__ascii-piracoca');
+    expect(didier).toBeTruthy();
+    expect(piracoca).toBeTruthy();
+    expect(didier.textContent).toContain('██████╗');
+    expect(piracoca.textContent).toContain('██████╗');
+    const h1 = fixture.nativeElement.querySelector('h1');
+    expect(h1.textContent).not.toContain('DIDIER PIRACOCA');
+  });
+
+  it('should render prompt with 3 lines and aria-hidden without duplicated prefix', async () => {
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -65,23 +84,25 @@ describe('Presentation', () => {
     expect(lines).toContain('> initializing portfolio ...');
     expect(lines).toContain('> loading projects ...');
     expect(lines).toContain('> system ready');
+    expect(lines).not.toContain('> >');
   });
 
-  it('should render subtitle and two description lines in correct DOM order', async () => {
+  it('should render subtitle and two description lines in correct DOM order with ascii after prompt', async () => {
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
     await fixture.whenStable();
     const el = fixture.nativeElement;
     const order = Array.from(
       el.querySelectorAll(
-        '.presentation__prompt, h1, .presentation__subtitle, .presentation__description p',
+        '.presentation__prompt, .presentation__ascii, h1, .presentation__subtitle, .presentation__description p',
       ),
     ).map((n) => (n as Element).textContent?.trim());
     expect(order[0]).toContain('initializing');
-    expect(order[1]).toBe('DIDIER PIRACOCA');
-    expect(order[2]).toBe('Multiplatform Application Developer');
-    expect(order[3]).toBe('Currently focused on Angular and modern frontend development.');
-    expect(order[4]).toBe('Experience with Java, Spring MVC and SQL systems.');
+    expect(order[1]).toContain('██████╗');
+    expect(order[2]).toBe('Angular Developer and Frontend Developer');
+    expect(order[3]).toBe('Multiplatform Application Developer');
+    expect(order[4]).toBe('Currently focused on Angular and modern frontend development.');
+    expect(order[5]).toBe('Experience with Java, Spring MVC and SQL systems.');
   });
 
   it('should use section with aria-labelledby pointing to h1', async () => {

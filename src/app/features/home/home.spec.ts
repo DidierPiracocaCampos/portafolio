@@ -23,7 +23,7 @@ describe('Home', () => {
     translate.setTranslation('en', {
       presentation: {
         prompt: ['> initializing portfolio ...', '> loading projects ...', '> system ready'],
-        title: 'DIDIER PIRACOCA',
+        title: 'Angular Developer and Frontend Developer',
         subtitle: 'Multiplatform Application Developer',
         description: [
           'Currently focused on Angular and modern frontend development.',
@@ -171,7 +171,7 @@ describe('Home', () => {
     translate.setTranslation('es', {
       presentation: {
         prompt: ['> inicializando portafolio ...', '> cargando proyectos ...', '> sistema listo'],
-        title: 'DIDIER PIRACOCA',
+        title: 'Programador Angular y Desarrollador Frontend',
         subtitle: 'Desarrollador de Aplicaciones Multiplataforma',
         description: [
           'Actualmente enfocado en Angular y desarrollo frontend moderno.',
@@ -325,7 +325,9 @@ describe('Home', () => {
     await fixture.whenStable();
     const el = fixture.nativeElement;
     expect(el.querySelector('app-presentation')).toBeTruthy();
-    expect(el.querySelector('h1')?.textContent?.trim()).toBe('DIDIER PIRACOCA');
+    expect(el.querySelector('h1')?.textContent?.trim()).toBe(
+      'Angular Developer and Frontend Developer',
+    );
   });
 
   it('should not render language switcher - moved to App shell', async () => {

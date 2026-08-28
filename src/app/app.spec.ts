@@ -35,7 +35,7 @@ describe('App', () => {
     expect(compiled.querySelector('.app-shell__window-controls')).toBeTruthy();
     expect(compiled.querySelectorAll('.app-shell__window-dot').length).toBe(3);
     expect(compiled.querySelector('.app-shell__title')?.textContent?.trim()).toBe(
-      'didier@portfolio:~',
+      'dev@portfolio:~',
     );
     expect(compiled.querySelector('.app-shell__prompt')).toBeFalsy();
     expect(compiled.querySelector('.app-shell__cursor')).toBeFalsy();
