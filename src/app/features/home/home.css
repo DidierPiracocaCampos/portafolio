@@ -9,6 +9,21 @@
   padding-top: clamp(1.5rem, 4vw, 3rem);
 }
 
+.home__defer-marker {
+  display: block;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.home__defer-error {
+  margin: 1rem var(--section-x);
+  color: var(--color-error);
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  line-height: 1.5;
+}
+
 @media (min-width: 768px) {
   .home {
     margin-inline: clamp(1.5rem, 5vw, 5rem);

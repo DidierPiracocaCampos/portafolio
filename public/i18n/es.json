@@ -8,6 +8,11 @@
       "contact": "npm run contact"
     }
   },
+  "home": {
+    "sequence": {
+      "loadError": "No se pudo cargar esta sección. Recarga la página para intentarlo de nuevo."
+    }
+  },
   "presentation": {
     "prompt": ["> inicializando portafolio ", "> cargando proyectos ", "> sistema listo"],
     "title": "Programador Angular y Desarrollador Frontend",

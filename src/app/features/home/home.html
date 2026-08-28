@@ -1,17 +1,88 @@
 <div class="home">
-  <app-terminal-section sectionId="presentation" commandKey="terminal.commands.presentation">
-    <app-presentation />
+  <app-terminal-section
+    sectionId="presentation"
+    commandKey="terminal.commands.presentation"
+    (completed)="onPresentationTerminalCompleted()"
+  >
+    <app-presentation
+      [animationStarted]="presentationAnimationStarted()"
+      (animationCompleted)="onPresentationCompleted()"
+    />
   </app-terminal-section>
-  <app-terminal-section sectionId="experience" commandKey="terminal.commands.experience">
-    <app-experience />
-  </app-terminal-section>
-  <app-terminal-section sectionId="skills" commandKey="terminal.commands.skills">
-    <app-skills />
-  </app-terminal-section>
-  <app-terminal-section sectionId="projects" commandKey="terminal.commands.projects">
-    <app-projects />
-  </app-terminal-section>
-  <app-terminal-section sectionId="contact" commandKey="terminal.commands.contact">
-    <app-contact />
-  </app-terminal-section>
+
+  @if (experienceUnlocked()) {
+    @defer (on immediate) {
+      <app-terminal-section
+        sectionId="experience"
+        commandKey="terminal.commands.experience"
+        [immediate]="true"
+        (completed)="onExperienceCompleted()"
+      >
+        <app-experience />
+      </app-terminal-section>
+    } @placeholder {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @loading {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @error {
+      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
+    }
+  }
+
+  @if (skillsUnlocked()) {
+    @defer (on immediate) {
+      <app-terminal-section
+        sectionId="skills"
+        commandKey="terminal.commands.skills"
+        [immediate]="true"
+        (completed)="onSkillsCompleted()"
+      >
+        <app-skills />
+      </app-terminal-section>
+    } @placeholder {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @loading {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @error {
+      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
+    }
+  }
+
+  @if (projectsUnlocked()) {
+    @defer (on immediate) {
+      <app-terminal-section
+        sectionId="projects"
+        commandKey="terminal.commands.projects"
+        [immediate]="true"
+        (completed)="onProjectsCompleted()"
+      >
+        <app-projects />
+      </app-terminal-section>
+    } @placeholder {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @loading {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @error {
+      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
+    }
+  }
+
+  @if (contactUnlocked()) {
+    @defer (on immediate) {
+      <app-terminal-section
+        sectionId="contact"
+        commandKey="terminal.commands.contact"
+        [immediate]="true"
+        (completed)="onContactCompleted()"
+      >
+        <app-contact />
+      </app-terminal-section>
+    } @placeholder {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @loading {
+      <span class="home__defer-marker" aria-hidden="true"></span>
+    } @error {
+      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
+    }
+  }
 </div>

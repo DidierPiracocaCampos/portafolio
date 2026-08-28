@@ -8,6 +8,11 @@
       "contact": "npm run contact"
     }
   },
+  "home": {
+    "sequence": {
+      "loadError": "Failed to load this section. Please reload the page to try again."
+    }
+  },
   "presentation": {
     "prompt": ["> initializing portfolio ", "> loading projects ", "> system ready"],
     "title": "Angular Developer and Frontend Developer",

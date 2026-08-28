@@ -1,14 +1,41 @@
 import { provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
+import { DeferBlockBehavior, DeferBlockState } from '@angular/core/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import { ContactSubmissionService } from '../../core/contact/contact-submission.service';
 import Home from './home';
 
+const enHomeSequence = {
+  home: {
+    sequence: {
+      loadError: 'Failed to load this section. Please reload the page to try again.',
+    },
+  },
+};
+
+const esHomeSequence = {
+  home: {
+    sequence: {
+      loadError: 'No se pudo cargar esta sección. Recarga la página para intentarlo de nuevo.',
+    },
+  },
+};
+
+async function renderAllDeferBlocks(fixture: ReturnType<typeof TestBed.createComponent<Home>>): Promise<void> {
+  const blocks = await fixture.getDeferBlocks();
+  for (const block of blocks) {
+    await block.render(DeferBlockState.Complete);
+  }
+  fixture.detectChanges();
+  await fixture.whenStable();
+}
+
 describe('Home', () => {
   beforeEach(async () => {
     localStorage.clear();
     await TestBed.configureTestingModule({
+      deferBlockBehavior: DeferBlockBehavior.Manual,
       imports: [Home],
       providers: [
         provideRouter([]),
@@ -21,6 +48,16 @@ describe('Home', () => {
     }).compileComponents();
     const translate = TestBed.inject(TranslateService);
     translate.setTranslation('en', {
+      ...enHomeSequence,
+      terminal: {
+        commands: {
+          presentation: 'start portfolio',
+          experience: 'cat experience.txt',
+          skills: 'cat skills.json',
+          projects: 'ls projects/',
+          contact: 'npm run contact',
+        },
+      },
       presentation: {
         prompt: ['> initializing portfolio ...', '> loading projects ...', '> system ready'],
         title: 'Angular Developer and Frontend Developer',
@@ -169,6 +206,7 @@ describe('Home', () => {
       },
     });
     translate.setTranslation('es', {
+      ...esHomeSequence,
       presentation: {
         prompt: ['> inicializando portafolio ...', '> cargando proyectos ...', '> sistema listo'],
         title: 'Programador Angular y Desarrollador Frontend',
@@ -339,10 +377,27 @@ describe('Home', () => {
     expect(el.querySelector('.home__header')).toBeFalsy();
   });
 
+  it('should initially hide lower sections until presentation completes', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('app-experience')).toBeFalsy();
+    expect(el.querySelector('app-skills')).toBeFalsy();
+    expect(el.querySelector('app-projects')).toBeFalsy();
+    expect(el.querySelector('app-contact')).toBeFalsy();
+  });
+
   it('should render experience after presentation', async () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
     const presentation = el.querySelector('app-presentation');
     const experience = el.querySelector('app-experience');
@@ -357,6 +412,12 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const translate = TestBed.inject(TranslateService);
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('#experience-title')?.textContent?.trim()).toBe('EXPERIENCE');
@@ -372,6 +433,13 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    home.onExperienceCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
     const experience = el.querySelector('app-experience');
     const skills = el.querySelector('app-skills');
@@ -385,6 +453,13 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    home.onExperienceCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const translate = TestBed.inject(TranslateService);
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('#skills-title')?.textContent?.trim()).toBe('SKILLS');
@@ -403,6 +478,14 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    home.onExperienceCompleted();
+    home.onSkillsCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
     const skills = el.querySelector('app-skills');
     const projects = el.querySelector('app-projects');
@@ -416,6 +499,14 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    home.onExperienceCompleted();
+    home.onSkillsCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const translate = TestBed.inject(TranslateService);
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('#projects-title')?.textContent?.trim()).toBe('PROJECTS');
@@ -435,6 +526,15 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    home.onExperienceCompleted();
+    home.onSkillsCompleted();
+    home.onProjectsCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
     const projects = el.querySelector('app-projects');
     const contact = el.querySelector('app-contact');
@@ -448,6 +548,15 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    home.onExperienceCompleted();
+    home.onSkillsCompleted();
+    home.onProjectsCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
     const translate = TestBed.inject(TranslateService);
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('#contact-title')?.textContent?.trim()).toBe('CONTACT');
@@ -457,5 +566,30 @@ describe('Home', () => {
     await fixture.whenStable();
     expect(el.querySelector('#contact-title')?.textContent?.trim()).toBe('CONTACTO');
     expect(el.textContent).toContain('inicializando modulo de contacto');
+  });
+
+  it('should not skip steps when events fire out of order', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const home = fixture.componentInstance as Home;
+    // Try to skip directly to skills without presentation
+    home.onSkillsCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    let blocks = await fixture.getDeferBlocks();
+    // No blocks should be rendered because sequence hasn't advanced
+    expect(blocks.length).toBe(0);
+    expect(fixture.nativeElement.querySelector('app-skills')).toBeFalsy();
+
+    // Now correctly advance step by step
+    home.onPresentationTerminalCompleted();
+    home.onPresentationCompleted();
+    home.onExperienceCompleted();
+    home.onSkillsCompleted();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await renderAllDeferBlocks(fixture);
+    expect(fixture.nativeElement.querySelector('app-skills')).toBeTruthy();
   });
 });
