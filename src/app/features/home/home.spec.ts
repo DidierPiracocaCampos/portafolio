@@ -348,7 +348,9 @@ describe('Home', () => {
     const experience = el.querySelector('app-experience');
     expect(presentation).toBeTruthy();
     expect(experience).toBeTruthy();
-    expect(presentation?.nextElementSibling).toBe(experience);
+    expect(presentation?.closest('app-terminal-section')?.nextElementSibling).toBe(
+      experience?.closest('app-terminal-section'),
+    );
   });
 
   it('should render experience heading and bilingual content', async () => {
@@ -374,7 +376,9 @@ describe('Home', () => {
     const experience = el.querySelector('app-experience');
     const skills = el.querySelector('app-skills');
     expect(skills).toBeTruthy();
-    expect(experience?.nextElementSibling).toBe(skills);
+    expect(experience?.closest('app-terminal-section')?.nextElementSibling).toBe(
+      skills?.closest('app-terminal-section'),
+    );
   });
 
   it('should render skills heading and bilingual content', async () => {
@@ -403,7 +407,9 @@ describe('Home', () => {
     const skills = el.querySelector('app-skills');
     const projects = el.querySelector('app-projects');
     expect(projects).toBeTruthy();
-    expect(skills?.nextElementSibling).toBe(projects);
+    expect(skills?.closest('app-terminal-section')?.nextElementSibling).toBe(
+      projects?.closest('app-terminal-section'),
+    );
   });
 
   it('should render projects heading and bilingual content', async () => {
@@ -433,7 +439,9 @@ describe('Home', () => {
     const projects = el.querySelector('app-projects');
     const contact = el.querySelector('app-contact');
     expect(contact).toBeTruthy();
-    expect(projects?.nextElementSibling).toBe(contact);
+    expect(projects?.closest('app-terminal-section')?.nextElementSibling).toBe(
+      contact?.closest('app-terminal-section'),
+    );
   });
 
   it('should render contact heading and bilingual content', async () => {

@@ -1,4 +1,13 @@
 {
+  "terminal": {
+    "commands": {
+      "presentation": "start portfolio",
+      "experience": "cat experience.txt",
+      "skills": "cat skills.json",
+      "projects": "ls projects/",
+      "contact": "npm run contact"
+    }
+  },
   "presentation": {
     "prompt": ["> initializing portfolio ", "> loading projects ", "> system ready"],
     "title": "Angular Developer and Frontend Developer",

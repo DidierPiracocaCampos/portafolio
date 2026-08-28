@@ -1,0 +1,22 @@
+<section class="terminal-section" [class.terminal-section--done]="revealed()">
+  <p class="terminal-section__prompt" aria-hidden="true">
+    <span class="terminal-section__prefix">
+      <span class="terminal-section__icon terminal-section__icon--user">&#xE6D9;</span>
+      <span class="terminal-section__user">{{ user }}</span>
+      <span class="terminal-section__word">on</span>
+      <span class="terminal-section__icon terminal-section__icon--folder">&#xF07B;</span>
+      <span class="terminal-section__path">{{ path }}</span>
+      <span class="terminal-section__icon terminal-section__icon--branch">&#xF408;</span>
+      <span class="terminal-section__branch">{{ branch }}</span>
+      <span class="terminal-section__hash">#</span>
+    </span>
+    <span class="terminal-section__command">
+      <span>{{ typed() }}</span>
+      <span class="terminal-section__caret" [class.terminal-section__caret--hidden]="revealed()"></span>
+    </span>
+  </p>
+
+  <div class="terminal-section__content" [class.terminal-section__content--visible]="revealed()">
+    <ng-content />
+  </div>
+</section>
