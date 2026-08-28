@@ -19,6 +19,7 @@ src/environments/
 
 # Angular CLI and build artefacts
 /.angular-cli.json
+serve.log
 /.ng/
 
 # TypeScript cache
