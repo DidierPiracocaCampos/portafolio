@@ -17,6 +17,17 @@
   --font-icons: 'Terminal Icons', var(--font-sans);
   --section-x: clamp(0.75rem, 2.5vw, 1rem);
 }
+
+html {
+  scroll-padding-top: 3.2rem;
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 2.8rem;
+  }
+}
+
 @plugin "daisyui/theme" {
   name: 'gold';
   default: false;
