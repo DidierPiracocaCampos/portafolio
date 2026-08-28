@@ -15,12 +15,9 @@
   },
   "presentation": {
     "prompt": ["> initializing portfolio ", "> loading projects ", "> system ready"],
-    "title": "Angular Developer and Frontend Developer",
-    "subtitle": "Multiplatform Application Developer",
-    "description": [
-      "Currently focused on Angular and modern frontend development.",
-      "Experience with Java, Spring MVC and SQL systems."
-    ]
+    "title": "Multiplatform Application Developer",
+    "subtitle": "Angular Programmer & Full Stack Developer",
+    "description": "Specialized in Angular and frontend development with modern web technologies. Experience with frontend, backend, and mobile application development."
   },
   "language": {
     "label": "Language",
@@ -68,7 +65,7 @@
         }
       },
       "mobile": {
-        "heading": "Mobile",
+        "heading": "Multiplatform Development",
         "items": {
           "androidStudio": "Android Studio",
           "ionic": "Ionic",
@@ -119,16 +116,16 @@
     },
     "items": {
       "devhelper": {
-        "description": "Desktop application for application development.",
-        "imageAlt": "DevHelper preview"
+        "description": "Desktop application focused on the development and maintenance of software projects.",
+        "imageAlt": "DevHelper preview, desktop application for developers"
       },
       "spot": {
-        "description": "Desktop application for application development.",
-        "imageAlt": "SPOT preview"
+        "description": "Multiplatform application built to manage and organize projects.",
+        "imageAlt": "SPOT preview, multiplatform application"
       },
       "devformfx": {
-        "description": "Desktop application for application development.",
-        "imageAlt": "DevFormFX preview"
+        "description": "Desktop application for creating and managing application interfaces and components.",
+        "imageAlt": "DevFormFX preview, desktop application"
       }
     }
   },
@@ -160,7 +157,7 @@
     }
   },
   "seo": {
-    "title": "Angular Developer and Frontend Developer | Portfolio",
-    "description": "Angular and frontend developer specialized in Angular, modern web development, Java, Spring MVC, SQL and Firebase. Portfolio by Didier Piracoca."
+    "title": "Multiplatform Application Developer | Angular, Java and Spring",
+    "description": "Portfolio of Didier Piracoca, multiplatform application developer specialized in Angular and frontend development. Experience with Java, Spring MVC, Ionic, SQL, Firebase and full-stack development."
   }
 }

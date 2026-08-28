@@ -37,12 +37,11 @@
 
     <p class="presentation__subtitle presentation__reveal">{{ 'presentation.subtitle' | translate }}</p>
 
-    <div
+    <p
       class="presentation__description presentation__reveal"
       (animationend)="onDescriptionAnimationEnd($event)"
     >
-      <p>{{ 'presentation.description.0' | translate }}</p>
-      <p>{{ 'presentation.description.1' | translate }}</p>
-    </div>
+      {{ 'presentation.description' | translate }}
+    </p>
   </div>
 </section>

@@ -15,12 +15,9 @@
   },
   "presentation": {
     "prompt": ["> inicializando portafolio ", "> cargando proyectos ", "> sistema listo"],
-    "title": "Programador Angular y Desarrollador Frontend",
-    "subtitle": "Desarrollador de Aplicaciones Multiplataforma",
-    "description": [
-      "Actualmente enfocado en Angular y desarrollo frontend moderno.",
-      "Experiencia con sistemas Java, Spring MVC y SQL."
-    ]
+    "title": "Desarrollador de Aplicaciones Multiplataforma",
+    "subtitle": "Programador Angular y Desarrollador Full Stack",
+    "description": "Especializado en Angular y desarrollo frontend con tecnologías web modernas. Experiencia en desarrollo frontend, backend y aplicaciones móviles."
   },
   "language": {
     "label": "Idioma",
@@ -68,7 +65,7 @@
         }
       },
       "mobile": {
-        "heading": "Móvil",
+        "heading": "Desarrollo multiplataforma",
         "items": {
           "androidStudio": "Android Studio",
           "ionic": "Ionic",
@@ -119,16 +116,16 @@
     },
     "items": {
       "devhelper": {
-        "description": "Aplicación de escritorio para el desarrollo de aplicaciones.",
-        "imageAlt": "Vista previa de DevHelper"
+        "description": "Aplicación de escritorio orientada al desarrollo y mantenimiento de proyectos de software.",
+        "imageAlt": "Vista previa de DevHelper, aplicación de escritorio para desarrolladores"
       },
       "spot": {
-        "description": "Aplicación de escritorio para el desarrollo de aplicaciones.",
-        "imageAlt": "Vista previa de SPOT"
+        "description": "Aplicación multiplataforma desarrollada para gestionar y organizar proyectos.",
+        "imageAlt": "Vista previa de SPOT, aplicación multiplataforma"
       },
       "devformfx": {
-        "description": "Aplicación de escritorio para el desarrollo de aplicaciones.",
-        "imageAlt": "Vista previa de DevFormFX"
+        "description": "Aplicación de escritorio para crear y gestionar interfaces y componentes de aplicaciones.",
+        "imageAlt": "Vista previa de DevFormFX, aplicación de escritorio"
       }
     }
   },
@@ -160,7 +157,7 @@
     }
   },
   "seo": {
-    "title": "Programador Angular y Desarrollador Frontend | Portafolio",
-    "description": "Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca."
+    "title": "Desarrollador de Aplicaciones Multiplataforma | Angular, Java y Spring",
+    "description": "Portfolio de Didier Piracoca, desarrollador de aplicaciones multiplataforma especializado en Angular y desarrollo frontend. Experiencia con Java, Spring MVC, Ionic, SQL, Firebase y desarrollo full-stack."
   }
 }

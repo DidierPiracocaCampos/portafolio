@@ -9,10 +9,8 @@ const enTranslations = {
     prompt: ['> initializing portfolio ', '> loading projects ', '> system ready'],
     title: 'Angular Developer and Frontend Developer',
     subtitle: 'Multiplatform Application Developer',
-    description: [
-      'Currently focused on Angular and modern frontend development.',
-      'Experience with Java, Spring MVC and SQL systems.',
-    ],
+    description:
+      'Currently focused on Angular and modern frontend development. Experience with Java, Spring MVC and SQL systems.',
   },
 };
 
@@ -24,10 +22,8 @@ async function setupTranslate(): Promise<void> {
       prompt: ['> inicializando portafolio ', '> cargando proyectos ', '> sistema listo'],
       title: 'Programador Angular y Desarrollador Frontend',
       subtitle: 'Desarrollador de Aplicaciones Multiplataforma',
-      description: [
-        'Actualmente enfocado en Angular y desarrollo frontend moderno.',
-        'Experiencia con sistemas Java, Spring MVC y SQL.',
-      ],
+      description:
+        'Actualmente enfocado en Angular y desarrollo frontend moderno. Experiencia con sistemas Java, Spring MVC y SQL.',
     },
   });
   await firstValueFrom(translate.use('en'));
@@ -87,22 +83,23 @@ describe('Presentation', () => {
     expect(lines).not.toContain('> >');
   });
 
-  it('should render subtitle and two description lines in correct DOM order with ascii after prompt', async () => {
+  it('should render subtitle and single description paragraph in correct DOM order with ascii after prompt', async () => {
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
     await fixture.whenStable();
     const el = fixture.nativeElement;
     const order = Array.from(
       el.querySelectorAll(
-        '.presentation__prompt, .presentation__ascii, h1, .presentation__subtitle, .presentation__description p',
+        '.presentation__prompt, .presentation__ascii, h1, .presentation__subtitle, .presentation__description',
       ),
     ).map((n) => (n as Element).textContent?.trim());
     expect(order[0]).toContain('initializing');
     expect(order[1]).toContain('██████╗');
     expect(order[2]).toBe('Angular Developer and Frontend Developer');
     expect(order[3]).toBe('Multiplatform Application Developer');
-    expect(order[4]).toBe('Currently focused on Angular and modern frontend development.');
-    expect(order[5]).toBe('Experience with Java, Spring MVC and SQL systems.');
+    expect(order[4]).toBe(
+      'Currently focused on Angular and modern frontend development. Experience with Java, Spring MVC and SQL systems.',
+    );
   });
 
   it('should use section with aria-labelledby pointing to h1', async () => {
@@ -128,13 +125,16 @@ describe('Presentation', () => {
     expect(el.querySelector('.presentation__description')).toBeTruthy();
   });
 
-  it('should keep description as semantic paragraphs not aria-hidden', async () => {
+  it('should keep description as semantic paragraph not aria-hidden', async () => {
     const fixture = TestBed.createComponent(Presentation);
     fixture.detectChanges();
     await fixture.whenStable();
     const desc = fixture.nativeElement.querySelector('.presentation__description');
     expect(desc.getAttribute('aria-hidden')).toBeNull();
-    expect(desc.querySelectorAll('p').length).toBe(2);
+    expect(desc.tagName.toLowerCase()).toBe('p');
+    expect(desc.textContent?.trim()).toBe(
+      'Currently focused on Angular and modern frontend development. Experience with Java, Spring MVC and SQL systems.',
+    );
   });
 
   it('should not have more than one h1', async () => {
