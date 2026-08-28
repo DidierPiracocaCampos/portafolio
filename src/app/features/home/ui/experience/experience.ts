@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import SectionTitle from '../../../../shared/ui/section-title/section-title';
 
 type ExperienceEntry = {
   readonly id: 'axpe' | 'education';
@@ -37,7 +38,7 @@ const EXPERIENCE_ENTRIES: readonly ExperienceEntry[] = [
 
 @Component({
   selector: 'app-experience',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, SectionTitle],
   templateUrl: './experience.html',
   styleUrl: './experience.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

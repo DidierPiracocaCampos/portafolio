@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ContactSubmissionService } from '../../../../core/contact/contact-submission.service';
+import SectionTitle from '../../../../shared/ui/section-title/section-title';
 
 const COOLDOWN_MS = 60_000;
 const COOLDOWN_STORAGE_KEY = 'contact.lastSubmissionAt';
@@ -35,7 +36,7 @@ const trimmedEmailValidator: ValidatorFn = (control) => {
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule, TranslatePipe],
+  imports: [ReactiveFormsModule, TranslatePipe, SectionTitle],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

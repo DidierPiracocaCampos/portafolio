@@ -140,8 +140,10 @@ describe('Contact', () => {
 
     expect(element.querySelector('.contact')).toBeTruthy();
     expect(element.querySelector('.contact__inner')).toBeTruthy();
-    expect(element.querySelector('.contact__heading')).toBeTruthy();
-    expect(element.querySelector('.contact__rule')).toBeTruthy();
+    expect(element.querySelector('app-section-title')).toBeTruthy();
+    expect(element.querySelector('.section-title')).toBeTruthy();
+    expect(element.querySelector('.section-title__rule')).toBeTruthy();
+    expect(element.querySelector('.section-title__heading')).toBeTruthy();
     expect(element.querySelector('.contact__form')).toBeTruthy();
     expect(element.querySelector('.contact__field')).toBeTruthy();
     expect(element.querySelector('.contact__submit')).toBeTruthy();

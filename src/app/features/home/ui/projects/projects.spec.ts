@@ -179,7 +179,9 @@ describe('Projects', () => {
 
     expect(element.querySelector('.projects')).toBeTruthy();
     expect(element.querySelector('.projects__inner')).toBeTruthy();
-    expect(element.querySelector('.projects__heading')).toBeTruthy();
+    expect(element.querySelector('app-section-title')).toBeTruthy();
+    expect(element.querySelector('.section-title')).toBeTruthy();
+    expect(element.querySelector('.section-title__heading')).toBeTruthy();
     expect(element.querySelector('.projects__list')).toBeTruthy();
     expect(element.querySelector('.projects__card')).toBeTruthy();
     expect(element.querySelector('.projects__preview')).toBeTruthy();

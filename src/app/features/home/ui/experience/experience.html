@@ -1,11 +1,7 @@
 <section class="experience" aria-labelledby="experience-title">
-  <div class="experience__inner">
-    <div class="experience__heading">
-      <span class="experience__rule" aria-hidden="true"></span>
-      <h2 id="experience-title">{{ 'experience.heading' | translate }}</h2>
-      <span class="experience__rule" aria-hidden="true"></span>
-    </div>
+  <app-section-title [title]="'experience.heading' | translate" headingId="experience-title" />
 
+  <div class="experience__inner">
     <div class="experience__timeline">
       @for (entry of entries; track entry.id) {
         <article

@@ -1,11 +1,7 @@
 <section class="projects" aria-labelledby="projects-title">
-  <div class="projects__inner">
-    <div class="projects__heading">
-      <span class="projects__rule" aria-hidden="true"></span>
-      <h2 id="projects-title">{{ 'projects.heading' | translate }}</h2>
-      <span class="projects__rule" aria-hidden="true"></span>
-    </div>
+  <app-section-title [title]="'projects.heading' | translate" headingId="projects-title" />
 
+  <div class="projects__inner">
     <div class="projects__list">
       @for (project of projects; track project.id) {
         <article class="projects__card" [attr.aria-labelledby]="'project-' + project.id + '-title'">

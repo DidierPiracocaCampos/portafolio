@@ -174,7 +174,10 @@ describe('Experience', () => {
     const el = fixture.nativeElement;
     expect(el.querySelector('.experience')).toBeTruthy();
     expect(el.querySelector('.experience__inner')).toBeTruthy();
-    expect(el.querySelector('.experience__heading')).toBeTruthy();
+    expect(el.querySelector('app-section-title')).toBeTruthy();
+    expect(el.querySelector('.section-title')).toBeTruthy();
+    expect(el.querySelector('.section-title__rule')).toBeTruthy();
+    expect(el.querySelector('.section-title__heading')).toBeTruthy();
     expect(el.querySelector('.experience__timeline')).toBeTruthy();
     expect(el.querySelector('.experience__entry')).toBeTruthy();
     expect(el.querySelector('.experience__period')).toBeTruthy();

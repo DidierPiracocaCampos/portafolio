@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import SectionTitle from '../../../../shared/ui/section-title/section-title';
 
 type Project = {
   readonly id: 'devhelper' | 'spot' | 'devformfx';
@@ -46,7 +47,7 @@ const PROJECTS: readonly Project[] = [
 
 @Component({
   selector: 'app-projects',
-  imports: [NgOptimizedImage, TranslatePipe],
+  imports: [NgOptimizedImage, TranslatePipe, SectionTitle],
   templateUrl: './projects.html',
   styleUrl: './projects.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

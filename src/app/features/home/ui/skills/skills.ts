@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import SectionTitle from '../../../../shared/ui/section-title/section-title';
 
 type SkillItem = {
   readonly id: string;
@@ -75,7 +76,7 @@ const SKILL_GROUPS: readonly SkillGroup[] = [
 
 @Component({
   selector: 'app-skills',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, SectionTitle],
   templateUrl: './skills.html',
   styleUrl: './skills.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

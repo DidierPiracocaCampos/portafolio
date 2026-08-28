@@ -278,7 +278,9 @@ describe('Skills', () => {
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('.skills')).toBeTruthy();
     expect(el.querySelector('.skills__inner')).toBeTruthy();
-    expect(el.querySelector('.skills__heading')).toBeTruthy();
+    expect(el.querySelector('app-section-title')).toBeTruthy();
+    expect(el.querySelector('.section-title')).toBeTruthy();
+    expect(el.querySelector('.section-title__heading')).toBeTruthy();
     expect(el.querySelector('.skills__grid')).toBeTruthy();
     expect(el.querySelector('.skills__group')).toBeTruthy();
     expect(el.querySelector('.skills__items')).toBeTruthy();

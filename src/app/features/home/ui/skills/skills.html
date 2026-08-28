@@ -1,11 +1,7 @@
 <section class="skills" aria-labelledby="skills-title">
-  <div class="skills__inner">
-    <div class="skills__heading">
-      <span class="skills__rule" aria-hidden="true"></span>
-      <h2 id="skills-title">{{ 'skills.heading' | translate }}</h2>
-      <span class="skills__rule" aria-hidden="true"></span>
-    </div>
+  <app-section-title [title]="'skills.heading' | translate" headingId="skills-title" />
 
+  <div class="skills__inner">
     <div class="skills__grid">
       @for (group of groups; track group.id) {
         <article
