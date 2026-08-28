@@ -103,7 +103,9 @@ describe('Experience', () => {
 
     const first = articles[0] as HTMLElement;
     expect(first.querySelector('.experience__period')?.textContent?.trim()).toBe('2023-present');
-    expect(first.querySelector('.experience__company')?.textContent?.trim()).toBe('AXPE Consulting');
+    expect(first.querySelector('.experience__company')?.textContent?.trim()).toBe(
+      'AXPE Consulting',
+    );
     expect(first.querySelector('.experience__role')?.textContent?.trim()).toBe('Angular Developer');
     expect(first.querySelectorAll('ul.experience__items li').length).toBe(4);
 
@@ -119,9 +121,9 @@ describe('Experience', () => {
     const fixture = TestBed.createComponent(Experience);
     fixture.detectChanges();
     await fixture.whenStable();
-    const items = Array.from(
-      fixture.nativeElement.querySelectorAll('.experience__items li'),
-    ).map((el) => (el as HTMLElement).textContent?.trim());
+    const items = Array.from(fixture.nativeElement.querySelectorAll('.experience__items li')).map(
+      (el) => (el as HTMLElement).textContent?.trim(),
+    );
     expect(items).toEqual([
       'Development of web applications using Spring MVC and Ionic',
       'Oracle SQL integration (optimized queries & data modeling)',

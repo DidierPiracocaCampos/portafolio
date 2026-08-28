@@ -13,7 +13,10 @@ describe('Home', () => {
       providers: [
         provideRouter([]),
         provideTranslateService({ fallbackLang: 'en' }),
-        { provide: ContactSubmissionService, useValue: { submit: vi.fn().mockResolvedValue(undefined) } },
+        {
+          provide: ContactSubmissionService,
+          useValue: { submit: vi.fn().mockResolvedValue(undefined) },
+        },
       ],
     }).compileComponents();
     const translate = TestBed.inject(TranslateService);

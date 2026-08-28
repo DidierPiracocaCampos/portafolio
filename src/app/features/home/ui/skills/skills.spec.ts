@@ -156,8 +156,8 @@ describe('Skills', () => {
     const articles = fixture.nativeElement.querySelectorAll('article.skills__group');
     expect(articles.length).toBe(5);
 
-    const headings = Array.from(articles).map(
-      (article) => (article as HTMLElement).querySelector('h3')?.textContent?.trim(),
+    const headings = Array.from(articles).map((article) =>
+      (article as HTMLElement).querySelector('h3')?.textContent?.trim(),
     );
     expect(headings).toEqual(['Frontend', 'Backend', 'Tools', 'Database', 'Mobile']);
 
@@ -172,7 +172,9 @@ describe('Skills', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const toolsArticle = fixture.nativeElement.querySelectorAll('article.skills__group')[2] as HTMLElement;
+    const toolsArticle = fixture.nativeElement.querySelectorAll(
+      'article.skills__group',
+    )[2] as HTMLElement;
     const gitItem = toolsArticle.querySelectorAll('ul.skills__items li')[0] as HTMLElement;
 
     expect(gitItem.textContent).toContain('Git');
@@ -180,10 +182,11 @@ describe('Skills', () => {
     expect(gitItem.textContent).toContain('GitHub');
     expect(gitItem.querySelectorAll('svg.skills__icon').length).toBe(3);
     expect(gitItem.querySelectorAll('.skills__separator').length).toBe(2);
-    expect(Array.from(gitItem.querySelectorAll('.skills__separator')).map((el) => el.textContent?.trim())).toEqual([
-      '/',
-      '/',
-    ]);
+    expect(
+      Array.from(gitItem.querySelectorAll('.skills__separator')).map((el) =>
+        el.textContent?.trim(),
+      ),
+    ).toEqual(['/', '/']);
   });
 
   it('should keep a single li for Ionic + Cordova with two icons and plus separator', async () => {
@@ -191,7 +194,9 @@ describe('Skills', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const mobileArticle = fixture.nativeElement.querySelectorAll('article.skills__group')[4] as HTMLElement;
+    const mobileArticle = fixture.nativeElement.querySelectorAll(
+      'article.skills__group',
+    )[4] as HTMLElement;
     const ionicItem = mobileArticle.querySelectorAll('ul.skills__items li')[1] as HTMLElement;
 
     expect(ionicItem.textContent).toContain('Ionic');
@@ -224,8 +229,8 @@ describe('Skills', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const items = Array.from(fixture.nativeElement.querySelectorAll('.skills__items li')).map((el) =>
-      (el as HTMLElement).textContent?.replace(/\s+/g, ' ').trim(),
+    const items = Array.from(fixture.nativeElement.querySelectorAll('.skills__items li')).map(
+      (el) => (el as HTMLElement).textContent?.replace(/\s+/g, ' ').trim(),
     );
 
     expect(items).toEqual([
@@ -259,9 +264,9 @@ describe('Skills', () => {
 
     expect(fixture.nativeElement.querySelector('h2')?.textContent?.trim()).toBe('HABILIDADES');
 
-    const headings = Array.from(fixture.nativeElement.querySelectorAll('article.skills__group h3')).map(
-      (el) => (el as HTMLElement).textContent?.trim(),
-    );
+    const headings = Array.from(
+      fixture.nativeElement.querySelectorAll('article.skills__group h3'),
+    ).map((el) => (el as HTMLElement).textContent?.trim());
     expect(headings).toEqual(['Frontend', 'Backend', 'Herramientas', 'Base de datos', 'Móvil']);
   });
 

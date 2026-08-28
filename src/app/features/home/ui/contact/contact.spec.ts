@@ -166,7 +166,9 @@ describe('Contact', () => {
 
     const nameInput = fixture.nativeElement.querySelector('#contact-name') as HTMLInputElement;
     const emailInput = fixture.nativeElement.querySelector('#contact-email') as HTMLInputElement;
-    const messageTextarea = fixture.nativeElement.querySelector('#contact-message') as HTMLTextAreaElement;
+    const messageTextarea = fixture.nativeElement.querySelector(
+      '#contact-message',
+    ) as HTMLTextAreaElement;
 
     expect(fixture.nativeElement.querySelector('label[for="contact-name"]')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('label[for="contact-email"]')).toBeTruthy();
@@ -228,14 +230,20 @@ describe('Contact', () => {
     instance.form.controls.message.markAsTouched();
     fixture.detectChanges();
 
-    expect(instance.validationKey(instance.form.controls.name, 'name')).toBe('contact.validation.nameRequired');
-    expect(instance.validationKey(instance.form.controls.email, 'email')).toBe('contact.validation.emailInvalid');
+    expect(instance.validationKey(instance.form.controls.name, 'name')).toBe(
+      'contact.validation.nameRequired',
+    );
+    expect(instance.validationKey(instance.form.controls.email, 'email')).toBe(
+      'contact.validation.emailInvalid',
+    );
     expect(instance.validationKey(instance.form.controls.message, 'message')).toBe(
       'contact.validation.messageRequired',
     );
 
     instance.form.controls.name.setValue('a'.repeat(81));
-    expect(instance.validationKey(instance.form.controls.name, 'name')).toBe('contact.validation.nameTooLong');
+    expect(instance.validationKey(instance.form.controls.name, 'name')).toBe(
+      'contact.validation.nameTooLong',
+    );
   });
 
   it('should submit normalized valid values and show success', async () => {
@@ -348,7 +356,9 @@ describe('Contact', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const button = fixture.nativeElement.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement;
     expect(button.disabled).toBe(true);
 
     fixture.componentInstance.form.setValue({

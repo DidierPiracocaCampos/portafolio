@@ -52,7 +52,9 @@
           rows="6"
           formControlName="message"
           [attr.aria-invalid]="isInvalid(form.controls.message) ? 'true' : null"
-          [attr.aria-describedby]="isInvalid(form.controls.message) ? 'contact-message-error' : null"
+          [attr.aria-describedby]="
+            isInvalid(form.controls.message) ? 'contact-message-error' : null
+          "
         ></textarea>
         @if (isInvalid(form.controls.message)) {
           <p id="contact-message-error" class="contact__error" role="alert">
@@ -81,7 +83,9 @@
         <p role="alert">{{ 'contact.status.error' | translate }}</p>
       }
       @if (cooldownRemaining() > 0) {
-        <p role="status">{{ 'contact.status.cooldown' | translate: { seconds: cooldownRemaining() } }}</p>
+        <p role="status">
+          {{ 'contact.status.cooldown' | translate: { seconds: cooldownRemaining() } }}
+        </p>
       }
     </div>
   </div>

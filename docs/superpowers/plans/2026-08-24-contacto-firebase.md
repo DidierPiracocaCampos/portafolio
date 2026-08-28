@@ -55,7 +55,7 @@
 
 ## Task 1: Markup Bilingüe
 
-Pruebas de renderizado de heading, línea de inicialización, labels, inputs y botón. Traducciones ES/EN para contact.heading, contact.initializing, contact.fields.*, contact.actions.send, contact.validation.* y contact.status.*. Componente inicial sin lógica de envío.
+Pruebas de renderizado de heading, línea de inicialización, labels, inputs y botón. Traducciones ES/EN para contact.heading, contact.initializing, contact.fields._, contact.actions.send, contact.validation._ y contact.status.\*. Componente inicial sin lógica de envío.
 
 ## Task 2: Servicio y Formulario
 
@@ -72,4 +72,3 @@ Servicio `ContactSubmissionService` con método `submit` que escribe en `contact
 ## Task 5: Estilos y Verificación
 
 CSS responsive con `.contact`, `.contact__inner` max 42rem, heading con rules magenta, labels amarillos, bordes claros, textarea alto, botón alineado a derecha con hover dorado, focus visible accent, y feedback aria-live. Verificación con `pnpm test`, `pnpm build`, `pnpm lint`, revisión manual responsive 320/768/1440 y zoom 200%.
-
