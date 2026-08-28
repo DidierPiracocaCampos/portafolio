@@ -5,19 +5,20 @@
 .presentation {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
   background: var(--color-base-100);
   color: var(--color-base-content);
 }
 
 .presentation__inner {
-  width: min(100%, 55ch);
+  width: min(96vw, 96rem);
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: clamp(0.5rem, 2vw, 0.9rem);
+  align-items: flex-start;
+  text-align: left;
+  gap: clamp(0.6rem, 2vw, 1rem);
 }
 
 .presentation__prompt {
@@ -31,30 +32,101 @@
   letter-spacing: 0.02em;
 }
 
+.presentation__prompt-line {
+  display: flex;
+  align-items: baseline;
+  min-height: 1.6em;
+  opacity: 0;
+  animation: prompt-line-in 0.3s ease both;
+  animation-delay: var(--line-delay, 0s);
+}
+
+.presentation__prompt-line--1 {
+  --line-delay: 0s;
+}
+
+.presentation__prompt-line--2 {
+  --line-delay: 0.4s;
+}
+
+.presentation__prompt-line--3 {
+  --line-delay: 1.7s;
+}
+
+.presentation__prompt-dots i {
+  font-style: normal;
+  opacity: 0;
+  animation: dots-appear 0.25s ease both;
+}
+
+.presentation__prompt-line--1 .presentation__prompt-dots i:nth-child(1),
+.presentation__prompt-line--2 .presentation__prompt-dots i:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.presentation__prompt-line--1 .presentation__prompt-dots i:nth-child(2),
+.presentation__prompt-line--2 .presentation__prompt-dots i:nth-child(2) {
+  animation-delay: 0.75s;
+}
+
+.presentation__prompt-line--1 .presentation__prompt-dots i:nth-child(3),
+.presentation__prompt-line--2 .presentation__prompt-dots i:nth-child(3) {
+  animation-delay: 1s;
+}
+
+.presentation__ascii {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  align-items: flex-start;
+  width: 100%;
+  overflow: visible;
+}
+
+.presentation__ascii-block {
+  margin: 0;
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.46rem, 1.55vw, 1.48rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+  white-space: pre;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--color-primary) 68%, black),
+    var(--color-primary),
+    color-mix(in oklch, var(--color-warning) 94%, white),
+    var(--color-warning),
+    color-mix(in oklch, var(--color-primary) 90%, white),
+    var(--color-warning),
+    color-mix(in oklch, var(--color-primary) 72%, black)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 6px color-mix(in oklch, var(--color-primary) 14%, transparent))
+    drop-shadow(0 6px 16px color-mix(in oklch, var(--color-warning) 10%, transparent));
+  flex-shrink: 0;
+  animation: ascii-glow 2.8s ease-in-out infinite;
+  will-change: filter;
+}
+
 .presentation__title {
   margin: 0;
-  font-size: clamp(2.2rem, 10vw, 5.2rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.5rem, 4.2vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   font-weight: 800;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  -webkit-text-stroke: 0.6px color-mix(in oklch, var(--color-primary) 90%, transparent);
-  text-shadow:
-    2px 0 0 color-mix(in oklch, var(--color-primary) 35%, transparent),
-    -2px 0 0 color-mix(in oklch, var(--color-secondary) 18%, transparent),
-    0 0 18px color-mix(in oklch, var(--color-primary) 25%, transparent);
+  color: var(--color-base-content);
   text-wrap: balance;
-  max-width: 100%;
-  overflow-wrap: break-word;
+  max-width: 22ch;
 }
 
 .presentation__subtitle {
   margin: 0;
-  font-size: clamp(1rem, 3vw, 1.35rem);
+  font-size: clamp(1rem, 3vw, 1.25rem);
   line-height: 1.3;
   font-weight: 500;
-  color: var(--color-base-content);
+  color: color-mix(in oklch, var(--color-base-content) 85%, transparent);
   text-wrap: balance;
 }
 
@@ -62,7 +134,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  max-width: 60ch;
+  max-width: 62ch;
   font-size: clamp(0.875rem, 2.4vw, 1rem);
   line-height: 1.65;
   color: color-mix(in oklch, var(--color-base-content) 78%, transparent);
@@ -73,12 +145,113 @@
   text-wrap: pretty;
 }
 
-@media (max-width: 360px) {
-  .presentation__title {
-    font-size: clamp(1.8rem, 11vw, 2.6rem);
-    -webkit-text-stroke-width: 0.4px;
-    text-shadow:
-      1px 0 0 color-mix(in oklch, var(--color-primary) 30%, transparent),
-      -1px 0 0 color-mix(in oklch, var(--color-secondary) 15%, transparent);
+.presentation__reveal {
+  opacity: 0;
+  animation: content-reveal 0.55s ease both;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+.presentation__ascii {
+  --reveal-delay: 1.9s;
+}
+
+.presentation__title {
+  --reveal-delay: 2.15s;
+}
+
+.presentation__subtitle {
+  --reveal-delay: 2.4s;
+}
+
+.presentation__description {
+  --reveal-delay: 2.65s;
+}
+
+@keyframes prompt-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+@keyframes dots-appear {
+  from {
+    opacity: 0;
+    transform: translateY(0.15em);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes content-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ascii-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 1px 6px color-mix(in oklch, var(--color-primary) 14%, transparent))
+      drop-shadow(0 6px 16px color-mix(in oklch, var(--color-warning) 10%, transparent))
+      brightness(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 2px 10px color-mix(in oklch, var(--color-primary) 20%, transparent))
+      drop-shadow(0 8px 26px color-mix(in oklch, var(--color-warning) 16%, transparent))
+      drop-shadow(0 12px 36px color-mix(in oklch, var(--color-primary) 10%, transparent))
+      brightness(1.07);
+  }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .presentation__ascii-block {
+    animation: none !important;
+  }
+
+  .presentation__prompt-line,
+  .presentation__prompt-dots i,
+  .presentation__reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .presentation {
+    padding: 1.5rem 1rem;
+  }
+
+  .presentation__ascii {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .presentation__ascii-block {
+    font-size: clamp(0.28rem, 1.9vw, 0.58rem);
+  }
+
+  .presentation__title {
+    font-size: clamp(1.4rem, 7vw, 1.85rem);
+  }
+}
+
+

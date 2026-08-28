@@ -1,18 +1,39 @@
 <section class="presentation" aria-labelledby="presentation-title">
   <div class="presentation__inner">
     <p class="presentation__prompt" aria-hidden="true">
-      <span>&gt; {{ 'presentation.prompt.0' | translate }}</span>
-      <span>&gt; {{ 'presentation.prompt.1' | translate }}</span>
-      <span>&gt; {{ 'presentation.prompt.2' | translate }}</span>
+      <span class="presentation__prompt-line presentation__prompt-line--1">
+        <span>{{ 'presentation.prompt.0' | translate }}</span>
+        <span class="presentation__prompt-dots"><i>.</i><i>.</i><i>.</i></span>
+      </span>
+      <span class="presentation__prompt-line presentation__prompt-line--2">
+        <span>{{ 'presentation.prompt.1' | translate }}</span>
+        <span class="presentation__prompt-dots"><i>.</i><i>.</i><i>.</i></span>
+      </span>
+      <span class="presentation__prompt-line presentation__prompt-line--3">
+        <span>{{ 'presentation.prompt.2' | translate }}</span>
+      </span>
     </p>
 
-    <h1 id="presentation-title" class="presentation__title">
-      {{ 'presentation.title' | translate }}
-    </h1>
+    <div class="presentation__ascii presentation__reveal" role="img" aria-label="Didier Piracoca">
+      <pre class="presentation__ascii-block presentation__ascii-didier" aria-hidden="true">██████╗░██╗██████╗░██╗███████╗██████╗░
+██╔══██╗██║██╔══██╗██║██╔════╝██╔══██╗
+██║░░██║██║██║░░██║██║█████╗░░██████╔╝
+██║░░██║██║██║░░██║██║██╔══╝░░██╔══██╗
+██████╔╝██║██████╔╝██║███████╗██║░░██║
+╚═════╝░╚═╝╚═════╝░╚═╝╚══════╝╚═╝░░╚═╝</pre>
+      <pre class="presentation__ascii-block presentation__ascii-piracoca" aria-hidden="true">██████╗░██╗██████╗░░█████╗░░█████╗░░█████╗░░█████╗░░█████╗░
+██╔══██╗██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+██████╔╝██║██████╔╝███████║██║░░╚═╝██║░░██║██║░░╚═╝███████║
+██╔═══╝░██║██╔══██╗██╔══██║██║░░██╗██║░░██║██║░░██╗██╔══██║
+██║░░░░░██║██║░░██║██║░░██║╚█████╔╝╚█████╔╝╚█████╔╝██║░░██║
+╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░░╚════╝░░╚════╝░╚═╝░░╚═╝</pre>
+    </div>
 
-    <p class="presentation__subtitle">{{ 'presentation.subtitle' | translate }}</p>
+    <h1 id="presentation-title" class="presentation__title presentation__reveal">{{ 'presentation.title' | translate }}</h1>
 
-    <div class="presentation__description">
+    <p class="presentation__subtitle presentation__reveal">{{ 'presentation.subtitle' | translate }}</p>
+
+    <div class="presentation__description presentation__reveal">
       <p>{{ 'presentation.description.0' | translate }}</p>
       <p>{{ 'presentation.description.1' | translate }}</p>
     </div>
