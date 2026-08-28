@@ -1,7 +1,27 @@
-<div class="p-4">
-  <div class="mockup-code">
-    <div class="p-2">
-      <router-outlet />
-    </div>
+<div class="app-shell">
+  <div class="app-shell__window">
+    <header class="app-shell__header">
+      <div class="app-shell__windowbar">
+        <div class="app-shell__window-controls" aria-hidden="true">
+          <span class="app-shell__window-dot app-shell__window-dot--close"></span>
+          <span class="app-shell__window-dot app-shell__window-dot--minimize"></span>
+          <span class="app-shell__window-dot app-shell__window-dot--maximize"></span>
+        </div>
+
+        <span class="app-shell__title">didier@portfolio:~</span>
+
+        <div class="app-shell__actions">
+          <app-language-switcher />
+        </div>
+      </div>
+    </header>
+
+    <main class="app-shell__main">
+      <div class="app-shell__frame">
+        <div class="app-shell__content">
+          <router-outlet />
+        </div>
+      </div>
+    </main>
   </div>
 </div>

@@ -328,13 +328,13 @@ describe('Home', () => {
     expect(el.querySelector('h1')?.textContent?.trim()).toBe('DIDIER PIRACOCA');
   });
 
-  it('should render language switcher in header', async () => {
+  it('should not render language switcher - moved to App shell', async () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
     const el = fixture.nativeElement;
-    expect(el.querySelector('app-language-switcher')).toBeTruthy();
-    expect(el.querySelector('.home__header')).toBeTruthy();
+    expect(el.querySelector('app-language-switcher')).toBeFalsy();
+    expect(el.querySelector('.home__header')).toBeFalsy();
   });
 
   it('should render experience after presentation', async () => {
