@@ -1,4 +1,8 @@
-<section class="presentation" aria-labelledby="presentation-title">
+<section
+  class="presentation"
+  [class.presentation--active]="animationStarted()"
+  aria-labelledby="presentation-title"
+>
   <div class="presentation__inner">
     <p class="presentation__prompt" aria-hidden="true">
       <span class="presentation__prompt-line presentation__prompt-line--1">
@@ -33,7 +37,10 @@
 
     <p class="presentation__subtitle presentation__reveal">{{ 'presentation.subtitle' | translate }}</p>
 
-    <div class="presentation__description presentation__reveal">
+    <div
+      class="presentation__description presentation__reveal"
+      (animationend)="onDescriptionAnimationEnd($event)"
+    >
       <p>{{ 'presentation.description.0' | translate }}</p>
       <p>{{ 'presentation.description.1' | translate }}</p>
     </div>

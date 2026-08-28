@@ -36,6 +36,9 @@
   align-items: baseline;
   min-height: 1.6em;
   opacity: 0;
+}
+
+.presentation--active .presentation__prompt-line {
   animation: prompt-line-in 0.3s ease both;
   animation-delay: var(--line-delay, 0s);
 }
@@ -55,6 +58,9 @@
 .presentation__prompt-dots i {
   font-style: normal;
   opacity: 0;
+}
+
+.presentation--active .presentation__prompt-dots i {
   animation: dots-appear 0.25s ease both;
 }
 
@@ -110,8 +116,11 @@
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
-  animation: ascii-glow 2.8s ease-in-out infinite;
   will-change: filter;
+}
+
+.presentation--active .presentation__ascii-block {
+  animation: ascii-glow 2.8s ease-in-out infinite;
 }
 
 .presentation__title {
@@ -151,6 +160,9 @@
 
 .presentation__reveal {
   opacity: 0;
+}
+
+.presentation--active .presentation__reveal {
   animation: content-reveal 0.55s ease both;
   animation-delay: var(--reveal-delay, 0s);
 }
@@ -228,9 +240,9 @@
     animation: none !important;
   }
 
-  .presentation__prompt-line,
-  .presentation__prompt-dots i,
-  .presentation__reveal {
+  .presentation--active .presentation__prompt-line,
+  .presentation--active .presentation__prompt-dots i,
+  .presentation--active .presentation__reveal {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

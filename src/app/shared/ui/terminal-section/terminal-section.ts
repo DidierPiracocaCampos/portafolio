@@ -6,6 +6,7 @@ import {
   OnInit,
   inject,
   input,
+  output,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,6 +28,8 @@ const BRANCH = 'main';
 export default class TerminalSection implements OnInit {
   readonly sectionId = input.required<string>();
   readonly commandKey = input.required<string>();
+  readonly immediate = input(false);
+  readonly completed = output<void>();
 
   readonly user = USER;
   readonly path = PATH;
@@ -43,12 +46,18 @@ export default class TerminalSection implements OnInit {
   private observer: IntersectionObserver | null = null;
   private typeTimer: ReturnType<typeof setTimeout> | null = null;
   private started = false;
+  private hasCompleted = false;
 
   ngOnInit(): void {
     this.observe();
   }
 
   private observe(): void {
+    if (this.immediate()) {
+      this.run();
+      return;
+    }
+
     const target = this.host.nativeElement;
 
     if (typeof IntersectionObserver === 'undefined') {
@@ -66,7 +75,7 @@ export default class TerminalSection implements OnInit {
           }
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0 },
     );
 
     this.observer.observe(target);
@@ -104,9 +113,27 @@ export default class TerminalSection implements OnInit {
     this.typeTimer = setTimeout(() => this.type(index + 1), typeDelay());
   }
 
+  onContentTransitionEnd(event: TransitionEvent): void {
+    if (event.target !== event.currentTarget || event.propertyName !== 'opacity') {
+      return;
+    }
+    this.emitCompleted();
+  }
+
   private finish(): void {
     this.typed.set(this.fullCommand || this.translate.instant(this.commandKey()));
     this.revealed.set(true);
+    if (this.reduceMotion()) {
+      this.emitCompleted();
+    }
+  }
+
+  private emitCompleted(): void {
+    if (this.hasCompleted) {
+      return;
+    }
+    this.hasCompleted = true;
+    this.completed.emit();
   }
 
   private reduceMotion(): boolean {

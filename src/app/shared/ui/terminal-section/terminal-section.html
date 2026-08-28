@@ -16,7 +16,11 @@
     </span>
   </p>
 
-  <div class="terminal-section__content" [class.terminal-section__content--visible]="revealed()">
+  <div
+    class="terminal-section__content"
+    [class.terminal-section__content--visible]="revealed()"
+    (transitionend)="onContentTransitionEnd($event)"
+  >
     <ng-content />
   </div>
 </section>
