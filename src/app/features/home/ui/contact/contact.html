@@ -1,0 +1,88 @@
+<section class="contact" aria-labelledby="contact-title">
+  <div class="contact__inner">
+    <div class="contact__heading">
+      <span class="contact__rule" aria-hidden="true"></span>
+      <h2 id="contact-title">{{ 'contact.heading' | translate }}</h2>
+      <span class="contact__rule" aria-hidden="true"></span>
+    </div>
+
+    <p class="contact__initializing" aria-hidden="true">
+      {{ 'contact.initializing' | translate }}
+    </p>
+
+    <form class="contact__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="contact__field">
+        <label for="contact-name">{{ 'contact.fields.name' | translate }}</label>
+        <input
+          id="contact-name"
+          type="text"
+          autocomplete="name"
+          formControlName="name"
+          [attr.aria-invalid]="isInvalid(form.controls.name) ? 'true' : null"
+          [attr.aria-describedby]="isInvalid(form.controls.name) ? 'contact-name-error' : null"
+        />
+        @if (isInvalid(form.controls.name)) {
+          <p id="contact-name-error" class="contact__error" role="alert">
+            {{ validationKey(form.controls.name, 'name') | translate }}
+          </p>
+        }
+      </div>
+
+      <div class="contact__field">
+        <label for="contact-email">{{ 'contact.fields.email' | translate }}</label>
+        <input
+          id="contact-email"
+          type="email"
+          autocomplete="email"
+          formControlName="email"
+          [attr.aria-invalid]="isInvalid(form.controls.email) ? 'true' : null"
+          [attr.aria-describedby]="isInvalid(form.controls.email) ? 'contact-email-error' : null"
+        />
+        @if (isInvalid(form.controls.email)) {
+          <p id="contact-email-error" class="contact__error" role="alert">
+            {{ validationKey(form.controls.email, 'email') | translate }}
+          </p>
+        }
+      </div>
+
+      <div class="contact__field">
+        <label for="contact-message">{{ 'contact.fields.message' | translate }}</label>
+        <textarea
+          id="contact-message"
+          rows="6"
+          formControlName="message"
+          [attr.aria-invalid]="isInvalid(form.controls.message) ? 'true' : null"
+          [attr.aria-describedby]="isInvalid(form.controls.message) ? 'contact-message-error' : null"
+        ></textarea>
+        @if (isInvalid(form.controls.message)) {
+          <p id="contact-message-error" class="contact__error" role="alert">
+            {{ validationKey(form.controls.message, 'message') | translate }}
+          </p>
+        }
+      </div>
+
+      <button
+        class="contact__submit"
+        type="submit"
+        [disabled]="form.invalid || submitState() === 'submitting' || cooldownRemaining() > 0"
+      >
+        {{ 'contact.actions.send' | translate }}
+      </button>
+    </form>
+
+    <div class="contact__feedback" aria-live="polite" aria-atomic="true">
+      @if (submitState() === 'submitting') {
+        <p role="status">{{ 'contact.status.submitting' | translate }}</p>
+      }
+      @if (submitState() === 'success') {
+        <p role="status">{{ 'contact.status.success' | translate }}</p>
+      }
+      @if (submitState() === 'error') {
+        <p role="alert">{{ 'contact.status.error' | translate }}</p>
+      }
+      @if (cooldownRemaining() > 0) {
+        <p role="status">{{ 'contact.status.cooldown' | translate: { seconds: cooldownRemaining() } }}</p>
+      }
+    </div>
+  </div>
+</section>

@@ -1,6 +1,30 @@
 {
   "rules": {
     ".read": false,
-    ".write": false
+    ".write": false,
+    "contactSubmissions": {
+      ".read": false,
+      ".write": false,
+      "$submissionId": {
+        ".read": false,
+        ".write": "!data.exists() && newData.exists() && $submissionId.matches(/^[A-Za-z0-9_-]{20}$/)",
+        ".validate": "newData.hasChildren(['name', 'email', 'message', 'createdAt'])",
+        "name": {
+          ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 80"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().length >= 3 && newData.val().length <= 254 && newData.val().matches(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/)"
+        },
+        "message": {
+          ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 2000"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber() && newData.val() <= now && newData.val() >= now - 300000"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
   }
 }

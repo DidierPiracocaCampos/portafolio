@@ -2,13 +2,19 @@ import { provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
+import { ContactSubmissionService } from '../../core/contact/contact-submission.service';
 import Home from './home';
 
 describe('Home', () => {
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [Home],
-      providers: [provideRouter([]), provideTranslateService({ fallbackLang: 'en' })],
+      providers: [
+        provideRouter([]),
+        provideTranslateService({ fallbackLang: 'en' }),
+        { provide: ContactSubmissionService, useValue: { submit: vi.fn().mockResolvedValue(undefined) } },
+      ],
     }).compileComponents();
     const translate = TestBed.inject(TranslateService);
     translate.setTranslation('en', {
@@ -129,6 +135,33 @@ describe('Home', () => {
             description: 'Desktop application for application development.',
             imageAlt: 'DevFormFX preview',
           },
+        },
+      },
+      contact: {
+        heading: 'CONTACT',
+        initializing: '> initializing contact module ...',
+        fields: {
+          name: 'name:',
+          email: 'email:',
+          message: 'message:',
+        },
+        actions: {
+          send: '> send',
+        },
+        validation: {
+          nameRequired: 'Name is required.',
+          nameTooLong: 'Name must be 80 characters or fewer.',
+          emailRequired: 'Email is required.',
+          emailInvalid: 'Enter a valid email address.',
+          emailTooLong: 'Email must be 254 characters or fewer.',
+          messageRequired: 'Message is required.',
+          messageTooLong: 'Message must be 2,000 characters or fewer.',
+        },
+        status: {
+          submitting: 'Sending...',
+          success: 'Message sent successfully.',
+          error: 'The message could not be sent. Please try again.',
+          cooldown: 'Wait {{seconds}} seconds before sending again.',
         },
       },
     });
@@ -252,6 +285,33 @@ describe('Home', () => {
           },
         },
       },
+      contact: {
+        heading: 'CONTACTO',
+        initializing: '> inicializando modulo de contacto ...',
+        fields: {
+          name: 'nombre:',
+          email: 'correo:',
+          message: 'mensaje:',
+        },
+        actions: {
+          send: '> enviar',
+        },
+        validation: {
+          nameRequired: 'El nombre es obligatorio.',
+          nameTooLong: 'El nombre debe tener 80 caracteres o menos.',
+          emailRequired: 'El correo es obligatorio.',
+          emailInvalid: 'Introduce un correo valido.',
+          emailTooLong: 'El correo debe tener 254 caracteres o menos.',
+          messageRequired: 'El mensaje es obligatorio.',
+          messageTooLong: 'El mensaje debe tener 2.000 caracteres o menos.',
+        },
+        status: {
+          submitting: 'Enviando...',
+          success: 'Mensaje enviado correctamente.',
+          error: 'No se pudo enviar el mensaje. Intentalo de nuevo.',
+          cooldown: 'Espera {{seconds}} segundos antes de volver a enviar.',
+        },
+      },
     });
     await firstValueFrom(translate.use('en'));
   });
@@ -358,5 +418,31 @@ describe('Home', () => {
     expect(el.textContent).toContain(
       'Aplicación de escritorio para el desarrollo de aplicaciones.',
     );
+  });
+
+  it('should render contact after projects', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const projects = el.querySelector('app-projects');
+    const contact = el.querySelector('app-contact');
+    expect(contact).toBeTruthy();
+    expect(projects?.nextElementSibling).toBe(contact);
+  });
+
+  it('should render contact heading and bilingual content', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const translate = TestBed.inject(TranslateService);
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('#contact-title')?.textContent?.trim()).toBe('CONTACT');
+    expect(el.textContent).toContain('initializing contact module');
+    await firstValueFrom(translate.use('es'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(el.querySelector('#contact-title')?.textContent?.trim()).toBe('CONTACTO');
+    expect(el.textContent).toContain('inicializando modulo de contacto');
   });
 });

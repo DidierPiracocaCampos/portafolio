@@ -118,6 +118,33 @@
       }
     }
   },
+  "contact": {
+    "heading": "CONTACTO",
+    "initializing": "> inicializando modulo de contacto ...",
+    "fields": {
+      "name": "nombre:",
+      "email": "correo:",
+      "message": "mensaje:"
+    },
+    "actions": {
+      "send": "> enviar"
+    },
+    "validation": {
+      "nameRequired": "El nombre es obligatorio.",
+      "nameTooLong": "El nombre debe tener 80 caracteres o menos.",
+      "emailRequired": "El correo es obligatorio.",
+      "emailInvalid": "Introduce un correo valido.",
+      "emailTooLong": "El correo debe tener 254 caracteres o menos.",
+      "messageRequired": "El mensaje es obligatorio.",
+      "messageTooLong": "El mensaje debe tener 2.000 caracteres o menos."
+    },
+    "status": {
+      "submitting": "Enviando...",
+      "success": "Mensaje enviado correctamente.",
+      "error": "No se pudo enviar el mensaje. Intentalo de nuevo.",
+      "cooldown": "Espera {{seconds}} segundos antes de volver a enviar."
+    }
+  },
   "seo": {
     "title": "Didier Piracoca — Portafolio",
     "description": "Desarrollador de Aplicaciones Multiplataforma enfocado en Angular y frontend moderno. Experiencia con Java, Spring MVC y SQL."
