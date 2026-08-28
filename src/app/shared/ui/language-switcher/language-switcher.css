@@ -3,35 +3,49 @@
 }
 
 .language-switcher {
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
 }
 
-.language-switcher__swap {
-  font-family: var(--font-sans), ui-monospace, monospace;
-  font-weight: 600;
-  letter-spacing: 0.03em;
+.language-switcher__trigger {
   border: 1px solid color-mix(in oklch, var(--color-base-content) 12%, transparent);
   background: color-mix(in oklch, var(--color-base-100) 95%, transparent);
   color: var(--color-base-content);
-  min-width: 3.5rem;
-  height: 2rem;
-  padding-inline: 0.6rem;
 }
 
-.language-switcher__swap:has(input:checked) {
+.language-switcher__trigger:hover,
+.language-switcher[open] > .language-switcher__trigger {
   border-color: color-mix(in oklch, var(--color-primary) 35%, transparent);
   color: var(--color-primary);
+  background: color-mix(in oklch, var(--color-base-100) 98%, transparent);
 }
 
-.language-switcher__swap input {
-  /* hide native checkbox but keep accessible */
+/* Hide native details marker */
+.language-switcher > summary {
+  list-style: none;
 }
 
-.language-switcher__on,
-.language-switcher__off {
-  font-size: 0.8rem;
-  line-height: 1;
+.language-switcher > summary::-webkit-details-marker {
+  display: none;
+}
+
+.language-switcher > summary::marker {
+  content: '';
+}
+
+.language-switcher__menu {
+  margin-top: 0.5rem;
+}
+
+.language-switcher__code {
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+.menu-active .language-switcher__code {
+  opacity: 1;
 }
 
 .sr-only {

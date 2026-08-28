@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../../../core/i18n/language.service';
+import { LanguageService, type AppLang } from '../../../core/i18n/language.service';
 
 @Component({
   selector: 'app-language-switcher',
@@ -13,22 +13,21 @@ export class LanguageSwitcher {
   private readonly languageService = inject(LanguageService);
   private readonly translate = inject(TranslateService);
 
-  readonly isEnglish = computed(() => {
+  readonly languages = [
+    { code: 'es' as AppLang, labelKey: 'language.es', shortCode: 'ES' },
+    { code: 'en' as AppLang, labelKey: 'language.en', shortCode: 'EN' },
+  ] as const;
+
+  readonly currentLang = computed<AppLang>(() => {
     const sig = this.translate.currentLang();
-    if (sig) return sig === 'en';
-    return this.languageService.currentLang === 'en';
+    if (sig === 'es' || sig === 'en') return sig;
+    return this.languageService.currentLang;
   });
 
-  readonly ariaLabel = computed(() => {
-    const lang = this.isEnglish() ? 'es' : 'en';
-    // Use instant for aria-label to avoid pipe in computed
-    const key = lang === 'es' ? 'language.switchToEs' : 'language.switchToEn';
-    const translated = this.translate.instant(key);
-    if (translated !== key) return translated;
-    return lang === 'es' ? 'Cambiar a español' : 'Switch to English';
-  });
-
-  toggle(): void {
-    this.languageService.toggle();
+  selectLanguage(lang: AppLang, menu: HTMLDetailsElement): void {
+    menu.open = false;
+    if (lang !== this.currentLang()) {
+      this.languageService.setLang(lang, true);
+    }
   }
 }

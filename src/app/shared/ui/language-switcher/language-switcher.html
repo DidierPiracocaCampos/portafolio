@@ -1,20 +1,55 @@
-<div class="language-switcher" role="group" [attr.aria-label]="'language.label' | translate">
-  <label
-    class="swap swap-flip btn btn-ghost btn-sm language-switcher__swap"
-    [attr.aria-label]="ariaLabel()"
+<details
+  #languageMenu
+  class="dropdown dropdown-end language-switcher"
+  (keydown.escape)="languageMenu.open = false"
+>
+  <summary
+    class="btn btn-ghost btn-sm btn-square language-switcher__trigger"
+    [attr.aria-label]="'language.label' | translate"
+    aria-haspopup="menu"
   >
-    <input
-      type="checkbox"
-      [checked]="isEnglish()"
-      (change)="toggle()"
-      [attr.aria-checked]="isEnglish()"
-      role="switch"
-      [attr.aria-label]="ariaLabel()"
-    />
-    <span class="swap-on language-switcher__on" lang="en" aria-hidden="true">EN</span>
-    <span class="swap-off language-switcher__off" lang="es" aria-hidden="true">ES</span>
-  </label>
-  <span class="language-switcher__hint sr-only" aria-live="polite">
-    {{ isEnglish() ? ('language.en' | translate) : ('language.es' | translate) }}
-  </span>
-</div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.8"
+      stroke="currentColor"
+      class="size-5"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"
+      />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M3.6 9h16.8M3.6 15h16.8M9 3.6a15.306 15.306 0 0 0 0 16.8M15 3.6a15.306 15.306 0 0 1 0 16.8"
+      />
+    </svg>
+    <span class="sr-only">{{ 'language.label' | translate }}</span>
+  </summary>
+  <ul
+    id="language-menu"
+    class="menu menu-sm dropdown-content bg-base-100 rounded-box shadow-sm border border-base-300 z-1 w-44 p-2 gap-1 language-switcher__menu"
+    role="menu"
+  >
+    @for (language of languages; track language.code) {
+      <li role="none">
+        <button
+          type="button"
+          role="menuitem"
+          class="justify-between"
+          [class.menu-active]="currentLang() === language.code"
+          [attr.aria-pressed]="currentLang() === language.code"
+          [attr.lang]="language.code"
+          (click)="selectLanguage(language.code, languageMenu)"
+        >
+          <span>{{ language.labelKey | translate }}</span>
+          <span class="language-switcher__code">{{ language.shortCode }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+</details>
