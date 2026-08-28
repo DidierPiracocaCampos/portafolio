@@ -1,7 +1,7 @@
 {
   "presentation": {
-    "prompt": ["> inicializando portafolio ...", "> cargando proyectos ...", "> sistema listo"],
-    "title": "DIDIER PIRACOCA",
+    "prompt": ["> inicializando portafolio ", "> cargando proyectos ", "> sistema listo"],
+    "title": "Programador Angular y Desarrollador Frontend",
     "subtitle": "Desarrollador de Aplicaciones Multiplataforma",
     "description": [
       "Actualmente enfocado en Angular y desarrollo frontend moderno.",
@@ -146,7 +146,7 @@
     }
   },
   "seo": {
-    "title": "Didier Piracoca — Portafolio",
-    "description": "Desarrollador de Aplicaciones Multiplataforma enfocado en Angular y frontend moderno. Experiencia con Java, Spring MVC y SQL."
+    "title": "Programador Angular y Desarrollador Frontend | Portafolio",
+    "description": "Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca."
   }
 }

@@ -70,8 +70,8 @@ export class SeoService {
     if (!hasDescription) {
       const fallbackDesc =
         lang === 'es'
-          ? 'Desarrollador de Aplicaciones Multiplataforma enfocado en Angular y frontend moderno. Experiencia con Java, Spring MVC y SQL.'
-          : 'Multiplatform Application Developer focused on Angular and modern frontend. Experience with Java, Spring MVC and SQL.';
+          ? 'Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca.'
+          : 'Angular and frontend developer specialized in Angular, modern web development, Java, Spring MVC, SQL and Firebase. Portfolio by Didier Piracoca.';
       this.upsertMeta('name', 'description', fallbackDesc);
     }
   }
