@@ -30,7 +30,7 @@ html {
 
 @plugin "daisyui/theme" {
   name: 'gold';
-  default: false;
+  default: true;
   prefersdark: true;
   color-scheme: 'dark';
   --color-base-100: oklch(9% 0.004 286);

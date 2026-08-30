@@ -159,5 +159,8 @@
   "seo": {
     "title": "Multiplatform Application Developer | Angular, Java and Spring",
     "description": "Portfolio of Didier Piracoca, multiplatform application developer specialized in Angular and frontend development. Experience with Java, Spring MVC, Ionic, SQL, Firebase and full-stack development."
+  },
+  "theme": {
+    "toggle": "Toggle theme"
   }
 }
