@@ -53,11 +53,13 @@
 ### Task 1: Actualizar traducciones y SEO i18n para priorizar Programador Angular
 
 **Files:**
+
 - Modify: `public/i18n/es.json:1-152`
 - Modify: `public/i18n/en.json:1-152`
 - Test: `src/app/features/home/ui/presentation/presentation.spec.ts` (ajuste de expectativas, verificación posterior)
 
 **Interfaces:**
+
 - Consumes: claves actuales `presentation.*` y `seo.*`
 - Produces: nuevas claves `presentation.title` con rol profesional y `seo` role-first usadas por `SeoService` y `presentation.html`
 
@@ -125,11 +127,13 @@ git commit -m "feat(i18n): prioritize Angular Developer role in presentation and
 ### Task 2: Refactorizar markup de Presentation — arte ASCII único, h1 SEO y corrección prompt
 
 **Files:**
+
 - Modify: `src/app/features/home/ui/presentation/presentation.html:1-20`
 - Modify: `src/app/features/home/ui/presentation/presentation.ts:1-11` (sin cambios lógicos, solo verificar OnPush)
 - Test: `src/app/features/home/ui/presentation/presentation.spec.ts`
 
 **Interfaces:**
+
 - Consumes: traducciones de Task 1 (`presentation.title`, `subtitle`, `description`, `prompt`)
 - Produces: DOM ordenado `prompt → ascii (DIDIER + PIRACOCA) → h1 → subtitle → description` con `aria-*` correctos
 
@@ -178,7 +182,9 @@ it('should keep DOM order prompt -> ascii -> h1 -> subtitle -> description', asy
   fixture.detectChanges();
   await fixture.whenStable();
   const order = Array.from(
-    fixture.nativeElement.querySelectorAll('.presentation__prompt, .presentation__ascii, h1, .presentation__subtitle, .presentation__description p')
+    fixture.nativeElement.querySelectorAll(
+      '.presentation__prompt, .presentation__ascii, h1, .presentation__subtitle, .presentation__description p',
+    ),
   ).map((n: Element) => n.className || n.tagName);
   expect(order[0]).toContain('presentation__prompt');
   expect(order[1]).toContain('presentation__ascii');
@@ -201,21 +207,27 @@ Expected: FAIL (h1 sigue siendo DIDIER, ascii no existe, prompt duplicado)
     </p>
 
     <div class="presentation__ascii" role="img" aria-label="Didier Piracoca" aria-hidden="false">
-      <pre class="presentation__ascii-block presentation__ascii-didier" aria-hidden="true">██████╗░██╗██████╗░██╗███████╗██████╗░
+      <pre class="presentation__ascii-block presentation__ascii-didier" aria-hidden="true">
+██████╗░██╗██████╗░██╗███████╗██████╗░
 ██╔══██╗██║██╔══██╗██║██╔════╝██╔══██╗
 ██║░░██║██║██║░░██║██║█████╗░░██████╔╝
 ██║░░██║██║██║░░██║██║██╔══╝░░██╔══██╗
 ██████╔╝██║██████╔╝██║███████╗██║░░██║
-╚═════╝░╚═╝╚═════╝░╚═╝╚══════╝╚═╝░░╚═╝</pre>
-      <pre class="presentation__ascii-block presentation__ascii-piracoca" aria-hidden="true">██████╗░██╗██████╗░░█████╗░░█████╗░░█████╗░░█████╗░░█████╗░
+╚═════╝░╚═╝╚═════╝░╚═╝╚══════╝╚═╝░░╚═╝</pre
+      >
+      <pre class="presentation__ascii-block presentation__ascii-piracoca" aria-hidden="true">
+██████╗░██╗██████╗░░█████╗░░█████╗░░█████╗░░█████╗░░█████╗░
 ██╔══██╗██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
 ██████╔╝██║██████╔╝███████║██║░░╚═╝██║░░██║██║░░╚═╝███████║
 ██╔═══╝░██║██╔══██╗██╔══██║██║░░██╗██║░░██║██║░░██╗██╔══██║
 ██║░░░░░██║██║░░██║██║░░██║╚█████╔╝╚█████╔╝╚█████╔╝██║░░██║
-╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░░╚════╝░░╚════╝░╚═╝░░╚═╝</pre>
+╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░░╚════╝░░╚════╝░╚═╝░░╚═╝</pre
+      >
     </div>
 
-    <h1 id="presentation-title" class="presentation__title">{{ 'presentation.title' | translate }}</h1>
+    <h1 id="presentation-title" class="presentation__title">
+      {{ 'presentation.title' | translate }}
+    </h1>
 
     <p class="presentation__subtitle">{{ 'presentation.subtitle' | translate }}</p>
 
@@ -228,6 +240,7 @@ Expected: FAIL (h1 sigue siendo DIDIER, ascii no existe, prompt duplicado)
 ```
 
 Notas:
+
 - Elimina `&gt;` manual para evitar `> >` (prompt ya trae `>`).
 - Divide exactamente el bloque proporcionado: DIDIER = columnas izquierdas, PIRACOCA = columnas derechas (respetar salto y ancho original).
 - `role="img"` con `aria-label` da nombre accesible sin duplicar texto visible.
@@ -249,9 +262,11 @@ git commit -m "feat(presentation): single ascii art with DIDIER/PIRACOCA blocks 
 ### Task 3: Estilos — left align, degradado animado, responsive y secuencia de entrada
 
 **Files:**
+
 - Modify: `src/app/features/home/ui/presentation/presentation.css:1-84`
 
 **Interfaces:**
+
 - Consumes: tokens `src/styles.css` (`--color-primary`, `--color-secondary`, `--color-accent`, `--color-base-100`, `--font-sans`)
 - Produces: layout izquierda, ascii fluido con gradiente, animación entrada y mobile stacking
 
@@ -277,7 +292,9 @@ Expected: PASS (clases existen tras Task 2, estilos aún vacíos)
 - [ ] **Step 2: Implementar CSS completo**
 
 ```css
-:host { display: block; }
+:host {
+  display: block;
+}
 .presentation {
   display: flex;
   justify-content: flex-start;
@@ -317,7 +334,9 @@ Expected: PASS (clases existen tras Task 2, estilos aún vacíos)
   animation: presentation-enter 0.6s ease-out both;
   animation-delay: 0.45s;
 }
-.presentation__ascii::-webkit-scrollbar { display: none; }
+.presentation__ascii::-webkit-scrollbar {
+  display: none;
+}
 .presentation__ascii-block {
   margin: 0;
   font-family: var(--font-sans), ui-monospace, monospace;
@@ -325,7 +344,13 @@ Expected: PASS (clases existen tras Task 2, estilos aún vacíos)
   line-height: 1.05;
   letter-spacing: 0;
   white-space: pre;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent), var(--color-primary));
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary),
+    var(--color-accent),
+    var(--color-primary)
+  );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -366,26 +391,54 @@ Expected: PASS (clases existen tras Task 2, estilos aún vacíos)
   animation: presentation-enter 0.5s ease-out both;
   animation-delay: 1.2s;
 }
-.presentation__description p { margin: 0; text-wrap: pretty; }
+.presentation__description p {
+  margin: 0;
+  text-wrap: pretty;
+}
 @keyframes presentation-enter {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes ascii-gradient {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 @media (max-width: 640px) {
-  .presentation { padding: 1.5rem 1rem; }
-  .presentation__ascii { flex-direction: column; gap: 0.35rem; }
-  .presentation__ascii-block { font-size: clamp(0.28rem, 1.8vw, 0.52rem); }
-  .presentation__title { font-size: clamp(1.45rem, 7vw, 1.9rem); }
+  .presentation {
+    padding: 1.5rem 1rem;
+  }
+  .presentation__ascii {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .presentation__ascii-block {
+    font-size: clamp(0.28rem, 1.8vw, 0.52rem);
+  }
+  .presentation__title {
+    font-size: clamp(1.45rem, 7vw, 1.9rem);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .presentation__prompt, .presentation__ascii, .presentation__title, .presentation__subtitle, .presentation__description {
+  .presentation__prompt,
+  .presentation__ascii,
+  .presentation__title,
+  .presentation__subtitle,
+  .presentation__description {
     animation: none !important;
   }
-  .presentation__ascii-block { animation: none !important; }
+  .presentation__ascii-block {
+    animation: none !important;
+  }
 }
 ```
 
@@ -408,6 +461,7 @@ git commit -m "feat(presentation): left align, gradient ascii and entrance seque
 ### Task 4: Actualizar SEO, index.html, app shell y deploy config
 
 **Files:**
+
 - Modify: `src/index.html:1-29`
 - Modify: `public/index.html:1-13`
 - Modify: `src/app/core/i18n/seo.service.ts:1-154`
@@ -415,6 +469,7 @@ git commit -m "feat(presentation): left align, gradient ascii and entrance seque
 - Modify: `firebase.json:1-15`
 
 **Interfaces:**
+
 - Consumes: i18n seo keys de Task 1
 - Produces: títulos role-first en HTML inicial y runtime, shell sin nombre y hosting apunta a build real
 
@@ -422,9 +477,18 @@ git commit -m "feat(presentation): left align, gradient ascii and entrance seque
 
 ```html
 <title>Programador Angular y Desarrollador Frontend | Portafolio — Didier Piracoca</title>
-<meta name="description" content="Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca." />
-<meta property="og:title" content="Programador Angular y Desarrollador Frontend | Portafolio — Didier Piracoca" />
-<meta property="og:description" content="Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca." />
+<meta
+  name="description"
+  content="Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca."
+/>
+<meta
+  property="og:title"
+  content="Programador Angular y Desarrollador Frontend | Portafolio — Didier Piracoca"
+/>
+<meta
+  property="og:description"
+  content="Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca."
+/>
 ```
 
 Mantener charset, viewport, hreflang, canonical y og:locale.
@@ -453,10 +517,13 @@ Verificar `setTitleAndDescription` sigue usando `translate.instant('seo.title')`
 - [ ] **Step 4: Cambiar app.html shell title**
 
 Reemplazar:
+
 ```html
 <span class="app-shell__title">didier@portfolio:~</span>
 ```
+
 por:
+
 ```html
 <span class="app-shell__title">dev@portfolio:~</span>
 ```
@@ -492,11 +559,13 @@ git commit -m "feat(seo): role-first titles and fix hosting public path"
 ### Task 5: Ajustar tests y verificación final
 
 **Files:**
+
 - Modify: `src/app/features/home/ui/presentation/presentation.spec.ts:1-139`
 - Modify: `src/app/features/home/home.spec.ts:1-451`
 - Modify: `src/app/app.spec.ts:1-77`
 
 **Interfaces:**
+
 - Consumes: markup de Task 2 y estilos de Task 3
 - Produces: suite verde con expectativas SEO
 
@@ -521,8 +590,9 @@ const enTranslations = {
   },
   seo: {
     title: 'Angular Developer and Frontend Developer | Portfolio',
-    description: 'Angular and frontend developer specialized in Angular, modern web development, Java, Spring MVC, SQL and Firebase. Portfolio by Didier Piracoca.'
-  }
+    description:
+      'Angular and frontend developer specialized in Angular, modern web development, Java, Spring MVC, SQL and Firebase. Portfolio by Didier Piracoca.',
+  },
 };
 ```
 
@@ -539,7 +609,7 @@ translate.setTranslation('es', {
       'Experiencia con sistemas Java, Spring MVC y SQL.',
     ],
   },
-  seo: { title: 'Programador Angular y Desarrollador Frontend | Portafolio', description: '...' }
+  seo: { title: 'Programador Angular y Desarrollador Frontend | Portafolio', description: '...' },
 });
 ```
 
@@ -563,7 +633,9 @@ expect(el.querySelector('h1')?.textContent?.trim()).toBe('DIDIER PIRACOCA');
 por:
 
 ```ts
-expect(el.querySelector('h1')?.textContent?.trim()).toBe('Angular Developer and Frontend Developer');
+expect(el.querySelector('h1')?.textContent?.trim()).toBe(
+  'Angular Developer and Frontend Developer',
+);
 ```
 
 Y en `enTranslations`/`esTranslations` de home.spec, actualizar `presentation.title` igual que arriba.

@@ -11,7 +11,10 @@
     </span>
     <span class="terminal-section__command">
       <span>{{ typed() }}</span>
-      <span class="terminal-section__caret" [class.terminal-section__caret--hidden]="revealed()"></span>
+      <span
+        class="terminal-section__caret"
+        [class.terminal-section__caret--hidden]="revealed()"
+      ></span>
     </span>
   </p>
 

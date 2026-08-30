@@ -69,9 +69,7 @@ describe('TerminalSection', () => {
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('.terminal-section__user')?.textContent).toBe('Didier');
-    expect(el.querySelector('.terminal-section__path')?.textContent).toBe(
-      'C:/proyects/portafolio',
-    );
+    expect(el.querySelector('.terminal-section__path')?.textContent).toBe('C:/proyects/portafolio');
     expect(el.querySelector('.terminal-section__branch')?.textContent).toBe('main');
     expect(el.querySelector('.terminal-section__icon--user')).toBeTruthy();
     expect(el.querySelector('.terminal-section__icon--folder')).toBeTruthy();

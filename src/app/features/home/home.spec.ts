@@ -22,7 +22,9 @@ const esHomeSequence = {
   },
 };
 
-async function renderAllDeferBlocks(fixture: ReturnType<typeof TestBed.createComponent<Home>>): Promise<void> {
+async function renderAllDeferBlocks(
+  fixture: ReturnType<typeof TestBed.createComponent<Home>>,
+): Promise<void> {
   const blocks = await fixture.getDeferBlocks();
   for (const block of blocks) {
     await block.render(DeferBlockState.Complete);
