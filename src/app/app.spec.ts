@@ -64,6 +64,7 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const actions = compiled.querySelector('.app-shell__actions');
     expect(actions).toBeTruthy();
+    expect(actions?.querySelector('app-theme-toggle')).toBeTruthy();
     expect(actions?.querySelector('app-language-switcher')).toBeTruthy();
     expect(compiled.querySelectorAll('.app-shell__header').length).toBe(1);
   });
@@ -73,5 +74,19 @@ describe('App', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.mockup-code')).toBeFalsy();
+  });
+
+  it('should render theme toggle inside header actions next to language switcher', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const actions = compiled.querySelector('.app-shell__actions');
+    expect(actions).toBeTruthy();
+    const toggle = actions?.querySelector('app-theme-toggle');
+    const switcher = actions?.querySelector('app-language-switcher');
+    expect(toggle).toBeTruthy();
+    expect(switcher).toBeTruthy();
+    // Theme toggle is rendered before language switcher
+    expect(toggle?.nextElementSibling).toBe(switcher);
   });
 });
