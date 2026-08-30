@@ -14,6 +14,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
 import { LanguageService } from './core/i18n/language.service';
+import { ThemeService } from './core/theme/theme.service';
 
 function isPlaceholder(value: string | undefined): boolean {
   return !value || value.includes('FIREBASE_') || value.trim().length === 0;
@@ -79,6 +80,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(() => {
       const initializer = inject(LanguageService).init();
+      inject(ThemeService).init();
       return initializer;
     }),
     provideFirebaseApp(() => initializeApp(resolveFirebaseConfig())),
