@@ -1,5 +1,7 @@
 :host {
   display: block;
+  min-height: calc(100dvh - var(--shell-header-height, 3.25rem));
+  scroll-snap-align: start;
 }
 
 .terminal-section {
@@ -7,6 +9,7 @@
   flex-direction: column;
   gap: clamp(1.25rem, 4vw, 2rem);
   width: 100%;
+  min-height: calc(100dvh - var(--shell-header-height, 3.25rem));
 }
 
 .terminal-section__prompt {
@@ -90,6 +93,9 @@
 }
 
 .terminal-section__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding-inline: var(--section-x);
   opacity: 0;
   transform: translateY(14px);
