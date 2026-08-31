@@ -56,7 +56,6 @@ export default class Presentation {
           try {
             const normalized = normalizeBanner(raw);
             this.portraitText.set(trimEmptyEdges(normalized));
-            this.portraitVisible.set(true);
           } catch {
             this.portraitVisible.set(false);
           }
@@ -66,6 +65,29 @@ export default class Presentation {
         },
       });
     }
+
+    effect(() => {
+      const animationStarted = this.animationStarted();
+      const bannerLoaded = this.portraitText() !== '';
+      if (animationStarted && bannerLoaded) {
+        if (!isPlatformBrowser(this.platformId)) {
+          this.portraitVisible.set(true);
+          return;
+        }
+        const reducedMotion =
+          typeof window.matchMedia === 'function' &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reducedMotion) {
+          this.portraitVisible.set(true);
+          return;
+        }
+        window.setTimeout(() => {
+          if (this.animationStarted() && this.portraitText() !== '') {
+            this.portraitVisible.set(true);
+          }
+        }, 2050);
+      }
+    });
 
     effect(() => {
       const isBrowser =
