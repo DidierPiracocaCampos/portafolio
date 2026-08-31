@@ -1,26 +1,33 @@
 :host {
-  display: block;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .presentation {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   padding-bottom: clamp(1rem, 2vw, 2rem);
   background: var(--color-base-100);
   color: var(--color-base-content);
 }
 
 .presentation__inner {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: clamp(0.6rem, 2vw, 1rem);
 }
 
 .presentation__prompt {
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -29,6 +36,15 @@
   line-height: 1.6;
   color: color-mix(in oklch, var(--color-base-content) 70%, transparent);
   letter-spacing: 0.02em;
+}
+
+.presentation__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.6rem, 2vw, 1rem);
 }
 
 .presentation__prompt-line {
@@ -309,5 +325,45 @@
 
   .presentation__title {
     font-size: clamp(1.4rem, 7vw, 1.85rem);
+  }
+}
+
+.presentation__portrait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  max-height: 70vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.presentation__portrait-text {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.45rem, 0.85vw, 0.8rem);
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+  color: color-mix(in oklch, var(--color-warning) 65%, white 20%);
+  opacity: 0.7;
+  text-shadow: 0 0 6px color-mix(in oklch, var(--color-warning) 35%, transparent);
+}
+
+@media (max-width: 640px) {
+  .presentation__portrait {
+    width: 100%;
+    max-width: none;
+    max-height: 55vh;
+  }
+
+  .presentation__portrait-text {
+    font-size: clamp(0.4rem, 1.4vw, 0.65rem);
   }
 }
