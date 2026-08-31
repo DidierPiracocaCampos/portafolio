@@ -123,6 +123,30 @@
   animation: ascii-glow 2.8s ease-in-out infinite;
 }
 
+/* Light theme: ASCII con tonos más profundos y contrastados sobre gris frío 86% */
+:host-context([data-theme='goldlight']) .presentation__ascii-block {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--color-primary) 58%, black),
+    color-mix(in oklch, var(--color-primary) 78%, black),
+    var(--color-primary),
+    color-mix(in oklch, var(--color-warning) 72%, black),
+    color-mix(in oklch, var(--color-primary) 82%, black 18%),
+    color-mix(in oklch, var(--color-warning) 68%, black),
+    color-mix(in oklch, var(--color-primary) 62%, black)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 3px color-mix(in oklch, var(--color-primary) 22%, transparent))
+    drop-shadow(0 3px 10px color-mix(in oklch, var(--color-base-content) 14%, transparent));
+}
+
+:host-context([data-theme='goldlight']).presentation--active .presentation__ascii-block,
+:host-context([data-theme='goldlight']) .presentation--active .presentation__ascii-block {
+  animation: ascii-glow-light 2.8s ease-in-out infinite;
+}
+
 .presentation__title {
   margin: 0;
   font-size: clamp(1.5rem, 4.2vw, 2.4rem);
@@ -236,6 +260,22 @@
       drop-shadow(0 8px 26px color-mix(in oklch, var(--color-warning) 16%, transparent))
       drop-shadow(0 12px 36px color-mix(in oklch, var(--color-primary) 10%, transparent))
       brightness(1.07);
+  }
+}
+
+@keyframes ascii-glow-light {
+  0%,
+  100% {
+    filter: drop-shadow(0 1px 3px color-mix(in oklch, var(--color-primary) 22%, transparent))
+      drop-shadow(0 3px 10px color-mix(in oklch, var(--color-base-content) 14%, transparent))
+      brightness(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 1px 5px color-mix(in oklch, var(--color-primary) 28%, transparent))
+      drop-shadow(0 5px 14px color-mix(in oklch, var(--color-base-content) 18%, transparent))
+      drop-shadow(0 8px 20px color-mix(in oklch, var(--color-primary) 14%, transparent))
+      brightness(1.04);
   }
 }
 

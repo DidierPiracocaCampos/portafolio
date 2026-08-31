@@ -66,9 +66,9 @@ html {
 @plugin "daisyui/theme" {
   name: 'goldlight';
   color-scheme: 'light';
-  --color-base-100: oklch(98% 0.004 286);
-  --color-base-200: oklch(96% 0.005 286);
-  --color-base-300: oklch(92% 0.006 286);
+  --color-base-100: oklch(99% 0.003 286);
+  --color-base-200: oklch(97% 0.004 286);
+  --color-base-300: oklch(94% 0.005 286);
   --color-base-content: oklch(20% 0.01 85);
   --color-primary: oklch(75% 0.16 85);
   --color-primary-content: oklch(12% 0.02 85);
