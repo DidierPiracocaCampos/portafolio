@@ -6,6 +6,7 @@
 }
 
 .presentation {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -331,10 +332,10 @@
 .presentation__portrait {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  bottom: 0;
+  width: 50%;
   max-width: none;
-  max-height: 70vh;
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
@@ -344,26 +345,32 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: -15%;
+  right: auto;
+  transform: translateY(-50%);
   font-family: var(--font-sans), ui-monospace, monospace;
-  font-size: clamp(0.45rem, 0.85vw, 0.8rem);
+  font-size: clamp(0.4rem, 0.55vw, 0.5rem);
   line-height: 1;
   letter-spacing: 0;
   white-space: pre;
-  color: color-mix(in oklch, var(--color-warning) 65%, white 20%);
-  opacity: 0.7;
+  color: color-mix(in oklch, var(--color-warning) 75%, white 10%);
+  opacity: 0.6;
   text-shadow: 0 0 6px color-mix(in oklch, var(--color-warning) 35%, transparent);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
 }
 
 @media (max-width: 640px) {
   .presentation__portrait {
     width: 100%;
-    max-width: none;
-    max-height: 55vh;
   }
-
   .presentation__portrait-text {
-    font-size: clamp(0.4rem, 1.4vw, 0.65rem);
+    left: -35%;
+  }
+  .presentation__portrait-text {
+    font-size: clamp(0.3rem, 0.95vw, 0.42rem);
   }
 }

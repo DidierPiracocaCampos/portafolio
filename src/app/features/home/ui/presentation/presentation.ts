@@ -1,5 +1,35 @@
-import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  PLATFORM_ID,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+
+const BANNER_URL = 'banner.txt';
+
+function normalizeBanner(raw: string): string {
+  return raw.replace(/\r\n/g, '\n');
+}
+
+function trimEmptyEdges(raw: string): string {
+  const lines = raw.split('\n');
+  let start = 0;
+  let end = lines.length;
+  while (start < end && lines[start]?.trim() === '') {
+    start++;
+  }
+  while (end > start && lines[end - 1]?.trim() === '') {
+    end--;
+  }
+  return lines.slice(start, end).join('\n');
+}
 
 @Component({
   selector: 'app-presentation',
@@ -12,11 +42,37 @@ export default class Presentation {
   readonly animationStarted = input(false);
   readonly animationCompleted = output<void>();
 
+  readonly portraitText = signal('');
+  readonly portraitVisible = signal(false);
+
   private hasCompleted = false;
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly http = inject(HttpClient);
 
   constructor() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.http.get(BANNER_URL, { responseType: 'text' }).subscribe({
+        next: (raw) => {
+          try {
+            const normalized = normalizeBanner(raw);
+            this.portraitText.set(trimEmptyEdges(normalized));
+            this.portraitVisible.set(true);
+          } catch {
+            this.portraitVisible.set(false);
+          }
+        },
+        error: () => {
+          this.portraitVisible.set(false);
+        },
+      });
+    }
+
     effect(() => {
-      if (this.animationStarted() && this.reduceMotion()) {
+      const isBrowser =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (this.animationStarted() && isBrowser) {
         this.emitCompleted();
       }
     });
@@ -35,11 +91,5 @@ export default class Presentation {
     }
     this.hasCompleted = true;
     this.animationCompleted.emit();
-  }
-
-  private reduceMotion(): boolean {
-    return (
-      typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
-    );
   }
 }

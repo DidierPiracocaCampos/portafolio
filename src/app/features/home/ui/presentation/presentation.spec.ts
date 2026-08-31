@@ -1,5 +1,13 @@
 import { provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import Presentation from './presentation';
@@ -29,13 +37,33 @@ async function setupTranslate(): Promise<void> {
   await firstValueFrom(translate.use('en'));
 }
 
+async function flushPortrait(httpTesting: HttpTestingController): Promise<void> {
+  const req = httpTesting.expectOne((r) => r.url.includes('banner'));
+  expect(req.request.responseType).toBe('text');
+  req.flush('  X\n  Y\n');
+  await Promise.resolve();
+}
+
 describe('Presentation', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Presentation],
-      providers: [provideRouter([]), provideTranslateService({ fallbackLang: 'en' })],
+      providers: [
+        provideRouter([]),
+        provideTranslateService({ fallbackLang: 'en' }),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
     await setupTranslate();
+  });
+
+  afterEach(() => {
+    const httpTesting = TestBed.inject(HttpTestingController);
+    const pending = httpTesting.match(() => true);
+    for (const req of pending) {
+      req.flush('');
+    }
   });
 
   it('should create', async () => {
@@ -156,5 +184,66 @@ describe('Presentation', () => {
     expect(el.querySelector('.presentation__subtitle')?.textContent?.trim()).toBe(
       'Desarrollador de Aplicaciones Multiplataforma',
     );
+  });
+
+  describe('ASCII portrait background', () => {
+    it('should fetch banner and render portrait layer with aria-hidden', async () => {
+      const fixture = TestBed.createComponent(Presentation);
+      fixture.detectChanges();
+      const httpTesting = TestBed.inject(HttpTestingController);
+      await flushPortrait(httpTesting);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const portrait = fixture.nativeElement.querySelector('.presentation__portrait');
+      expect(portrait).toBeTruthy();
+      expect(portrait.getAttribute('aria-hidden')).toBe('true');
+      expect(portrait.classList.contains('presentation__portrait')).toBe(true);
+
+      const text = fixture.nativeElement.querySelector('.presentation__portrait-text');
+      expect(text).toBeTruthy();
+      expect(text?.tagName.toLowerCase()).toBe('pre');
+    });
+
+    it('should hide portrait when banner request fails', async () => {
+      const fixture = TestBed.createComponent(Presentation);
+      fixture.detectChanges();
+      const httpTesting = TestBed.inject(HttpTestingController);
+      const req = httpTesting.expectOne((r) => r.url.includes('banner'));
+      req.error(new ProgressEvent('error'));
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const portrait = fixture.nativeElement.querySelector('.presentation__portrait');
+      expect(portrait).toBeNull();
+    });
+
+    it('should render portrait with full-resolution content and trim empty edges', async () => {
+      const fixture = TestBed.createComponent(Presentation);
+      fixture.detectChanges();
+      const httpTesting = TestBed.inject(HttpTestingController);
+      const req = httpTesting.expectOne((r) => r.url.includes('banner'));
+      const lines = [
+        '',
+        '   '.padEnd(300, ' '),
+        'X'.repeat(300),
+        'Y'.repeat(300),
+        'Z'.repeat(300),
+        '   ',
+        '',
+      ];
+      req.flush(lines.join('\n'));
+      await Promise.resolve();
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const text = fixture.nativeElement.querySelector('.presentation__portrait-text');
+      expect(text).toBeTruthy();
+      const rendered = (text?.textContent ?? '').replace(/\s+$/, '');
+      const rows = rendered.split('\n');
+      expect(rows.length).toBe(3);
+      expect(rows[0]?.length).toBe(300);
+      expect(rows[0]).toBe('X'.repeat(300));
+    });
   });
 });

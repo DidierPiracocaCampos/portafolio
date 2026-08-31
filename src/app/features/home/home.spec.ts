@@ -1,6 +1,14 @@
 import { provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { DeferBlockBehavior, DeferBlockState } from '@angular/core/testing';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import { ContactSubmissionService } from '../../core/contact/contact-submission.service';
@@ -42,6 +50,8 @@ describe('Home', () => {
       providers: [
         provideRouter([]),
         provideTranslateService({ fallbackLang: 'en' }),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
         {
           provide: ContactSubmissionService,
           useValue: { submit: vi.fn().mockResolvedValue(undefined) },
@@ -357,6 +367,14 @@ describe('Home', () => {
       },
     });
     await firstValueFrom(translate.use('en'));
+  });
+
+  afterEach(() => {
+    const httpTesting = TestBed.inject(HttpTestingController);
+    const pending = httpTesting.match(() => true);
+    for (const req of pending) {
+      req.flush('');
+    }
   });
 
   it('should render app-presentation as first section', async () => {
