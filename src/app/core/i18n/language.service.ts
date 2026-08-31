@@ -35,6 +35,10 @@ export class LanguageService {
         const urlLang = this.getLangFromPath(e.urlAfterRedirects);
         if (urlLang && urlLang !== this.translate.getCurrentLang()) {
           this.setLang(urlLang, false);
+        } else if (urlLang) {
+          // Keep canonical/hreflang in sync when navigating to same lang
+          // (e.g., after redirect from '/' -> '/es' where lang already matches)
+          this.seo.update(urlLang);
         }
       });
   }
@@ -140,14 +144,14 @@ export class LanguageService {
           this.persist(initial);
           this.setHtmlLang(initial);
           this.seo.update(initial);
-          // Align URL if needed: if initial came from localStorage/browser and path is '/' keep '/'
-          // Don't auto-redirect to /es or /en to avoid surprising SEO x-default behavior
+          this.redirectIfRoot(initial);
           resolve();
         },
         error: () => {
           this.persist(initial);
           this.setHtmlLang(initial);
           this.seo.update(initial);
+          this.redirectIfRoot(initial);
           resolve();
         },
       });
@@ -205,24 +209,61 @@ export class LanguageService {
     }
   }
 
+  private redirectIfRoot(lang: AppLang): void {
+    try {
+      const rawPath =
+        typeof window !== 'undefined' && window.location?.pathname
+          ? window.location.pathname.split('?')[0].split('#')[0]
+          : this.router.url.split('?')[0].split('#')[0];
+      if (rawPath === '/' || rawPath === '') {
+        // Defer navigation until after APP_INITIALIZER and initial navigation complete
+        // to avoid NavigationCancel / race with Router initialNavigation
+        queueMicrotask(() => {
+          try {
+            this.navigateToLang(lang);
+          } catch {
+            // ignore
+          }
+        });
+      }
+    } catch {
+      // ignore
+    }
+  }
+
   private navigateToLang(lang: AppLang): void {
     try {
-      const currentPath = this.router.url.split('?')[0].split('#')[0];
+      const rawUrl =
+        this.router.url ||
+        (typeof window !== 'undefined'
+          ? window.location.pathname + window.location.search + window.location.hash
+          : '/');
+      const currentPath = rawUrl.split('?')[0].split('#')[0];
+      const queryAndHash = rawUrl.slice(currentPath.length);
       // If already on /es or /en, just replace; if on '/', navigate to /lang
       if (currentPath === '/' || currentPath === '') {
-        this.router.navigate([`/${lang}`]);
+        this.router.navigate([`/${lang}`], {
+          replaceUrl: true,
+          queryParamsHandling: 'preserve',
+          preserveFragment: true,
+        });
         return;
       }
       if (currentPath.startsWith('/es') || currentPath.startsWith('/en')) {
         const rest = currentPath.replace(/^\/(es|en)/, '') || '';
         const target = `/${lang}${rest}` || `/${lang}`;
         if (target !== currentPath) {
-          this.router.navigateByUrl(target);
+          const fullTarget = `${target}${queryAndHash}`;
+          this.router.navigateByUrl(fullTarget, { replaceUrl: true } as never);
         }
         return;
       }
       // For any other route (future), prefix with lang
-      this.router.navigate([`/${lang}`]);
+      this.router.navigate([`/${lang}`], {
+        replaceUrl: true,
+        queryParamsHandling: 'preserve',
+        preserveFragment: true,
+      });
     } catch {
       // ignore
     }
