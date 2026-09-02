@@ -3,9 +3,11 @@ import {
   Component,
   DestroyRef,
   OnInit,
+  PLATFORM_ID,
   inject,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   AbstractControl,
   NonNullableFormBuilder,
@@ -45,6 +47,7 @@ export default class Contact implements OnInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly submissionService = inject(ContactSubmissionService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
 
   readonly form = this.formBuilder.group({
     name: ['', [Validators.required, nonBlankValidator, Validators.maxLength(80)]],
@@ -65,7 +68,9 @@ export default class Contact implements OnInit {
   }
 
   ngOnInit(): void {
-    this.restoreCooldown();
+    if (isPlatformBrowser(this.platformId)) {
+      this.restoreCooldown();
+    }
   }
 
   async submit(): Promise<void> {
@@ -115,6 +120,10 @@ export default class Contact implements OnInit {
   }
 
   private persistLastSubmission(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     try {
       globalThis.localStorage.setItem(COOLDOWN_STORAGE_KEY, String(Date.now()));
     } catch {

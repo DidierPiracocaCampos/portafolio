@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
@@ -8,6 +9,7 @@ export class SeoService {
   private readonly document = inject(DOCUMENT);
   private readonly title = inject(Title);
   private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router);
 
   private readonly supported = ['es', 'en'] as const;
   private readonly origin = this.resolveOrigin();
@@ -89,7 +91,7 @@ export class SeoService {
     }
   }
 
-  private setCanonical(lang: string): void {
+  private   setCanonical(lang: string): void {
     const origin = this.origin;
     // For SEO best-practice: canonical points to language-specific URL
     // x-default (/) is kept as alternate, but canonical is per-language
@@ -97,7 +99,7 @@ export class SeoService {
     // If current path is '/', keep canonical as '/', otherwise use language URL
     let canonicalHref = href;
     try {
-      const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+      const path = this.getCurrentPath();
       if (path === '/' || path === '') {
         canonicalHref = `${origin}/`;
       } else if (path.startsWith('/es') || path.startsWith('/en')) {
@@ -107,6 +109,17 @@ export class SeoService {
       // ignore
     }
     this.upsertLink('canonical', null, canonicalHref);
+  }
+
+  private getCurrentPath(): string {
+    try {
+      if (typeof window !== 'undefined' && window.location?.pathname) {
+        return window.location.pathname.split('?')[0].split('#')[0] || '/';
+      }
+    } catch {
+      // fallback to Router when running in SSR/prerender
+    }
+    return (this.router.url.split('?')[0].split('#')[0] || '/');
   }
 
   private setOgLocale(lang: string): void {

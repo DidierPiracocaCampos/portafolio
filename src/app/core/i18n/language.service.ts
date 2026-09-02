@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Injectable, inject, signal } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Injectable, PLATFORM_ID, afterNextRender, inject, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs';
@@ -16,6 +16,7 @@ export class LanguageService {
   private readonly document = inject(DOCUMENT);
   private readonly router = inject(Router);
   private readonly seo = inject(SeoService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   private readonly _initialized = signal(false);
 
@@ -106,10 +107,12 @@ export class LanguageService {
     } catch {
       // ignore
     }
-    const stored = this.getStoredLang();
-    if (stored) return stored;
-    const browser = this.getBrowserLang();
-    if (browser) return browser;
+    if (isPlatformBrowser(this.platformId)) {
+      const stored = this.getStoredLang();
+      if (stored) return stored;
+      const browser = this.getBrowserLang();
+      if (browser) return browser;
+    }
     return FALLBACK_LANG;
   }
 
@@ -210,6 +213,9 @@ export class LanguageService {
   }
 
   private redirectIfRoot(lang: AppLang): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
     try {
       const rawPath =
         typeof window !== 'undefined' && window.location?.pathname
@@ -218,7 +224,7 @@ export class LanguageService {
       if (rawPath === '/' || rawPath === '') {
         // Defer navigation until after APP_INITIALIZER and initial navigation complete
         // to avoid NavigationCancel / race with Router initialNavigation
-        queueMicrotask(() => {
+        afterNextRender(() => {
           try {
             this.navigateToLang(lang);
           } catch {

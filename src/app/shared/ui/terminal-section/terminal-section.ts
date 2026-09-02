@@ -4,11 +4,13 @@ import {
   DestroyRef,
   ElementRef,
   OnInit,
+  PLATFORM_ID,
   inject,
   input,
   output,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -41,6 +43,7 @@ export default class TerminalSection implements OnInit {
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly translate = inject(TranslateService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
 
   private fullCommand = '';
   private observer: IntersectionObserver | null = null;
@@ -55,6 +58,10 @@ export default class TerminalSection implements OnInit {
   private observe(): void {
     if (this.immediate()) {
       this.run();
+      return;
+    }
+
+    if (!isPlatformBrowser(this.platformId)) {
       return;
     }
 
