@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
   ApplicationConfig,
   provideAppInitializer,
@@ -6,6 +6,11 @@ import {
   provideZoneChangeDetection,
   inject,
 } from '@angular/core';
+import {
+  provideClientHydration,
+  withEventReplay,
+  withHttpTransferCacheOptions,
+} from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -69,7 +74,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
+    provideClientHydration(withEventReplay(), withHttpTransferCacheOptions({})),
     provideTranslateService({
       fallbackLang: 'en',
       lang: 'en',
