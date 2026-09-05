@@ -1,14 +1,8 @@
 import { provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { DeferBlockBehavior, DeferBlockState } from '@angular/core/testing';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
-import {
-  HttpTestingController,
-  provideHttpClientTesting,
-} from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import { ContactSubmissionService } from '../../core/contact/contact-submission.service';
@@ -65,7 +59,6 @@ describe('Home', () => {
         commands: {
           presentation: 'start portfolio',
           experience: 'cat experience.txt',
-          skills: 'cat skills.json',
           projects: 'ls projects/',
           contact: 'npm run contact',
         },
@@ -101,54 +94,6 @@ describe('Home', () => {
               'Database design and SQL',
               'UI development and interfaces',
             ],
-          },
-        },
-      },
-      skills: {
-        heading: 'SKILLS',
-        groups: {
-          frontend: {
-            heading: 'Frontend',
-            items: {
-              angular: 'Angular',
-              tailwind: 'TailwindCSS',
-              bootstrap: 'Bootstrap',
-            },
-          },
-          backend: {
-            heading: 'Backend',
-            items: {
-              java: 'Java',
-              spring: 'Spring',
-            },
-          },
-          tools: {
-            heading: 'Tools',
-            items: {
-              git: 'Git',
-              gitlab: 'GitLab',
-              github: 'GitHub',
-              vsCode: 'VS Code',
-              eclipse: 'Eclipse',
-              opencode: 'OpenCode',
-              figma: 'Figma',
-            },
-          },
-          database: {
-            heading: 'Database',
-            items: {
-              firebase: 'Firebase',
-              oracleDb: 'OracleDB',
-              sql: 'SQL',
-            },
-          },
-          mobile: {
-            heading: 'Mobile',
-            items: {
-              androidStudio: 'Android Studio',
-              ionic: 'Ionic',
-              cordova: 'Cordova',
-            },
           },
         },
       },
@@ -250,54 +195,6 @@ describe('Home', () => {
               'Diseño de bases de datos y SQL',
               'Desarrollo de interfaces de usuario',
             ],
-          },
-        },
-      },
-      skills: {
-        heading: 'HABILIDADES',
-        groups: {
-          frontend: {
-            heading: 'Frontend',
-            items: {
-              angular: 'Angular',
-              tailwind: 'TailwindCSS',
-              bootstrap: 'Bootstrap',
-            },
-          },
-          backend: {
-            heading: 'Backend',
-            items: {
-              java: 'Java',
-              spring: 'Spring',
-            },
-          },
-          tools: {
-            heading: 'Herramientas',
-            items: {
-              git: 'Git',
-              gitlab: 'GitLab',
-              github: 'GitHub',
-              vsCode: 'VS Code',
-              eclipse: 'Eclipse',
-              opencode: 'OpenCode',
-              figma: 'Figma',
-            },
-          },
-          database: {
-            heading: 'Base de datos',
-            items: {
-              firebase: 'Firebase',
-              oracleDb: 'OracleDB',
-              sql: 'SQL',
-            },
-          },
-          mobile: {
-            heading: 'Móvil',
-            items: {
-              androidStudio: 'Android Studio',
-              ionic: 'Ionic',
-              cordova: 'Cordova',
-            },
           },
         },
       },
@@ -403,7 +300,6 @@ describe('Home', () => {
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('app-experience')).toBeFalsy();
-    expect(el.querySelector('app-skills')).toBeFalsy();
     expect(el.querySelector('app-projects')).toBeFalsy();
     expect(el.querySelector('app-contact')).toBeFalsy();
   });
@@ -449,7 +345,7 @@ describe('Home', () => {
     expect(el.textContent).toContain('Desarrollador Angular');
   });
 
-  it('should render skills after experience', async () => {
+  it('should render projects after experience', async () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -462,55 +358,9 @@ describe('Home', () => {
     await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
     const experience = el.querySelector('app-experience');
-    const skills = el.querySelector('app-skills');
-    expect(skills).toBeTruthy();
-    expect(experience?.closest('app-terminal-section')?.nextElementSibling).toBe(
-      skills?.closest('app-terminal-section'),
-    );
-  });
-
-  it('should render skills heading and bilingual content', async () => {
-    const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
-    home.onExperienceCompleted();
-    fixture.detectChanges();
-    await fixture.whenStable();
-    await renderAllDeferBlocks(fixture);
-    const translate = TestBed.inject(TranslateService);
-    const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('#skills-title')?.textContent?.trim()).toBe('SKILLS');
-    expect(el.textContent).toContain('Angular');
-    expect(el.textContent).toContain('Git');
-    expect(el.querySelectorAll('svg.skills__icon').length).toBe(18);
-    await firstValueFrom(translate.use('es'));
-    fixture.detectChanges();
-    await fixture.whenStable();
-    expect(el.querySelector('#skills-title')?.textContent?.trim()).toBe('HABILIDADES');
-    expect(el.textContent).toContain('Herramientas');
-    expect(el.textContent).toContain('Móvil');
-  });
-
-  it('should render projects after skills', async () => {
-    const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
-    home.onExperienceCompleted();
-    home.onSkillsCompleted();
-    fixture.detectChanges();
-    await fixture.whenStable();
-    await renderAllDeferBlocks(fixture);
-    const el = fixture.nativeElement as HTMLElement;
-    const skills = el.querySelector('app-skills');
     const projects = el.querySelector('app-projects');
     expect(projects).toBeTruthy();
-    expect(skills?.closest('app-terminal-section')?.nextElementSibling).toBe(
+    expect(experience?.closest('app-terminal-section')?.nextElementSibling).toBe(
       projects?.closest('app-terminal-section'),
     );
   });
@@ -523,7 +373,6 @@ describe('Home', () => {
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
     home.onExperienceCompleted();
-    home.onSkillsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
@@ -550,7 +399,6 @@ describe('Home', () => {
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
     home.onExperienceCompleted();
-    home.onSkillsCompleted();
     home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
@@ -572,7 +420,6 @@ describe('Home', () => {
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
     home.onExperienceCompleted();
-    home.onSkillsCompleted();
     home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
@@ -593,23 +440,23 @@ describe('Home', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     const home = fixture.componentInstance as Home;
-    // Try to skip directly to skills without presentation
-    home.onSkillsCompleted();
+    // Try to skip directly to projects without presentation
+    home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     let blocks = await fixture.getDeferBlocks();
     // No blocks should be rendered because sequence hasn't advanced
     expect(blocks.length).toBe(0);
-    expect(fixture.nativeElement.querySelector('app-skills')).toBeFalsy();
+    expect(fixture.nativeElement.querySelector('app-projects')).toBeFalsy();
 
     // Now correctly advance step by step
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
     home.onExperienceCompleted();
-    home.onSkillsCompleted();
+    home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
-    expect(fixture.nativeElement.querySelector('app-skills')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('app-projects')).toBeTruthy();
   });
 });

@@ -29,25 +29,6 @@
     }
   }
 
-  @if (skillsUnlocked()) {
-    @defer (on immediate) {
-      <app-terminal-section
-        sectionId="skills"
-        commandKey="terminal.commands.skills"
-        [immediate]="true"
-        (completed)="onSkillsCompleted()"
-      >
-        <app-skills />
-      </app-terminal-section>
-    } @placeholder {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @loading {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @error {
-      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
-    }
-  }
-
   @if (projectsUnlocked()) {
     @defer (on immediate) {
       <app-terminal-section

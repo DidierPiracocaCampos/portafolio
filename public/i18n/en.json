@@ -3,7 +3,6 @@
     "commands": {
       "presentation": "start portfolio",
       "experience": "cat experience.txt",
-      "skills": "cat skills.json",
       "projects": "ls projects/",
       "contact": "npm run contact"
     }
@@ -25,54 +24,6 @@
     "en": "English",
     "switchToEs": "Switch to Spanish",
     "switchToEn": "Switch to English"
-  },
-  "skills": {
-    "heading": "SKILLS",
-    "groups": {
-      "frontend": {
-        "heading": "Frontend",
-        "items": {
-          "angular": "Angular",
-          "tailwind": "TailwindCSS",
-          "bootstrap": "Bootstrap"
-        }
-      },
-      "backend": {
-        "heading": "Backend",
-        "items": {
-          "java": "Java",
-          "spring": "Spring"
-        }
-      },
-      "tools": {
-        "heading": "Tools",
-        "items": {
-          "git": "Git",
-          "gitlab": "GitLab",
-          "github": "GitHub",
-          "vsCode": "VS Code",
-          "eclipse": "Eclipse",
-          "opencode": "OpenCode",
-          "figma": "Figma"
-        }
-      },
-      "database": {
-        "heading": "Database",
-        "items": {
-          "firebase": "Firebase",
-          "oracleDb": "OracleDB",
-          "sql": "SQL"
-        }
-      },
-      "mobile": {
-        "heading": "Multiplatform Development",
-        "items": {
-          "androidStudio": "Android Studio",
-          "ionic": "Ionic",
-          "cordova": "Cordova"
-        }
-      }
-    }
   },
   "experience": {
     "heading": "EXPERIENCE",

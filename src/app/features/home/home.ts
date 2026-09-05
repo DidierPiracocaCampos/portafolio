@@ -5,23 +5,21 @@ import Contact from './ui/contact/contact';
 import Experience from './ui/experience/experience';
 import Presentation from './ui/presentation/presentation';
 import Projects from './ui/projects/projects';
-import Skills from './ui/skills/skills';
 
 const SEQUENCE_STEP = {
   presentationTerminal: 0,
   presentationAnimation: 1,
   experience: 2,
-  skills: 3,
-  projects: 4,
-  contact: 5,
-  complete: 6,
+  projects: 3,
+  contact: 4,
+  complete: 5,
 } as const;
 
 type SequenceStep = (typeof SEQUENCE_STEP)[keyof typeof SEQUENCE_STEP];
 
 @Component({
   selector: 'app-home',
-  imports: [TerminalSection, Presentation, Experience, Skills, Projects, Contact, TranslatePipe],
+  imports: [TerminalSection, Presentation, Experience, Projects, Contact, TranslatePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +32,6 @@ export default class Home {
   );
 
   readonly experienceUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.experience);
-  readonly skillsUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.skills);
   readonly projectsUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.projects);
   readonly contactUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.contact);
 
@@ -47,11 +44,7 @@ export default class Home {
   }
 
   onExperienceCompleted(): void {
-    this.advance(SEQUENCE_STEP.experience, SEQUENCE_STEP.skills);
-  }
-
-  onSkillsCompleted(): void {
-    this.advance(SEQUENCE_STEP.skills, SEQUENCE_STEP.projects);
+    this.advance(SEQUENCE_STEP.experience, SEQUENCE_STEP.projects);
   }
 
   onProjectsCompleted(): void {
