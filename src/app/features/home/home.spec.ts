@@ -58,7 +58,7 @@ describe('Home', () => {
       terminal: {
         commands: {
           presentation: 'start portfolio',
-          experience: 'cat experience.txt',
+          aboutMe: 'cat about-me.txt',
           projects: 'ls projects/',
           contact: 'npm run contact',
         },
@@ -72,8 +72,8 @@ describe('Home', () => {
           'Experience with Java, Spring MVC and SQL systems.',
         ],
       },
-      experience: {
-        heading: 'EXPERIENCE',
+      aboutMe: {
+        heading: 'ABOUT ME',
         entries: {
           axpe: {
             period: '2023-present',
@@ -173,8 +173,8 @@ describe('Home', () => {
           'Experiencia con sistemas Java, Spring MVC y SQL.',
         ],
       },
-      experience: {
-        heading: 'EXPERIENCIA',
+      aboutMe: {
+        heading: 'SOBRE MÍ',
         entries: {
           axpe: {
             period: '2023-present',
@@ -299,12 +299,12 @@ describe('Home', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('app-experience')).toBeFalsy();
+    expect(el.querySelector('app-about-me')).toBeFalsy();
     expect(el.querySelector('app-projects')).toBeFalsy();
     expect(el.querySelector('app-contact')).toBeFalsy();
   });
 
-  it('should render experience after presentation', async () => {
+  it('should render about-me after presentation', async () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -316,15 +316,15 @@ describe('Home', () => {
     await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
     const presentation = el.querySelector('app-presentation');
-    const experience = el.querySelector('app-experience');
+    const aboutMe = el.querySelector('app-about-me');
     expect(presentation).toBeTruthy();
-    expect(experience).toBeTruthy();
+    expect(aboutMe).toBeTruthy();
     expect(presentation?.closest('app-terminal-section')?.nextElementSibling).toBe(
-      experience?.closest('app-terminal-section'),
+      aboutMe?.closest('app-terminal-section'),
     );
   });
 
-  it('should render experience heading and bilingual content', async () => {
+  it('should render about-me heading and bilingual content', async () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -336,31 +336,31 @@ describe('Home', () => {
     await renderAllDeferBlocks(fixture);
     const translate = TestBed.inject(TranslateService);
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('#experience-title')?.textContent?.trim()).toBe('EXPERIENCE');
+    expect(el.querySelector('#about-me-title')?.textContent?.trim()).toBe('ABOUT ME');
     expect(el.textContent).toContain('AXPE Consulting');
     await firstValueFrom(translate.use('es'));
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(el.querySelector('#experience-title')?.textContent?.trim()).toBe('EXPERIENCIA');
+    expect(el.querySelector('#about-me-title')?.textContent?.trim()).toBe('SOBRE MÍ');
     expect(el.textContent).toContain('Desarrollador Angular');
   });
 
-  it('should render projects after experience', async () => {
+  it('should render projects after about-me', async () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
     const home = fixture.componentInstance as Home;
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
-    home.onExperienceCompleted();
+    home.onAboutMeCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
-    const experience = el.querySelector('app-experience');
+    const aboutMe = el.querySelector('app-about-me');
     const projects = el.querySelector('app-projects');
     expect(projects).toBeTruthy();
-    expect(experience?.closest('app-terminal-section')?.nextElementSibling).toBe(
+    expect(aboutMe?.closest('app-terminal-section')?.nextElementSibling).toBe(
       projects?.closest('app-terminal-section'),
     );
   });
@@ -372,7 +372,7 @@ describe('Home', () => {
     const home = fixture.componentInstance as Home;
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
-    home.onExperienceCompleted();
+    home.onAboutMeCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
@@ -398,7 +398,7 @@ describe('Home', () => {
     const home = fixture.componentInstance as Home;
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
-    home.onExperienceCompleted();
+    home.onAboutMeCompleted();
     home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
@@ -419,7 +419,7 @@ describe('Home', () => {
     const home = fixture.componentInstance as Home;
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
-    home.onExperienceCompleted();
+    home.onAboutMeCompleted();
     home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
@@ -452,7 +452,7 @@ describe('Home', () => {
     // Now correctly advance step by step
     home.onPresentationTerminalCompleted();
     home.onPresentationCompleted();
-    home.onExperienceCompleted();
+    home.onAboutMeCompleted();
     home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();

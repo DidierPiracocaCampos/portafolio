@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
 import { TranslatePipe } from '@ngx-translate/core';
 import TerminalSection from '../../shared/ui/terminal-section/terminal-section';
 import Contact from './ui/contact/contact';
-import Experience from './ui/experience/experience';
+import AboutMe from './ui/about-me/about-me';
 import Presentation from './ui/presentation/presentation';
 import Projects from './ui/projects/projects';
 
 const SEQUENCE_STEP = {
   presentationTerminal: 0,
   presentationAnimation: 1,
-  experience: 2,
+  aboutMe: 2,
   projects: 3,
   contact: 4,
   complete: 5,
@@ -19,7 +19,7 @@ type SequenceStep = (typeof SEQUENCE_STEP)[keyof typeof SEQUENCE_STEP];
 
 @Component({
   selector: 'app-home',
-  imports: [TerminalSection, Presentation, Experience, Projects, Contact, TranslatePipe],
+  imports: [TerminalSection, Presentation, AboutMe, Projects, Contact, TranslatePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,7 +31,7 @@ export default class Home {
     () => this.sequenceStep() >= SEQUENCE_STEP.presentationAnimation,
   );
 
-  readonly experienceUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.experience);
+  readonly aboutMeUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.aboutMe);
   readonly projectsUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.projects);
   readonly contactUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.contact);
 
@@ -40,11 +40,11 @@ export default class Home {
   }
 
   onPresentationCompleted(): void {
-    this.advance(SEQUENCE_STEP.presentationAnimation, SEQUENCE_STEP.experience);
+    this.advance(SEQUENCE_STEP.presentationAnimation, SEQUENCE_STEP.aboutMe);
   }
 
-  onExperienceCompleted(): void {
-    this.advance(SEQUENCE_STEP.experience, SEQUENCE_STEP.projects);
+  onAboutMeCompleted(): void {
+    this.advance(SEQUENCE_STEP.aboutMe, SEQUENCE_STEP.projects);
   }
 
   onProjectsCompleted(): void {

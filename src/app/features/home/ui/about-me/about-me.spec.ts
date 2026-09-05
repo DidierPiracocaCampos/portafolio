@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
-import Experience from './experience';
+import AboutMe from './about-me';
 
 const enTranslations = {
-  experience: {
-    heading: 'EXPERIENCE',
+  aboutMe: {
+    heading: 'ABOUT ME',
     entries: {
       axpe: {
         period: '2023-present',
@@ -32,8 +32,8 @@ const enTranslations = {
 };
 
 const esTranslations = {
-  experience: {
-    heading: 'EXPERIENCIA',
+  aboutMe: {
+    heading: 'SOBRE MÍ',
     entries: {
       axpe: {
         period: '2023-present',
@@ -66,17 +66,17 @@ async function setupTranslate(): Promise<void> {
   await firstValueFrom(translate.use('en'));
 }
 
-describe('Experience', () => {
+describe('AboutMe', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Experience],
+      imports: [AboutMe],
       providers: [provideTranslateService({ fallbackLang: 'en' })],
     }).compileComponents();
     await setupTranslate();
   });
 
-  it('should create with two stable experience entries', () => {
-    const fixture = TestBed.createComponent(Experience);
+  it('should create with two stable about-me entries', () => {
+    const fixture = TestBed.createComponent(AboutMe);
     expect(fixture.componentInstance.entries.map((entry) => entry.id)).toEqual([
       'axpe',
       'education',
@@ -84,44 +84,44 @@ describe('Experience', () => {
   });
 
   it('should use section with aria-labelledby pointing to h2', async () => {
-    const fixture = TestBed.createComponent(Experience);
+    const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
     const section = fixture.nativeElement.querySelector('section');
     const heading = fixture.nativeElement.querySelector('h2');
     expect(section.getAttribute('aria-labelledby')).toBe(heading.id);
-    expect(heading.id).toBe('experience-title');
-    expect(heading.textContent.trim()).toBe('EXPERIENCE');
+    expect(heading.id).toBe('about-me-title');
+    expect(heading.textContent.trim()).toBe('ABOUT ME');
   });
 
   it('should render two articles with correct periods titles and lists', async () => {
-    const fixture = TestBed.createComponent(Experience);
+    const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
     const articles = fixture.nativeElement.querySelectorAll('article');
     expect(articles.length).toBe(2);
 
     const first = articles[0] as HTMLElement;
-    expect(first.querySelector('.experience__period')?.textContent?.trim()).toBe('2023-present');
-    expect(first.querySelector('.experience__company')?.textContent?.trim()).toBe(
+    expect(first.querySelector('.about-me__period')?.textContent?.trim()).toBe('2023-present');
+    expect(first.querySelector('.about-me__company')?.textContent?.trim()).toBe(
       'AXPE Consulting',
     );
-    expect(first.querySelector('.experience__role')?.textContent?.trim()).toBe('Angular Developer');
-    expect(first.querySelectorAll('ul.experience__items li').length).toBe(4);
+    expect(first.querySelector('.about-me__role')?.textContent?.trim()).toBe('Angular Developer');
+    expect(first.querySelectorAll('ul.about-me__items li').length).toBe(4);
 
     const second = articles[1] as HTMLElement;
-    expect(second.querySelector('.experience__period')?.textContent?.trim()).toBe('2021 - 2023');
-    expect(second.querySelector('.experience__title')?.textContent?.trim()).toBe(
+    expect(second.querySelector('.about-me__period')?.textContent?.trim()).toBe('2021 - 2023');
+    expect(second.querySelector('.about-me__title')?.textContent?.trim()).toBe(
       'Multiplatform Application Development Degree',
     );
-    expect(second.querySelectorAll('ul.experience__items li').length).toBe(3);
+    expect(second.querySelectorAll('ul.about-me__items li').length).toBe(3);
   });
 
   it('should render lists with square markers and expected copy', async () => {
-    const fixture = TestBed.createComponent(Experience);
+    const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
-    const items = Array.from(fixture.nativeElement.querySelectorAll('.experience__items li')).map(
+    const items = Array.from(fixture.nativeElement.querySelectorAll('.about-me__items li')).map(
       (el) => (el as HTMLElement).textContent?.trim(),
     );
     expect(items).toEqual([
@@ -136,30 +136,30 @@ describe('Experience', () => {
   });
 
   it('should keep DOM order period title list for each entry', async () => {
-    const fixture = TestBed.createComponent(Experience);
+    const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
     const articles = fixture.nativeElement.querySelectorAll('article');
     articles.forEach((article: Element) => {
-      const order = Array.from(article.querySelectorAll('.experience__period, h3, ul')).map(
+      const order = Array.from(article.querySelectorAll('.about-me__period, h3, ul')).map(
         (el) => el.className,
       );
-      expect(order[0]).toContain('experience__period');
-      expect(order[1]).toContain('experience__title');
-      expect(order[2]).toContain('experience__items');
+      expect(order[0]).toContain('about-me__period');
+      expect(order[1]).toContain('about-me__title');
+      expect(order[2]).toContain('about-me__items');
     });
   });
 
   it('should switch heading and role to Spanish', async () => {
-    const fixture = TestBed.createComponent(Experience);
+    const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
     const translate = TestBed.inject(TranslateService);
     await firstValueFrom(translate.use('es'));
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(fixture.nativeElement.querySelector('h2')?.textContent?.trim()).toBe('EXPERIENCIA');
-    expect(fixture.nativeElement.querySelector('.experience__role')?.textContent?.trim()).toBe(
+    expect(fixture.nativeElement.querySelector('h2')?.textContent?.trim()).toBe('SOBRE MÍ');
+    expect(fixture.nativeElement.querySelector('.about-me__role')?.textContent?.trim()).toBe(
       'Desarrollador Angular',
     );
     expect(fixture.nativeElement.textContent).toContain(
@@ -168,19 +168,19 @@ describe('Experience', () => {
   });
 
   it('should expose BEM classes for visual timeline', async () => {
-    const fixture = TestBed.createComponent(Experience);
+    const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
     const el = fixture.nativeElement;
-    expect(el.querySelector('.experience')).toBeTruthy();
-    expect(el.querySelector('.experience__inner')).toBeTruthy();
+    expect(el.querySelector('.about-me')).toBeTruthy();
+    expect(el.querySelector('.about-me__inner')).toBeTruthy();
     expect(el.querySelector('app-section-title')).toBeTruthy();
     expect(el.querySelector('.section-title')).toBeTruthy();
     expect(el.querySelector('.section-title__rule')).toBeTruthy();
     expect(el.querySelector('.section-title__heading')).toBeTruthy();
-    expect(el.querySelector('.experience__timeline')).toBeTruthy();
-    expect(el.querySelector('.experience__entry')).toBeTruthy();
-    expect(el.querySelector('.experience__period')).toBeTruthy();
-    expect(el.querySelector('.experience__items')).toBeTruthy();
+    expect(el.querySelector('.about-me__timeline')).toBeTruthy();
+    expect(el.querySelector('.about-me__entry')).toBeTruthy();
+    expect(el.querySelector('.about-me__period')).toBeTruthy();
+    expect(el.querySelector('.about-me__items')).toBeTruthy();
   });
 });

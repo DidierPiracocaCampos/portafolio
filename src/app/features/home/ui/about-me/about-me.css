@@ -2,7 +2,7 @@
   display: block;
 }
 
-.experience {
+.about-me {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,15 +11,15 @@
   color: var(--color-base-content);
 }
 
-.experience app-section-title {
+.about-me app-section-title {
   width: 100%;
 }
 
-.experience__inner {
+.about-me__inner {
   width: min(100%, 64ch);
 }
 
-.experience__timeline {
+.about-me__timeline {
   --timeline-indent: clamp(1.5rem, 6vw, 2.25rem);
   position: relative;
   display: flex;
@@ -28,7 +28,7 @@
   padding-inline-start: var(--timeline-indent);
 }
 
-.experience__timeline::before {
+.about-me__timeline::before {
   position: absolute;
   inset-block: 0.25rem 0.35rem;
   inset-inline-start: 0.35rem;
@@ -37,17 +37,17 @@
   content: '';
 }
 
-.experience__entry {
+.about-me__entry {
   position: relative;
   min-width: 0;
   padding-block-end: clamp(1.5rem, 4vw, 2rem);
 }
 
-.experience__entry:last-child {
+.about-me__entry:last-child {
   padding-block-end: 0;
 }
 
-.experience__entry::before {
+.about-me__entry::before {
   position: absolute;
   inset-block-start: 0.55rem;
   inset-inline-start: calc(-1 * var(--timeline-indent) + 0.35rem);
@@ -57,13 +57,13 @@
   content: '';
 }
 
-.experience__period,
-.experience__title,
-.experience__items {
+.about-me__period,
+.about-me__title,
+.about-me__items {
   margin: 0;
 }
 
-.experience__period {
+.about-me__period {
   color: var(--color-base-content);
   font-family: var(--font-sans), ui-monospace, monospace;
   font-size: clamp(0.85rem, 2.2vw, 1rem);
@@ -72,7 +72,7 @@
   line-height: 1.5;
 }
 
-.experience__title {
+.about-me__title {
   margin-block: 0.25rem 0.6rem;
   color: var(--color-accent);
   font-family: var(--font-sans), ui-monospace, monospace;
@@ -82,15 +82,15 @@
   overflow-wrap: anywhere;
 }
 
-.experience__company {
+.about-me__company {
   color: var(--color-accent);
 }
 
-.experience__role {
+.about-me__role {
   color: var(--color-primary);
 }
 
-.experience__items {
+.about-me__items {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -102,22 +102,22 @@
   list-style: square;
 }
 
-.experience__items li {
+.about-me__items li {
   padding-inline-start: 0.1rem;
   overflow-wrap: anywhere;
 }
 
-.experience__items li::marker {
+.about-me__items li::marker {
   color: var(--color-success);
   font-size: 0.72em;
 }
 
 @media (max-width: 360px) {
-  .experience {
+  .about-me {
     padding-inline: 0.75rem;
   }
 
-  .experience__timeline {
+  .about-me__timeline {
     --timeline-indent: 1.35rem;
   }
 }

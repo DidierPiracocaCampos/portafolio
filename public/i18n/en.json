@@ -2,7 +2,7 @@
   "terminal": {
     "commands": {
       "presentation": "start portfolio",
-      "experience": "cat experience.txt",
+      "aboutMe": "cat about-me.txt",
       "projects": "ls projects/",
       "contact": "npm run contact"
     }
@@ -25,8 +25,8 @@
     "switchToEs": "Switch to Spanish",
     "switchToEn": "Switch to English"
   },
-  "experience": {
-    "heading": "EXPERIENCE",
+  "aboutMe": {
+    "heading": "ABOUT ME",
     "entries": {
       "axpe": {
         "period": "2023-present",
