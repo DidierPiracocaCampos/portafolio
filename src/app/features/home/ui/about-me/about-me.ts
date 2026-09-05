@@ -45,4 +45,5 @@ const ABOUT_ME_ENTRIES: readonly AboutMeEntry[] = [
 })
 export default class AboutMe {
   readonly entries = ABOUT_ME_ENTRIES;
+  readonly photoSrc = '/images/about-me/photo-me.jpg';
 }

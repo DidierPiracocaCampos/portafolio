@@ -6,6 +6,27 @@ import AboutMe from './about-me';
 const enTranslations = {
   aboutMe: {
     heading: 'ABOUT ME',
+    intro: {
+      prompt: '$ whoami',
+      photoAlt: 'Portrait of Didier Piracoca',
+      photoCaption: '~/didier',
+      meta: 'frontend • angular • full-stack',
+      p1Start: "I'm Didier — a ",
+      p1Hl1: 'developer',
+      p1Mid: ', focused on building software that is ',
+      p1Hl2: 'designed to evolve',
+      p1End:
+        '. I enjoy tackling complex problems, working from the ground up, and turning ideas into well-structured applications.',
+      p2Start: 'With a strong focus on ',
+      p2Hl1: 'frontend development',
+      p2Mid1: ' and a broader understanding of ',
+      p2Hl2: 'backend and software architecture',
+      p2Mid2: ', I care about building things that are not only functional, but ',
+      p2Hl3: 'maintainable',
+      p2Mid3: ', ',
+      p2Hl4: 'scalable',
+      p2End: ', and ready for what comes next.',
+    },
     entries: {
       axpe: {
         period: '2023-present',
@@ -34,6 +55,27 @@ const enTranslations = {
 const esTranslations = {
   aboutMe: {
     heading: 'SOBRE MÍ',
+    intro: {
+      prompt: '$ whoami',
+      photoAlt: 'Retrato de Didier Piracoca',
+      photoCaption: '~/didier',
+      meta: 'frontend • angular • full-stack',
+      p1Start: 'Soy Didier — ',
+      p1Hl1: 'desarrollador',
+      p1Mid: ', enfocado en construir software ',
+      p1Hl2: 'diseñado para evolucionar',
+      p1End:
+        '. Disfruto resolver problemas complejos, trabajar desde cero y convertir ideas en aplicaciones bien estructuradas.',
+      p2Start: 'Con un fuerte enfoque en ',
+      p2Hl1: 'desarrollo frontend',
+      p2Mid1: ' y una visión amplia de ',
+      p2Hl2: 'backend y arquitectura de software',
+      p2Mid2: ', me importa construir cosas que no solo funcionen, sino que sean ',
+      p2Hl3: 'mantenibles',
+      p2Mid3: ', ',
+      p2Hl4: 'escalables',
+      p2End: ' y listas para lo que venga.',
+    },
     entries: {
       axpe: {
         period: '2023-present',
@@ -182,5 +224,100 @@ describe('AboutMe', () => {
     expect(el.querySelector('.about-me__entry')).toBeTruthy();
     expect(el.querySelector('.about-me__period')).toBeTruthy();
     expect(el.querySelector('.about-me__items')).toBeTruthy();
+  });
+
+  it('should render intro hero before timeline with copy (no whoami prompt)', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const intro = el.querySelector('.about-me__intro');
+    expect(intro).toBeTruthy();
+    expect(el.querySelector('.about-me__prompt')).toBeNull();
+    expect(el.textContent).not.toContain('$ whoami');
+    expect(el.querySelector('.about-me__grid')).toBeTruthy();
+    expect(el.querySelector('.about-me__copy')).toBeTruthy();
+    expect(el.textContent).toContain("I'm Didier");
+    expect(el.textContent).toContain('designed to evolve');
+    expect(el.textContent).toContain('frontend development');
+    const introEl = el.querySelector('.about-me__intro') as HTMLElement;
+    const innerEl = el.querySelector('.about-me__inner') as HTMLElement;
+    expect(introEl.compareDocumentPosition(innerEl) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('should highlight keywords with terminal tones', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const highlights = Array.from(
+      fixture.nativeElement.querySelectorAll('.about-me__hl'),
+    ).map((node) => (node as HTMLElement).textContent?.trim());
+    expect(highlights).toEqual([
+      'developer',
+      'designed to evolve',
+      'frontend development',
+      'backend and software architecture',
+      'maintainable',
+      'scalable',
+    ]);
+    const highlighted = Array.from(
+      fixture.nativeElement.querySelectorAll('.about-me__hl'),
+    ) as HTMLElement[];
+    expect(highlighted.length).toBe(6);
+    highlighted.forEach((node) => {
+      expect(node.classList.contains('about-me__hl--warning')).toBe(true);
+    });
+    expect(fixture.nativeElement.querySelector('.about-me__hl--primary')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.about-me__hl--accent')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.about-me__hl--success')).toBeNull();
+  });
+
+  it('should render rectangular photo with alt and caption and no meta line', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const img = fixture.nativeElement.querySelector(
+      '.about-me__photo img',
+    ) as HTMLImageElement | null;
+    expect(img).toBeTruthy();
+    expect(img?.getAttribute('src')).toBe('/images/about-me/photo-me.jpg');
+    expect(img?.getAttribute('alt')).toBe('Portrait of Didier Piracoca');
+    expect(img?.getAttribute('loading')).toBe('lazy');
+    expect(
+      fixture.nativeElement
+        .querySelector('.about-me__photo-caption')
+        ?.textContent?.trim(),
+    ).toBe('~/didier');
+    expect(fixture.nativeElement.querySelector('.about-me__meta')).toBeNull();
+    expect(fixture.nativeElement.textContent).not.toContain('~/didier $');
+  });
+
+  it('should frame photo as clean rectangle without window dots and no stack badges', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.about-me__photo .mockup-window')).toBeNull();
+    expect(el.querySelector('.about-me__photo .about-me__frame img')).toBeTruthy();
+    expect(el.querySelector('.about-me__photo .status-success')).toBeTruthy();
+    expect(el.querySelector('.about-me__tags')).toBeNull();
+    expect(el.querySelector('.about-me__photo')?.textContent?.toLowerCase()).not.toContain(
+      'full-stack',
+    );
+  });
+
+  it('should switch intro copy and photo alt to Spanish', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const translate = TestBed.inject(TranslateService);
+    await firstValueFrom(translate.use('es'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(fixture.nativeElement.textContent).toContain('Soy Didier');
+    expect(fixture.nativeElement.textContent).toContain('diseñado para evolucionar');
+    expect(
+      fixture.nativeElement.querySelector('.about-me__photo img')?.getAttribute('alt'),
+    ).toBe('Retrato de Didier Piracoca');
   });
 });

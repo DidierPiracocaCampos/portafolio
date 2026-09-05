@@ -27,6 +27,26 @@
   },
   "aboutMe": {
     "heading": "ABOUT ME",
+    "intro": {
+      "prompt": "$ whoami",
+      "photoAlt": "Portrait of Didier Piracoca",
+      "photoCaption": "~/didier",
+      "meta": "frontend • angular • full-stack",
+      "p1Start": "I'm Didier — a ",
+      "p1Hl1": "developer",
+      "p1Mid": ", focused on building software that is ",
+      "p1Hl2": "designed to evolve",
+      "p1End": ". I enjoy tackling complex problems, working from the ground up, and turning ideas into well-structured applications.",
+      "p2Start": "With a strong focus on ",
+      "p2Hl1": "frontend development",
+      "p2Mid1": " and a broader understanding of ",
+      "p2Hl2": "backend and software architecture",
+      "p2Mid2": ", I care about building things that are not only functional, but ",
+      "p2Hl3": "maintainable",
+      "p2Mid3": ", ",
+      "p2Hl4": "scalable",
+      "p2End": ", and ready for what comes next."
+    },
     "entries": {
       "axpe": {
         "period": "2023-present",

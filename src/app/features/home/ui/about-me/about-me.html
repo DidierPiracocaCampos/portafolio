@@ -1,6 +1,67 @@
 <section class="about-me" aria-labelledby="about-me-title">
   <app-section-title [title]="'aboutMe.heading' | translate" headingId="about-me-title" />
 
+  <div class="about-me__intro">
+    <div class="about-me__grid">
+      <div class="about-me__copy">
+        <p class="about-me__paragraph"
+          >{{ 'aboutMe.intro.p1Start' | translate
+          }}<span class="about-me__hl about-me__hl--warning">{{
+            'aboutMe.intro.p1Hl1' | translate
+          }}</span
+          >{{ 'aboutMe.intro.p1Mid' | translate
+          }}<span class="about-me__hl about-me__hl--warning">{{
+            'aboutMe.intro.p1Hl2' | translate
+          }}</span
+          >{{ 'aboutMe.intro.p1End' | translate }}</p
+        >
+
+        <p class="about-me__paragraph"
+          >{{ 'aboutMe.intro.p2Start' | translate
+          }}<span class="about-me__hl about-me__hl--warning">{{
+            'aboutMe.intro.p2Hl1' | translate
+          }}</span
+          >{{ 'aboutMe.intro.p2Mid1' | translate
+          }}<span class="about-me__hl about-me__hl--warning">{{
+            'aboutMe.intro.p2Hl2' | translate
+          }}</span
+          >{{ 'aboutMe.intro.p2Mid2' | translate
+          }}<span class="about-me__hl about-me__hl--warning">{{
+            'aboutMe.intro.p2Hl3' | translate
+          }}</span
+          >{{ 'aboutMe.intro.p2Mid3' | translate
+          }}<span class="about-me__hl about-me__hl--warning">{{
+            'aboutMe.intro.p2Hl4' | translate
+          }}</span
+          >{{ 'aboutMe.intro.p2End' | translate }}</p
+        >
+      </div>
+
+      <figure class="about-me__photo">
+        <div class="indicator">
+          <span
+            class="indicator-item indicator-top indicator-end status status-success status-md about-me__live"
+            aria-hidden="true"
+          ></span>
+          <div class="about-me__frame bg-base-200 border border-base-300">
+            <img
+              [src]="photoSrc"
+              [alt]="'aboutMe.intro.photoAlt' | translate"
+              loading="lazy"
+              width="480"
+              height="600"
+            />
+          </div>
+        </div>
+        <div class="about-me__photo-foot">
+          <figcaption class="about-me__photo-caption">{{
+            'aboutMe.intro.photoCaption' | translate
+          }}</figcaption>
+        </div>
+      </figure>
+    </div>
+  </div>
+
   <div class="about-me__inner">
     <div class="about-me__timeline">
       @for (entry of entries; track entry.id) {
