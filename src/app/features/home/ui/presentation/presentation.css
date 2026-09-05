@@ -180,7 +180,7 @@
   font-size: clamp(1rem, 3vw, 1.25rem);
   line-height: 1.3;
   font-weight: 500;
-  color: color-mix(in oklch, var(--color-base-content) 85%, transparent);
+  color: color-mix(in oklch, var(--color-secondary) 85%, transparent);
 }
 
 @media (min-width: 768px) {
