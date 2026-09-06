@@ -132,100 +132,241 @@
 }
 
 .about-me__inner {
-  width: min(100%, 64ch);
+  width: min(100%, 64rem);
 }
 
-.about-me__timeline {
-  --timeline-indent: clamp(1.5rem, 6vw, 2.25rem);
+.about-me__exp-label {
+  margin: 0 0 3.5rem;
+  color: var(--color-success);
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  letter-spacing: 0.02em;
+}
+
+.about-me__roadmap {
+  --track-left: 10%;
+  --track-right: 10%;
   position: relative;
+}
+
+.about-me__track {
+  position: absolute;
+  top: 0;
+  right: var(--track-right);
+  left: var(--track-left);
+  display: flex;
+  height: 3px;
+}
+
+.about-me__seg {
+  display: block;
+  height: 3px;
+}
+
+.about-me__seg--dashed {
+  flex: 0 0 30%;
+  height: 3px;
+  background-image: linear-gradient(90deg, var(--color-success) 55%, transparent 45%);
+  background-size: 20px 3px;
+  background-repeat: repeat-x;
+}
+
+.about-me__seg--solid {
+  flex: 1;
+  height: 3px;
+  background: var(--color-success);
+  -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+}
+
+.about-me__phase {
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  width: 30%;
+  color: var(--color-success);
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  text-align: center;
+}
+
+.about-me__nodes {
+  position: relative;
+  min-height: 7rem;
+  margin: 0 var(--track-right) 0 var(--track-left);
+}
+
+.about-me__node {
+  position: absolute;
+  top: 0;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  padding-inline-start: var(--timeline-indent);
-}
-
-.about-me__timeline::before {
-  position: absolute;
-  inset-block: 0.25rem 0.35rem;
-  inset-inline-start: 0.35rem;
-  width: 2px;
-  background: var(--color-primary);
-  content: '';
-}
-
-.about-me__entry {
-  position: relative;
+  align-items: center;
+  gap: 0.15rem;
   min-width: 0;
-  padding-block-end: clamp(1.5rem, 4vw, 2rem);
+  width: max-content;
+  max-width: 14rem;
+  padding: 0.45rem 0.5rem 0.25rem;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  cursor: pointer;
+  transform: translateX(-50%);
 }
 
-.about-me__entry:last-child {
-  padding-block-end: 0;
+.about-me__nodes > .about-me__node:first-child {
+  left: 0;
 }
 
-.about-me__entry::before {
+.about-me__node::before {
   position: absolute;
-  inset-block-start: 0.55rem;
-  inset-inline-start: calc(-1 * var(--timeline-indent) + 0.35rem);
-  width: calc(var(--timeline-indent) - 0.35rem);
-  height: 2px;
-  background: var(--color-primary);
+  top: -14px;
+  left: 50%;
+  width: 3px;
+  height: 14px;
+  background: var(--color-success);
+  transform: translateX(-50%);
   content: '';
 }
 
-.about-me__period,
-.about-me__title,
-.about-me__items {
-  margin: 0;
+.about-me__node--center {
+  left: 30%;
+  align-items: center;
+  text-align: center;
 }
 
-.about-me__period {
+.about-me__future {
+  left: 85%;
+  align-items: center;
+  text-align: center;
+  cursor: default;
+}
+
+.about-me__node:focus-visible {
+  border-radius: 0.25rem;
+  outline: 2px solid var(--color-success);
+  outline-offset: 3px;
+}
+
+button.about-me__node:hover .about-me__short {
+  text-decoration: underline;
+  text-decoration-color: var(--color-success);
+  text-underline-offset: 4px;
+}
+
+button.about-me__node:hover::before {
+  box-shadow: 0 0 8px var(--color-success);
+}
+
+.about-me__node--active::before {
+  top: -18px;
+  height: 18px;
+  box-shadow: 0 0 10px var(--color-success);
+}
+
+.about-me__node--active .about-me__short {
+  text-decoration: underline;
+  text-decoration-color: var(--color-success);
+  text-underline-offset: 4px;
+  text-shadow: 0 0 14px color-mix(in oklch, var(--color-success) 65%, transparent);
+}
+
+.about-me__node--active .about-me__year {
+  opacity: 1;
+  color: var(--color-success);
+}
+
+.about-me__node--active .about-me__year::before {
+  content: '> ';
+}
+
+.about-me__year {
   color: var(--color-base-content);
   font-family: var(--font-sans), ui-monospace, monospace;
-  font-size: clamp(0.85rem, 2.2vw, 1rem);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  opacity: 0.75;
 }
 
-.about-me__title {
-  margin-block: 0.25rem 0.6rem;
-  color: var(--color-accent);
+.about-me__short {
+  color: var(--color-base-content);
   font-family: var(--font-sans), ui-monospace, monospace;
-  font-size: clamp(0.95rem, 2.4vw, 1.15rem);
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
   overflow-wrap: anywhere;
 }
 
-.about-me__company {
-  color: var(--color-accent);
+.about-me__short--strong {
+  font-size: clamp(1rem, 2.6vw, 1.15rem);
+  font-weight: 700;
 }
 
-.about-me__role {
-  color: var(--color-primary);
-}
-
-.about-me__items {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding-inline-start: 1.15rem;
-  color: color-mix(in oklch, var(--color-base-content) 88%, transparent);
-  font-family: var(--font-sans), ui-monospace, monospace;
-  font-size: clamp(0.85rem, 2.2vw, 1rem);
-  line-height: 1.55;
-  list-style: square;
-}
-
-.about-me__items li {
-  padding-inline-start: 0.1rem;
-  overflow-wrap: anywhere;
-}
-
-.about-me__items li::marker {
+.about-me__sub {
   color: var(--color-success);
-  font-size: 0.72em;
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+}
+
+.about-me__short--teaser {
+  color: var(--color-success);
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+}
+
+/* Desktop: todas visibles muy solapadas, activa centrada encima */
+.about-me__detail {
+  margin-top: 1.25rem;
+}
+
+.about-me__stack {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  isolation: isolate;
+}
+
+.about-me__stack > app-about-entry-card {
+  flex: 1 1 26rem;
+  width: auto;
+  min-width: 0;
+  max-width: 30rem;
+  justify-self: auto;
+}
+
+.about-me__stack > app-about-entry-card:not(:first-child) {
+  margin-left: -28%;
+}
+
+.about-me__stack > app-about-entry-card.about-me-card--active {
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-4px) scale(1.02);
+  pointer-events: auto;
+}
+
+.about-me__stack > app-about-entry-card:not(.about-me-card--active) {
+  z-index: 1;
+  opacity: 0.55;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Card internals styled in about-entry-card.css (reuses .about-me__* classes for compat) */
+.about-me__company,
+.about-me__role {
+  color: var(--color-base-content);
+}
+
+/* Mobile vertical: después de cada título su descripción */
+.about-me__timeline-mobile {
+  display: none;
+}
+
+.about-me__phase-mobile {
+  display: block;
+  color: var(--color-success);
+  font-family: var(--font-sans), ui-monospace, monospace;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
 }
 
 @media (min-width: 768px) {
@@ -250,14 +391,82 @@
   .about-me__frame:hover {
     transform: none;
   }
+
+  .about-me__stack > app-about-entry-card {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-me__roadmap,
+  .about-me__stack {
+    display: none;
+  }
+
+  .about-me__timeline-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .about-me__timeline-mobile .about-me__node {
+    position: relative;
+    left: auto;
+    align-items: flex-start;
+    justify-self: stretch;
+    width: auto;
+    max-width: none;
+    padding: 0.4rem 0 0.4rem 1rem;
+    border-inline-start: 2px solid var(--color-success);
+    text-align: left;
+    transform: none;
+  }
+
+  .about-me__timeline-mobile .about-me__node--center,
+  .about-me__timeline-mobile .about-me__future {
+    left: auto;
+  }
+
+  .about-me__timeline-mobile > .about-me__node:first-child {
+    border-inline-start-style: dashed;
+  }
+
+  .about-me__timeline-mobile .about-me__node::before {
+    top: 50%;
+    left: -1rem;
+    width: 1rem;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .about-me__timeline-mobile > .about-me__node:first-child::before {
+    background-color: transparent;
+    background-image: linear-gradient(90deg, var(--color-success) 55%, transparent 45%);
+    background-size: 10px 2px;
+    background-repeat: repeat-x;
+  }
+
+  .about-me__inline-card {
+    margin: 0.25rem 0 0.9rem 1rem;
+  }
+
+  .about-me__phase-mobile {
+    align-self: stretch;
+    margin: 0 0 0.9rem;
+    padding: 0.35rem 0 0.35rem 1rem;
+    border-inline-start: 2px dashed var(--color-success);
+    text-align: center;
+  }
+
+  .about-me__timeline-mobile .about-me__future {
+    cursor: default;
+  }
 }
 
 @media (max-width: 360px) {
   .about-me {
     padding-inline: 0.75rem;
-  }
-
-  .about-me__timeline {
-    --timeline-indent: 1.35rem;
   }
 }

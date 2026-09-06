@@ -50,8 +50,11 @@
     "entries": {
       "axpe": {
         "period": "2023-present",
+        "year": "2023",
+        "short": "Desarrollador Angular",
         "company": "AXPE Consulting",
         "role": "Desarrollador Angular",
+        "selectLabel": "Ver detalle de experiencia laboral",
         "items": [
           "Desarrollo de aplicaciones web usando Spring MVC e Ionic",
           "Integración con Oracle SQL (consultas optimizadas y modelado de datos)",
@@ -61,13 +64,27 @@
       },
       "education": {
         "period": "2021 - 2023",
+        "year": "2021",
+        "short": "FP DAW",
         "title": "Grado Superior en Desarrollo de Aplicaciones Multiplataforma",
+        "selectLabel": "Ver detalle de estudios",
         "items": [
           "Fundamentos de ingeniería de software",
           "Diseño de bases de datos y SQL",
           "Desarrollo de interfaces de usuario"
         ]
       }
+    },
+    "timeline": {
+      "label": "// experience",
+      "phaseStudy": "estudiando",
+      "yearEducation": "2021",
+      "yearAxpe": "2023",
+      "yearFuture": "20 ??",
+      "shortEducation": "FP DAW",
+      "futureText": "¡Puedes estar aquí next! :D",
+      "selectEducation": "Ver detalle de estudios",
+      "selectAxpe": "Ver detalle de experiencia laboral"
     }
   },
   "projects": {

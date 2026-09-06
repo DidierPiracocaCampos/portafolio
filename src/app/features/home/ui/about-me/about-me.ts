@@ -1,44 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import SectionTitle from '../../../../shared/ui/section-title/section-title';
-
-type AboutMeEntry = {
-  readonly id: 'axpe' | 'education';
-  readonly periodKey: string;
-  readonly companyKey?: string;
-  readonly roleKey?: string;
-  readonly titleKey?: string;
-  readonly itemKeys: readonly string[];
-};
-
-const ABOUT_ME_ENTRIES: readonly AboutMeEntry[] = [
-  {
-    id: 'axpe',
-    periodKey: 'aboutMe.entries.axpe.period',
-    companyKey: 'aboutMe.entries.axpe.company',
-    roleKey: 'aboutMe.entries.axpe.role',
-    itemKeys: [
-      'aboutMe.entries.axpe.items.0',
-      'aboutMe.entries.axpe.items.1',
-      'aboutMe.entries.axpe.items.2',
-      'aboutMe.entries.axpe.items.3',
-    ],
-  },
-  {
-    id: 'education',
-    periodKey: 'aboutMe.entries.education.period',
-    titleKey: 'aboutMe.entries.education.title',
-    itemKeys: [
-      'aboutMe.entries.education.items.0',
-      'aboutMe.entries.education.items.1',
-      'aboutMe.entries.education.items.2',
-    ],
-  },
-];
+import AboutEntryCard from './ui/about-entry-card/about-entry-card';
+import { ABOUT_ME_ENTRIES } from './models/about-me-entry';
 
 @Component({
   selector: 'app-about-me',
-  imports: [TranslatePipe, SectionTitle],
+  imports: [TranslatePipe, SectionTitle, AboutEntryCard],
   templateUrl: './about-me.html',
   styleUrl: './about-me.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,4 +14,27 @@ const ABOUT_ME_ENTRIES: readonly AboutMeEntry[] = [
 export default class AboutMe {
   readonly entries = ABOUT_ME_ENTRIES;
   readonly photoSrc = '/images/about-me/photo-me.jpg';
+  readonly selectedId = signal<string>('axpe');
+  readonly selectedEntry = computed(
+    () => this.entries.find((e) => e.id === this.selectedId()) ?? this.entries[0],
+  );
+
+  select(id: string): void {
+    if (this.selectedId() !== id) {
+      this.selectedId.set(id);
+    }
+  }
+
+  isActive(id: string): boolean {
+    return this.selectedId() === id;
+  }
+
+  nodeLeft(index: number): number {
+    if (index <= 0) return 0;
+    if (index === 1) return 30;
+    const total = this.entries.length;
+    if (total <= 2) return 30;
+    const spread = 45 / (total - 1);
+    return Math.min(75, 30 + (index - 1) * spread);
+  }
 }

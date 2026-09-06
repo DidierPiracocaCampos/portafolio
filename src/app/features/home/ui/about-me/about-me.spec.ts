@@ -30,8 +30,11 @@ const enTranslations = {
     entries: {
       axpe: {
         period: '2023-present',
+        year: '2023',
+        short: 'Angular Developer',
         company: 'AXPE Consulting',
         role: 'Angular Developer',
+        selectLabel: 'Show work experience details',
         items: [
           'Development of web applications using Spring MVC and Ionic',
           'Oracle SQL integration (optimized queries & data modeling)',
@@ -41,13 +44,27 @@ const enTranslations = {
       },
       education: {
         period: '2021 - 2023',
+        year: '2021',
+        short: 'FP DAW',
         title: 'Multiplatform Application Development Degree',
+        selectLabel: 'Show education details',
         items: [
           'Software engineering fundamentals',
           'Database design and SQL',
           'UI development and interfaces',
         ],
       },
+    },
+    timeline: {
+      label: '// experience',
+      phaseStudy: 'studying',
+      yearEducation: '2021',
+      yearAxpe: '2023',
+      yearFuture: '20 ??',
+      shortEducation: 'FP DAW',
+      futureText: 'You can be here next! :D',
+      selectEducation: 'Show education details',
+      selectAxpe: 'Show work experience details',
     },
   },
 };
@@ -79,8 +96,11 @@ const esTranslations = {
     entries: {
       axpe: {
         period: '2023-present',
+        year: '2023',
+        short: 'Desarrollador Angular',
         company: 'AXPE Consulting',
         role: 'Desarrollador Angular',
+        selectLabel: 'Ver detalle de experiencia laboral',
         items: [
           'Desarrollo de aplicaciones web usando Spring MVC e Ionic',
           'Integración con Oracle SQL (consultas optimizadas y modelado de datos)',
@@ -90,13 +110,27 @@ const esTranslations = {
       },
       education: {
         period: '2021 - 2023',
+        year: '2021',
+        short: 'FP DAW',
         title: 'Grado Superior en Desarrollo de Aplicaciones Multiplataforma',
+        selectLabel: 'Ver detalle de estudios',
         items: [
           'Fundamentos de ingeniería de software',
           'Diseño de bases de datos y SQL',
           'Desarrollo de interfaces de usuario',
         ],
       },
+    },
+    timeline: {
+      label: '// experience',
+      phaseStudy: 'estudiando',
+      yearEducation: '2021',
+      yearAxpe: '2023',
+      yearFuture: '20 ??',
+      shortEducation: 'FP DAW',
+      futureText: '¡Puedes estar aquí next! :D',
+      selectEducation: 'Ver detalle de estudios',
+      selectAxpe: 'Ver detalle de experiencia laboral',
     },
   },
 };
@@ -117,11 +151,11 @@ describe('AboutMe', () => {
     await setupTranslate();
   });
 
-  it('should create with two stable about-me entries', () => {
+  it('should create with two stable about-me entries in chronological order', () => {
     const fixture = TestBed.createComponent(AboutMe);
     expect(fixture.componentInstance.entries.map((entry) => entry.id)).toEqual([
-      'axpe',
       'education',
+      'axpe',
     ]);
   });
 
@@ -136,60 +170,149 @@ describe('AboutMe', () => {
     expect(heading.textContent.trim()).toBe('ABOUT ME');
   });
 
-  it('should render two articles with correct periods titles and lists', async () => {
+  it('should default to axpe and switch selection', () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    expect(fixture.componentInstance.selectedId()).toBe('axpe');
+    expect(fixture.componentInstance.selectedEntry().id).toBe('axpe');
+    fixture.componentInstance.select('education');
+    expect(fixture.componentInstance.selectedId()).toBe('education');
+    expect(fixture.componentInstance.selectedEntry().id).toBe('education');
+  });
+
+  it('should render roadmap with 2 buttons plus future teaser and sublabel', async () => {
     const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
-    const articles = fixture.nativeElement.querySelectorAll('article');
-    expect(articles.length).toBe(2);
+    const el = fixture.nativeElement as HTMLElement;
+    const roadmap = el.querySelector('.about-me__roadmap') as HTMLElement;
+    expect(el.querySelector('.about-me__exp-label')?.textContent?.trim()).toBe('// experience');
+    expect(roadmap).toBeTruthy();
+    expect(el.querySelector('.about-me__track')).toBeTruthy();
+    expect(el.querySelector('.about-me__seg--dashed')).toBeTruthy();
+    expect(el.querySelector('.about-me__seg--solid')).toBeTruthy();
+    expect(el.querySelector('.about-me__phase')?.textContent?.trim()).toBe('studying');
+    expect(roadmap.querySelectorAll('.about-me__node').length).toBe(3);
+    expect(roadmap.querySelectorAll('button.about-me__node').length).toBe(2);
+    expect(el.querySelector('.about-me__future')).toBeTruthy();
+    expect(el.textContent).toContain('2021');
+    expect(el.textContent).toContain('2023');
+    expect(el.textContent).toContain('20 ??');
+    expect(el.textContent).toContain('FP DAW');
+    expect(el.textContent).toContain('Angular Developer');
+    expect(el.textContent).toContain('AXPE Consulting');
+    expect(el.textContent).toContain('You can be here next! :D');
+  });
 
-    const first = articles[0] as HTMLElement;
-    expect(first.querySelector('.about-me__period')?.textContent?.trim()).toBe('2023-present');
-    expect(first.querySelector('.about-me__company')?.textContent?.trim()).toBe(
+  it('should include a mobile-only studying caption between both dates', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const mobile = el.querySelector('.about-me__timeline-mobile') as HTMLElement;
+    expect(mobile).toBeTruthy();
+    const caption = mobile.querySelector('.about-me__phase-mobile');
+    expect(caption?.textContent?.trim()).toBe('studying');
+    if (caption === null) {
+      expect(caption).toBeTruthy();
+      return;
+    }
+    const buttons = Array.from(mobile.querySelectorAll('button.about-me__node'));
+    expect(buttons.length).toBe(2);
+    const [educationButton, axpeButton] = buttons;
+    expect(
+      caption.compareDocumentPosition(educationButton as Element) &
+        Node.DOCUMENT_POSITION_PRECEDING,
+    ).toBeTruthy();
+    expect(
+      caption.compareDocumentPosition(axpeButton as Element) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it('should show axpe detail by default with 4 items in stack carousel', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const detail = fixture.nativeElement.querySelector('#about-detail') as HTMLElement;
+    expect(detail).toBeTruthy();
+    expect(detail.classList.contains('about-me__stack')).toBe(true);
+    const cards = Array.from(detail.querySelectorAll('app-about-entry-card'));
+    expect(cards.length).toBe(2);
+    const active = detail.querySelector(
+      'app-about-entry-card.about-me-card--active',
+    ) as HTMLElement;
+    expect(active).toBeTruthy();
+    expect(active.querySelector('.about-me__period')?.textContent?.trim()).toBe('2023-present');
+    expect(active.querySelector('.about-me__company')?.textContent?.trim()).toBe(
       'AXPE Consulting',
     );
-    expect(first.querySelector('.about-me__role')?.textContent?.trim()).toBe('Angular Developer');
-    expect(first.querySelectorAll('ul.about-me__items li').length).toBe(4);
-
-    const second = articles[1] as HTMLElement;
-    expect(second.querySelector('.about-me__period')?.textContent?.trim()).toBe('2021 - 2023');
-    expect(second.querySelector('.about-me__title')?.textContent?.trim()).toBe(
-      'Multiplatform Application Development Degree',
-    );
-    expect(second.querySelectorAll('ul.about-me__items li').length).toBe(3);
+    expect(active.querySelector('.about-me__role')?.textContent?.trim()).toBe('Angular Developer');
+    expect(active.querySelectorAll('ul.about-me__items li').length).toBe(4);
+    const roadmapButtons = Array.from(
+      fixture.nativeElement.querySelectorAll('.about-me__roadmap button.about-me__node'),
+    ) as HTMLButtonElement[];
+    expect(roadmapButtons[1].classList.contains('about-me__node--active')).toBe(true);
+    expect(roadmapButtons[0].classList.contains('about-me__node--active')).toBe(false);
   });
 
-  it('should render lists with square markers and expected copy', async () => {
+  it('should switch detail to education with 3 items on click', async () => {
     const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
-    const items = Array.from(fixture.nativeElement.querySelectorAll('.about-me__items li')).map(
-      (el) => (el as HTMLElement).textContent?.trim(),
-    );
-    expect(items).toEqual([
-      'Development of web applications using Spring MVC and Ionic',
-      'Oracle SQL integration (optimized queries & data modeling)',
-      'Maintenance, bug fixing and production support',
-      'Full-stack feature delivery (frontend + backend)',
-      'Software engineering fundamentals',
-      'Database design and SQL',
-      'UI development and interfaces',
-    ]);
+    const buttons = Array.from(
+      fixture.nativeElement.querySelectorAll('.about-me__roadmap button.about-me__node'),
+    ) as HTMLButtonElement[];
+    expect(buttons.length).toBe(2);
+    buttons[0].click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const detail = fixture.nativeElement.querySelector('#about-detail') as HTMLElement;
+    const active = detail.querySelector(
+      'app-about-entry-card.about-me-card--active',
+    ) as HTMLElement;
+    expect(active.querySelector('.about-me__period')?.textContent?.trim()).toBe('2021 - 2023');
+    expect(active.textContent).toContain('Multiplatform Application Development Degree');
+    expect(active.querySelectorAll('ul.about-me__items li').length).toBe(3);
+    expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
+    expect(buttons[1].getAttribute('aria-expanded')).toBe('false');
+    expect(buttons[0].getAttribute('aria-controls')).toBe('about-detail');
+    expect(buttons[0].classList.contains('about-me__node--active')).toBe(true);
+    expect(buttons[1].classList.contains('about-me__node--active')).toBe(false);
   });
 
-  it('should keep DOM order period title list for each entry', async () => {
+  it('should show both descriptions inline in mobile timeline after each title', async () => {
     const fixture = TestBed.createComponent(AboutMe);
     fixture.detectChanges();
     await fixture.whenStable();
-    const articles = fixture.nativeElement.querySelectorAll('article');
-    articles.forEach((article: Element) => {
-      const order = Array.from(article.querySelectorAll('.about-me__period, h3, ul')).map(
-        (el) => el.className,
-      );
-      expect(order[0]).toContain('about-me__period');
-      expect(order[1]).toContain('about-me__title');
-      expect(order[2]).toContain('about-me__items');
-    });
+    const mobile = fixture.nativeElement.querySelector(
+      '.about-me__timeline-mobile',
+    ) as HTMLElement;
+    const inlineCards = Array.from(mobile.querySelectorAll('app-about-entry-card'));
+    expect(inlineCards.length).toBe(2);
+    expect(mobile.textContent).toContain('Multiplatform Application Development Degree');
+    expect(mobile.textContent).toContain('AXPE Consulting');
+    const nodes = Array.from(mobile.children);
+    const firstButtonIndex = nodes.findIndex((n) => n.tagName === 'BUTTON');
+    const firstCardIndex = nodes.findIndex((n) =>
+      n.tagName.toLowerCase().includes('app-about-entry-card'),
+    );
+    expect(firstButtonIndex).toBeGreaterThanOrEqual(0);
+    expect(firstCardIndex).toBeGreaterThan(firstButtonIndex);
+  });
+
+  it('should keep DOM order title period list in detail panel', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const active = fixture.nativeElement.querySelector(
+      '#about-detail app-about-entry-card.about-me-card--active',
+    ) as HTMLElement;
+    const order = Array.from(active.querySelectorAll('h3, .about-me__period, ul')).map(
+      (el) => (el as HTMLElement).className,
+    );
+    expect(order[0]).toContain('about-me__detail-title');
+    expect(order[1]).toContain('about-me__period');
+    expect(order[2]).toContain('about-me__items');
   });
 
   it('should switch heading and role to Spanish', async () => {
@@ -201,12 +324,32 @@ describe('AboutMe', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('h2')?.textContent?.trim()).toBe('SOBRE MÍ');
-    expect(fixture.nativeElement.querySelector('.about-me__role')?.textContent?.trim()).toBe(
+    expect(
+      fixture.nativeElement.querySelector('.about-me__short--strong')?.textContent?.trim(),
+    ).toBe('Desarrollador Angular');
+    expect(fixture.nativeElement.querySelector('#about-detail')?.textContent).toContain(
       'Desarrollador Angular',
     );
+    fixture.componentInstance.select('education');
+    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.nativeElement.textContent).toContain(
       'Grado Superior en Desarrollo de Aplicaciones Multiplataforma',
     );
+  });
+
+  it('should translate roadmap phase and future teaser to Spanish', async () => {
+    const fixture = TestBed.createComponent(AboutMe);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const translate = TestBed.inject(TranslateService);
+    await firstValueFrom(translate.use('es'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('.about-me__phase')?.textContent?.trim()).toBe(
+      'estudiando',
+    );
+    expect(fixture.nativeElement.textContent).toContain('¡Puedes estar aquí next! :D');
   });
 
   it('should expose BEM classes for visual timeline', async () => {
@@ -220,10 +363,16 @@ describe('AboutMe', () => {
     expect(el.querySelector('.section-title')).toBeTruthy();
     expect(el.querySelector('.section-title__rule')).toBeTruthy();
     expect(el.querySelector('.section-title__heading')).toBeTruthy();
-    expect(el.querySelector('.about-me__timeline')).toBeTruthy();
-    expect(el.querySelector('.about-me__entry')).toBeTruthy();
+    expect(el.querySelector('.about-me__exp-label')).toBeTruthy();
+    expect(el.querySelector('.about-me__roadmap')).toBeTruthy();
+    expect(el.querySelector('.about-me__track')).toBeTruthy();
+    expect(el.querySelector('.about-me__node')).toBeTruthy();
+    expect(el.querySelector('.about-me__detail')).toBeTruthy();
     expect(el.querySelector('.about-me__period')).toBeTruthy();
     expect(el.querySelector('.about-me__items')).toBeTruthy();
+    expect(el.querySelector('.about-me__timeline-mobile')).toBeTruthy();
+    expect(el.querySelector('.about-me__stack')).toBeTruthy();
+    expect(el.querySelector('app-about-entry-card')).toBeTruthy();
   });
 
   it('should render intro hero before timeline with copy (no whoami prompt)', async () => {

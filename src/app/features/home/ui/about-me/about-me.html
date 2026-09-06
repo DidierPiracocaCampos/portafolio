@@ -63,31 +63,102 @@
   </div>
 
   <div class="about-me__inner">
-    <div class="about-me__timeline">
+    <p class="about-me__exp-label">{{ 'aboutMe.timeline.label' | translate }}</p>
+
+    <!-- Desktop: timeline horizontal escalable -->
+    <div class="about-me__roadmap">
+      <div class="about-me__track" aria-hidden="true">
+        <span class="about-me__seg about-me__seg--dashed"></span>
+        <span class="about-me__seg about-me__seg--solid"></span>
+        <span class="about-me__phase">{{ 'aboutMe.timeline.phaseStudy' | translate }}</span>
+      </div>
+      <div class="about-me__nodes">
+        @for (entry of entries; track entry.id; let i = $index) {
+          <button
+            type="button"
+            class="about-me__node"
+            [class.about-me__node--center]="i > 0"
+            [class.about-me__node--active]="isActive(entry.id)"
+            [attr.aria-expanded]="isActive(entry.id)"
+            aria-controls="about-detail"
+            [attr.aria-label]="entry.selectLabelKey | translate"
+            [style.left.%]="nodeLeft(i)"
+            (click)="select(entry.id)"
+            (mouseenter)="select(entry.id)"
+            (focus)="select(entry.id)"
+          >
+            <span class="about-me__year">{{ entry.yearKey | translate }}</span>
+            <span
+              class="about-me__short"
+              [class.about-me__short--strong]="!!entry.companyKey"
+              >{{ entry.shortKey | translate }}</span
+            >
+            @if (entry.subKey) {
+              <span class="about-me__sub">{{ entry.subKey | translate }}</span>
+            }
+          </button>
+        }
+        <div class="about-me__node about-me__future">
+          <span class="about-me__year">{{ 'aboutMe.timeline.yearFuture' | translate }}</span>
+          <span class="about-me__short about-me__short--teaser">{{
+            'aboutMe.timeline.futureText' | translate
+          }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop: todas visibles, hover/click/focus activa highlight -->
+    <div id="about-detail" class="about-me__detail about-me__stack" aria-live="polite">
       @for (entry of entries; track entry.id) {
-        <article
-          class="about-me__entry"
-          [attr.aria-labelledby]="'about-me-entry-' + entry.id + '-title'"
-        >
-          <p class="about-me__period">{{ entry.periodKey | translate }}</p>
-
-          <h3 class="about-me__title" [id]="'about-me-entry-' + entry.id + '-title'">
-            @if (entry.companyKey && entry.roleKey) {
-              <span class="about-me__company">{{ entry.companyKey | translate }}</span>
-              <span>-</span>
-              <span class="about-me__role">{{ entry.roleKey | translate }}</span>
-            } @else if (entry.titleKey) {
-              {{ entry.titleKey | translate }}
-            }
-          </h3>
-
-          <ul class="about-me__items">
-            @for (itemKey of entry.itemKeys; track itemKey) {
-              <li>{{ itemKey | translate }}</li>
-            }
-          </ul>
-        </article>
+        <app-about-entry-card
+          [entry]="entry"
+          variant="stack"
+          [active]="isActive(entry.id)"
+          (mouseenter)="select(entry.id)"
+          (focusin)="select(entry.id)"
+        />
       }
+    </div>
+
+    <!-- Mobile: después de cada título su descripción -->
+    <div class="about-me__timeline-mobile">
+      @for (entry of entries; track entry.id; let i = $index) {
+        <button
+          type="button"
+          class="about-me__node"
+          [class.about-me__node--active]="isActive(entry.id)"
+          [attr.aria-expanded]="isActive(entry.id)"
+          [attr.aria-label]="entry.selectLabelKey | translate"
+          (click)="select(entry.id)"
+        >
+          <span class="about-me__year">{{ entry.yearKey | translate }}</span>
+          <span
+            class="about-me__short"
+            [class.about-me__short--strong]="!!entry.companyKey"
+            >{{ entry.shortKey | translate }}</span
+          >
+          @if (entry.subKey) {
+            <span class="about-me__sub">{{ entry.subKey | translate }}</span>
+          }
+        </button>
+        <app-about-entry-card
+          class="about-me__inline-card"
+          [entry]="entry"
+          variant="inline"
+          [active]="true"
+        />
+        @if (i === 0) {
+          <span class="about-me__phase-mobile">{{
+            'aboutMe.timeline.phaseStudy' | translate
+          }}</span>
+        }
+      }
+      <div class="about-me__node about-me__future">
+        <span class="about-me__year">{{ 'aboutMe.timeline.yearFuture' | translate }}</span>
+        <span class="about-me__short about-me__short--teaser">{{
+          'aboutMe.timeline.futureText' | translate
+        }}</span>
+      </div>
     </div>
   </div>
 </section>
