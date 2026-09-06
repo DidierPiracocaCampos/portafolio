@@ -100,9 +100,10 @@
         }
         <div class="about-me__node about-me__future">
           <span class="about-me__year">{{ 'aboutMe.timeline.yearFuture' | translate }}</span>
-          <span class="about-me__short about-me__short--teaser">{{
-            'aboutMe.timeline.futureText' | translate
-          }}</span>
+          <span class="about-me__short about-me__short--teaser"
+            ><span class="about-me__future-icons text-success" aria-hidden="true">⋆˙⟡</span
+            >{{ 'aboutMe.timeline.futureText' | translate }}</span
+          >
         </div>
       </div>
     </div>
@@ -123,41 +124,44 @@
     <!-- Mobile: después de cada título su descripción -->
     <div class="about-me__timeline-mobile">
       @for (entry of entries; track entry.id; let i = $index) {
-        <button
-          type="button"
-          class="about-me__node"
-          [class.about-me__node--active]="isActive(entry.id)"
-          [attr.aria-expanded]="isActive(entry.id)"
-          [attr.aria-label]="entry.selectLabelKey | translate"
-          (click)="select(entry.id)"
-        >
-          <span class="about-me__year">{{ entry.yearKey | translate }}</span>
-          <span
-            class="about-me__short"
-            [class.about-me__short--strong]="!!entry.companyKey"
-            >{{ entry.shortKey | translate }}</span
+        <div class="about-me__segment-mobile">
+          <button
+            type="button"
+            class="about-me__node"
+            [class.about-me__node--active]="isActive(entry.id)"
+            [attr.aria-expanded]="isActive(entry.id)"
+            [attr.aria-label]="entry.selectLabelKey | translate"
+            (click)="select(entry.id)"
           >
-          @if (entry.subKey) {
-            <span class="about-me__sub">{{ entry.subKey | translate }}</span>
+            <span class="about-me__year">{{ entry.yearKey | translate }}</span>
+            <span
+              class="about-me__short"
+              [class.about-me__short--strong]="!!entry.companyKey"
+              >{{ entry.shortKey | translate }}</span
+            >
+            @if (entry.subKey) {
+              <span class="about-me__sub">{{ entry.subKey | translate }}</span>
+            }
+          </button>
+          <app-about-entry-card
+            class="about-me__inline-card"
+            [entry]="entry"
+            variant="inline"
+            [active]="true"
+          />
+          @if (i === 0) {
+            <span class="about-me__phase-mobile">{{
+              'aboutMe.timeline.phaseStudy' | translate
+            }}</span>
           }
-        </button>
-        <app-about-entry-card
-          class="about-me__inline-card"
-          [entry]="entry"
-          variant="inline"
-          [active]="true"
-        />
-        @if (i === 0) {
-          <span class="about-me__phase-mobile">{{
-            'aboutMe.timeline.phaseStudy' | translate
-          }}</span>
-        }
+        </div>
       }
       <div class="about-me__node about-me__future">
         <span class="about-me__year">{{ 'aboutMe.timeline.yearFuture' | translate }}</span>
-        <span class="about-me__short about-me__short--teaser">{{
-          'aboutMe.timeline.futureText' | translate
-        }}</span>
+        <span class="about-me__short about-me__short--teaser"
+          ><span class="about-me__future-icons text-success" aria-hidden="true">⋆˙⟡</span
+          >{{ 'aboutMe.timeline.futureText' | translate }}</span
+        >
       </div>
     </div>
   </div>

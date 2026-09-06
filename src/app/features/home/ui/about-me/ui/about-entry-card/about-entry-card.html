@@ -1,12 +1,14 @@
-<h3 class="about-me-card__title about-me__detail-title">
-  @if (entry().companyKey && entry().roleKey) {
-    <span class="about-me__company">{{ entry().companyKey! | translate }}</span>
-    <span aria-hidden="true"> - </span>
-    <span class="about-me__role">{{ entry().roleKey! | translate }}</span>
-  } @else if (entry().titleKey) {
-    {{ entry().titleKey! | translate }}
-  }
-</h3>
+@if (!entry().hideTitle) {
+  <h3 class="about-me-card__title about-me__detail-title">
+    @if (entry().companyKey && entry().roleKey) {
+      <span class="about-me__company">{{ entry().companyKey! | translate }}</span>
+      <span aria-hidden="true"> - </span>
+      <span class="about-me__role">{{ entry().roleKey! | translate }}</span>
+    } @else if (entry().titleKey) {
+      {{ entry().titleKey! | translate }}
+    }
+  </h3>
+}
 <p class="about-me-card__period about-me__period">{{ entry().periodKey | translate }}</p>
 <ul class="about-me-card__items about-me__items">
   @for (itemKey of entry().itemKeys; track itemKey) {

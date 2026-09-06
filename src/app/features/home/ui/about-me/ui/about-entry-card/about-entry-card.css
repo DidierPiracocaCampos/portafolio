@@ -10,7 +10,7 @@
 :host(.about-me-card--stack) {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   border-style: solid;
   border-color: var(--color-success);
   background: var(--color-base-100);
@@ -68,6 +68,8 @@
 .about-me-card__items {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  flex: 1;
   gap: 0.3rem;
   margin: 0;
   padding-inline-start: 0;
@@ -88,4 +90,15 @@
   color: var(--color-success);
   content: '• ';
   font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  :host,
+  :host(.about-me-card--inline) {
+    padding: 0.35rem 0 0.35rem 1rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
 }

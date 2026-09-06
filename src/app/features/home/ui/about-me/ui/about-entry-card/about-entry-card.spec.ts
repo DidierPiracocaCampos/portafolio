@@ -129,4 +129,18 @@ describe('AboutEntryCard', () => {
     expect((fixture.nativeElement as HTMLElement).getAttribute('aria-hidden')).toBeNull();
     expect((fixture.nativeElement as HTMLElement).hasAttribute('inert')).toBe(false);
   });
+
+  it('should hide title when hideTitle is true but keep period and items', async () => {
+    const fixture = TestBed.createComponent(AboutEntryCard);
+    fixture.componentRef.setInput('entry', { ...axpeEntry, hideTitle: true });
+    fixture.componentRef.setInput('active', true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.about-me__detail-title')).toBeNull();
+    expect(el.querySelector('.about-me__company')).toBeNull();
+    expect(el.querySelector('.about-me__role')).toBeNull();
+    expect(el.querySelector('.about-me__period')?.textContent?.trim()).toBe('2023-present');
+    expect(el.querySelectorAll('ul.about-me__items li').length).toBe(4);
+  });
 });

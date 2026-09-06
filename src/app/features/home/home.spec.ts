@@ -77,6 +77,7 @@ describe('Home', () => {
         entries: {
           axpe: {
             period: '2023-present',
+            short: 'Angular Developer',
             company: 'AXPE Consulting',
             role: 'Angular Developer',
             items: [
@@ -178,6 +179,7 @@ describe('Home', () => {
         entries: {
           axpe: {
             period: '2023-present',
+            short: 'Desarrollador Angular',
             company: 'AXPE Consulting',
             role: 'Desarrollador Angular',
             items: [

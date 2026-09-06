@@ -194,6 +194,12 @@ describe('AboutMe', () => {
     expect(roadmap.querySelectorAll('.about-me__node').length).toBe(3);
     expect(roadmap.querySelectorAll('button.about-me__node').length).toBe(2);
     expect(el.querySelector('.about-me__future')).toBeTruthy();
+    const futureIcons = Array.from(el.querySelectorAll('.about-me__future-icons'));
+    expect(futureIcons.length).toBe(2);
+    futureIcons.forEach((icon) => {
+      expect(icon.textContent).toContain('⋆˙⟡');
+      expect(icon.getAttribute('aria-hidden')).toBe('true');
+    });
     expect(el.textContent).toContain('2021');
     expect(el.textContent).toContain('2023');
     expect(el.textContent).toContain('20 ??');
@@ -227,6 +233,12 @@ describe('AboutMe', () => {
       caption.compareDocumentPosition(axpeButton as Element) &
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
+    const segments = Array.from(mobile.querySelectorAll('.about-me__segment-mobile'));
+    expect(segments.length).toBe(2);
+    expect((segments[0] as HTMLElement).contains(caption as Node)).toBe(true);
+    expect((segments[0] as HTMLElement).querySelector('.about-me__phase-mobile')).toBe(
+      caption as unknown as Element,
+    );
   });
 
   it('should show axpe detail by default with 4 items in stack carousel', async () => {
@@ -243,11 +255,13 @@ describe('AboutMe', () => {
     ) as HTMLElement;
     expect(active).toBeTruthy();
     expect(active.querySelector('.about-me__period')?.textContent?.trim()).toBe('2023-present');
-    expect(active.querySelector('.about-me__company')?.textContent?.trim()).toBe(
-      'AXPE Consulting',
-    );
-    expect(active.querySelector('.about-me__role')?.textContent?.trim()).toBe('Angular Developer');
+    expect(active.querySelector('.about-me__detail-title')).toBeNull();
+    expect(active.querySelector('.about-me__company')).toBeNull();
+    expect(active.querySelector('.about-me__role')).toBeNull();
     expect(active.querySelectorAll('ul.about-me__items li').length).toBe(4);
+    expect(
+      fixture.nativeElement.querySelector('.about-me__roadmap')?.textContent,
+    ).toContain('AXPE Consulting');
     const roadmapButtons = Array.from(
       fixture.nativeElement.querySelectorAll('.about-me__roadmap button.about-me__node'),
     ) as HTMLButtonElement[];
@@ -291,17 +305,22 @@ describe('AboutMe', () => {
     expect(inlineCards.length).toBe(2);
     expect(mobile.textContent).toContain('Multiplatform Application Development Degree');
     expect(mobile.textContent).toContain('AXPE Consulting');
-    const nodes = Array.from(mobile.children);
-    const firstButtonIndex = nodes.findIndex((n) => n.tagName === 'BUTTON');
-    const firstCardIndex = nodes.findIndex((n) =>
-      n.tagName.toLowerCase().includes('app-about-entry-card'),
-    );
-    expect(firstButtonIndex).toBeGreaterThanOrEqual(0);
-    expect(firstCardIndex).toBeGreaterThan(firstButtonIndex);
+    const segments = Array.from(mobile.querySelectorAll('.about-me__segment-mobile'));
+    expect(segments.length).toBe(2);
+    const firstSegment = segments[0] as HTMLElement;
+    const firstButton = firstSegment.querySelector('button.about-me__node');
+    const firstCard = firstSegment.querySelector('app-about-entry-card');
+    expect(firstButton).toBeTruthy();
+    expect(firstCard).toBeTruthy();
+    expect(
+      firstButton!.compareDocumentPosition(firstCard as Element) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it('should keep DOM order title period list in detail panel', async () => {
     const fixture = TestBed.createComponent(AboutMe);
+    fixture.componentInstance.select('education');
     fixture.detectChanges();
     await fixture.whenStable();
     const active = fixture.nativeElement.querySelector(
@@ -327,9 +346,14 @@ describe('AboutMe', () => {
     expect(
       fixture.nativeElement.querySelector('.about-me__short--strong')?.textContent?.trim(),
     ).toBe('Desarrollador Angular');
-    expect(fixture.nativeElement.querySelector('#about-detail')?.textContent).toContain(
+    expect(fixture.nativeElement.querySelector('.about-me__roadmap')?.textContent).toContain(
       'Desarrollador Angular',
     );
+    expect(
+      fixture.nativeElement.querySelector(
+        '#about-detail app-about-entry-card.about-me-card--active',
+      )?.textContent,
+    ).not.toContain('AXPE Consulting - Desarrollador Angular');
     fixture.componentInstance.select('education');
     fixture.detectChanges();
     await fixture.whenStable();

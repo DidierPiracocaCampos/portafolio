@@ -8,6 +8,7 @@ export type AboutMeEntry = {
   readonly companyKey?: string;
   readonly roleKey?: string;
   readonly titleKey?: string;
+  readonly hideTitle?: boolean;
   readonly itemKeys: readonly string[];
 };
 
@@ -34,6 +35,7 @@ export const ABOUT_ME_ENTRIES: readonly AboutMeEntry[] = [
     selectLabelKey: 'aboutMe.entries.axpe.selectLabel',
     companyKey: 'aboutMe.entries.axpe.company',
     roleKey: 'aboutMe.entries.axpe.role',
+    hideTitle: true,
     itemKeys: [
       'aboutMe.entries.axpe.items.0',
       'aboutMe.entries.axpe.items.1',
