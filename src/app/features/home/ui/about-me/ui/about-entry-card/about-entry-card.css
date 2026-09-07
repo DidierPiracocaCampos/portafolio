@@ -2,7 +2,6 @@
   display: block;
   padding: 0.85rem 1rem;
   border: 2px dashed color-mix(in oklch, var(--color-success) 60%, transparent);
-  border-radius: 0.75rem;
   background: color-mix(in oklch, var(--color-success) 14%, var(--color-base-100));
   text-align: left;
 }
@@ -91,7 +90,6 @@
   :host(.about-me-card--inline) {
     padding: 0.35rem 0 0.35rem 1rem;
     border: 0;
-    border-radius: 0;
     background: transparent;
   }
 }
