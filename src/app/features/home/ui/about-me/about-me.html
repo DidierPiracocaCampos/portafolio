@@ -4,37 +4,37 @@
   <div class="about-me__intro">
     <div class="about-me__grid">
       <div class="about-me__copy">
-        <p class="about-me__paragraph"
-          >{{ 'aboutMe.intro.p1Start' | translate
-          }}<span class="about-me__hl about-me__hl--warning">{{
-            'aboutMe.intro.p1Hl1' | translate
-          }}</span
-          >{{ 'aboutMe.intro.p1Mid' | translate
-          }}<span class="about-me__hl about-me__hl--warning">{{
-            'aboutMe.intro.p1Hl2' | translate
-          }}</span
-          >{{ 'aboutMe.intro.p1End' | translate }}</p
-        >
+        <p class="about-me__paragraph">
+          {{ 'aboutMe.intro.p1Start' | translate }}
+          <span class="about-me__hl about-me__hl--warning">
+            {{ 'aboutMe.intro.p1Hl1' | translate }}
+          </span>
+          {{ 'aboutMe.intro.p1Mid' | translate }}
+          <span class="about-me__hl about-me__hl--warning">
+            {{ 'aboutMe.intro.p1Hl2' | translate }}
+          </span>
+          {{ 'aboutMe.intro.p1End' | translate }}
+        </p>
 
-        <p class="about-me__paragraph"
-          >{{ 'aboutMe.intro.p2Start' | translate
-          }}<span class="about-me__hl about-me__hl--warning">{{
-            'aboutMe.intro.p2Hl1' | translate
-          }}</span
-          >{{ 'aboutMe.intro.p2Mid1' | translate
-          }}<span class="about-me__hl about-me__hl--warning">{{
-            'aboutMe.intro.p2Hl2' | translate
-          }}</span
-          >{{ 'aboutMe.intro.p2Mid2' | translate
-          }}<span class="about-me__hl about-me__hl--warning">{{
-            'aboutMe.intro.p2Hl3' | translate
-          }}</span
-          >{{ 'aboutMe.intro.p2Mid3' | translate
-          }}<span class="about-me__hl about-me__hl--warning">{{
-            'aboutMe.intro.p2Hl4' | translate
-          }}</span
-          >{{ 'aboutMe.intro.p2End' | translate }}</p
-        >
+        <p class="about-me__paragraph">
+          {{ 'aboutMe.intro.p2Start' | translate }}
+          <span class="about-me__hl about-me__hl--warning">
+            {{ 'aboutMe.intro.p2Hl1' | translate }}
+          </span>
+          {{ 'aboutMe.intro.p2Mid1' | translate }}
+          <span class="about-me__hl about-me__hl--warning">
+            {{ 'aboutMe.intro.p2Hl2' | translate }}
+          </span>
+          {{ 'aboutMe.intro.p2Mid2' | translate }}
+          <span class="about-me__hl about-me__hl--warning">
+            {{ 'aboutMe.intro.p2Hl3' | translate }}
+          </span>
+          {{ 'aboutMe.intro.p2Mid3' | translate }}
+          <span class="about-me__hl about-me__hl--warning">
+            {{ 'aboutMe.intro.p2Hl4' | translate }}
+          </span>
+          {{ 'aboutMe.intro.p2End' | translate }}
+        </p>
       </div>
 
       <figure class="about-me__photo">
@@ -54,9 +54,9 @@
           </div>
         </div>
         <div class="about-me__photo-foot">
-          <figcaption class="about-me__photo-caption">{{
-            'aboutMe.intro.photoCaption' | translate
-          }}</figcaption>
+          <figcaption class="about-me__photo-caption">
+            {{ 'aboutMe.intro.photoCaption' | translate }}
+          </figcaption>
         </div>
       </figure>
     </div>
@@ -88,11 +88,9 @@
             (focus)="select(entry.id)"
           >
             <span class="about-me__year">{{ entry.yearKey | translate }}</span>
-            <span
-              class="about-me__short"
-              [class.about-me__short--strong]="!!entry.companyKey"
-              >{{ entry.shortKey | translate }}</span
-            >
+            <span class="about-me__short" [class.about-me__short--strong]="!!entry.companyKey">
+              {{ entry.shortKey | translate }}
+            </span>
             @if (entry.subKey) {
               <span class="about-me__sub">{{ entry.subKey | translate }}</span>
             }
@@ -100,10 +98,10 @@
         }
         <div class="about-me__node about-me__future">
           <span class="about-me__year">{{ 'aboutMe.timeline.yearFuture' | translate }}</span>
-          <span class="about-me__short about-me__short--teaser"
-            ><span class="about-me__future-icons text-success" aria-hidden="true">⋆˙⟡</span
-            >{{ 'aboutMe.timeline.futureText' | translate }}</span
-          >
+          <span class="about-me__short about-me__short--teaser">
+            <span class="about-me__future-icons text-success" aria-hidden="true">⋆˙⟡</span>
+            {{ 'aboutMe.timeline.futureText' | translate }}
+          </span>
         </div>
       </div>
     </div>
@@ -134,11 +132,9 @@
             (click)="select(entry.id)"
           >
             <span class="about-me__year">{{ entry.yearKey | translate }}</span>
-            <span
-              class="about-me__short"
-              [class.about-me__short--strong]="!!entry.companyKey"
-              >{{ entry.shortKey | translate }}</span
-            >
+            <span class="about-me__short" [class.about-me__short--strong]="!!entry.companyKey">
+              {{ entry.shortKey | translate }}
+            </span>
             @if (entry.subKey) {
               <span class="about-me__sub">{{ entry.subKey | translate }}</span>
             }
@@ -150,19 +146,21 @@
             [active]="true"
           />
           @if (i === 0) {
-            <span class="about-me__phase-mobile">{{
-              'aboutMe.timeline.phaseStudy' | translate
-            }}</span>
+            <span class="about-me__phase-mobile">
+              {{ 'aboutMe.timeline.phaseStudy' | translate }}
+            </span>
           }
         </div>
       }
       <div class="about-me__node about-me__future">
         <span class="about-me__year">{{ 'aboutMe.timeline.yearFuture' | translate }}</span>
-        <span class="about-me__short about-me__short--teaser"
-          ><span class="about-me__future-icons text-success" aria-hidden="true">⋆˙⟡</span
-          >{{ 'aboutMe.timeline.futureText' | translate }}</span
-        >
+        <span class="about-me__short about-me__short--teaser">
+          <span class="about-me__future-icons text-success" aria-hidden="true">⋆˙⟡</span>
+          {{ 'aboutMe.timeline.futureText' | translate }}
+        </span>
       </div>
     </div>
+
+    <app-skills-graph />
   </div>
 </section>

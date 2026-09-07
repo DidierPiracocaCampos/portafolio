@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
 import { TranslatePipe } from '@ngx-translate/core';
 import SectionTitle from '../../../../shared/ui/section-title/section-title';
 import AboutEntryCard from './ui/about-entry-card/about-entry-card';
+import SkillsGraph from './ui/skills-graph/skills-graph';
 import { ABOUT_ME_ENTRIES } from './models/about-me-entry';
 
 @Component({
   selector: 'app-about-me',
-  imports: [TranslatePipe, SectionTitle, AboutEntryCard],
+  imports: [TranslatePipe, SectionTitle, AboutEntryCard, SkillsGraph],
   templateUrl: './about-me.html',
   styleUrl: './about-me.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -85,6 +85,15 @@
       "futureText": "¡Tú puedes ser el próximo! :D",
       "selectEducation": "Ver detalle de estudios",
       "selectAxpe": "Ver detalle de experiencia laboral"
+    },
+    "skills": {
+      "title": "// skills",
+      "command": "skills --graph --live",
+      "hint": "arrastra los nodos • pasa el cursor para ver conexiones",
+      "swipe": "desliza ↔ para explorar",
+      "reset": "restablecer posiciones",
+      "nodes": "nodos",
+      "label": "Grafo de habilidades técnicas"
     }
   },
   "projects": {

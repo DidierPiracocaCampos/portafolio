@@ -90,12 +90,7 @@
   padding: 0.5rem;
   border-radius: var(--radius-box, 0.75rem);
   overflow: hidden;
-  box-shadow:
-    0 18px 45px color-mix(in oklch, var(--color-warning) 18%, transparent),
-    0 6px 18px color-mix(in oklch, var(--color-base-content) 18%, transparent);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .about-me__frame:hover {
@@ -261,7 +256,6 @@ button.about-me__node:hover::before {
 .about-me__node--active::before {
   top: -18px;
   height: 18px;
-  box-shadow: 0 0 10px var(--color-success);
 }
 
 .about-me__node--active .about-me__short {

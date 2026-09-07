@@ -85,6 +85,15 @@
       "futureText": "You can be here next! :D",
       "selectEducation": "Show education details",
       "selectAxpe": "Show work experience details"
+    },
+    "skills": {
+      "title": "// skills",
+      "command": "skills --graph --live",
+      "hint": "drag nodes • hover to see connections",
+      "swipe": "swipe ↔ to explore",
+      "reset": "reset positions",
+      "nodes": "nodes",
+      "label": "Technical skills graph"
     }
   },
   "projects": {

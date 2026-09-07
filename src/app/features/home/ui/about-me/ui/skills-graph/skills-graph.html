@@ -1,0 +1,86 @@
+<div
+  class="skills-graph"
+  [class.skills-graph--visible]="revealed()"
+  [class.skills-graph--dragging]="draggingId() !== null"
+>
+  <div class="skills-graph__head">
+    <p class="skills-graph__title">{{ 'aboutMe.skills.title' | translate }}</p>
+    <button
+      type="button"
+      class="skills-graph__reset btn btn-ghost btn-xs"
+      (click)="resetPositions()"
+    >
+      {{ 'aboutMe.skills.reset' | translate }}
+    </button>
+  </div>
+
+  <p class="skills-graph__hint">
+    {{ 'aboutMe.skills.hint' | translate }}
+    <span class="skills-graph__hint-swipe">{{ 'aboutMe.skills.swipe' | translate }}</span>
+  </p>
+
+  <div class="skills-graph__scroll">
+    <svg
+      class="skills-graph__canvas"
+      [attr.viewBox]="'0 0 ' + viewWidth + ' ' + viewHeight"
+      role="img"
+      [attr.aria-label]="'aboutMe.skills.label' | translate"
+      (pointermove)="onPointerMove($event)"
+      (pointerup)="onPointerUp()"
+      (pointercancel)="onPointerUp()"
+      (pointerleave)="onPointerUp()"
+    >
+      <g class="skills-graph__edges" aria-hidden="true">
+        @for (edge of edges; track edge.from + '-' + edge.to) {
+          <line
+            class="skills-graph__edge"
+            [class.skills-graph__edge--active]="isActiveEdge(edge.from, edge.to)"
+            [class.skills-graph__edge--dimmed]="isDimmedEdge(edge.from, edge.to)"
+            [attr.x1]="position(edge.from).x"
+            [attr.y1]="position(edge.from).y"
+            [attr.x2]="position(edge.to).x"
+            [attr.y2]="position(edge.to).y"
+          />
+        }
+      </g>
+
+      @for (node of nodes; track node.id) {
+        <g
+          class="skills-graph__node"
+          [class.skills-graph__node--hot]="isHotNode(node.id)"
+          [class.skills-graph__node--drag]="draggingId() === node.id"
+          [attr.data-node]="node.id"
+          [attr.transform]="'translate(' + position(node.id).x + ' ' + position(node.id).y + ')'"
+          [attr.tabindex]="0"
+          role="button"
+          [attr.aria-label]="node.label + ' (' + connectedCount(node.id) + ')'"
+          (pointerdown)="onPointerDown($event, node.id)"
+          (mouseenter)="hover(node.id)"
+          (mouseleave)="hover(null)"
+          (focus)="hover(node.id)"
+          (blur)="hover(null)"
+          (keydown)="onKeyDown($event, node.id)"
+        >
+          <circle class="skills-graph__circle" r="26" cx="0" cy="0" />
+          <image
+            class="skills-graph__img"
+            [class.skills-graph__img--invert]="node.id === 'github'"
+            [attr.href]="node.icon"
+            x="-14"
+            y="-14"
+            width="28"
+            height="28"
+            [attr.aria-hidden]="true"
+          />
+          <text class="skills-graph__label" y="42" text-anchor="middle">{{ node.label }}</text>
+        </g>
+      }
+    </svg>
+  </div>
+
+  <ul class="sr-only">
+    @for (node of nodes; track node.id) {
+      <li>{{ node.label }}</li>
+    }
+  </ul>
+</div>
