@@ -9,13 +9,15 @@ const enTranslations = {
     labels: {
       status: 'STATUS',
       tech: 'TECH',
-      link: 'LINK',
+      description: 'DESCRIPTION',
     },
     status: {
       completed: 'completed',
     },
     actions: {
       github: 'View code on GitHub',
+      website: 'View live site',
+      instagram: 'View on Instagram',
       figma: 'View design on Figma',
       projectLinks: 'Links for',
     },
@@ -42,13 +44,15 @@ const esTranslations = {
     labels: {
       status: 'ESTADO',
       tech: 'TECNOLOGÍAS',
-      link: 'ENLACE',
+      description: 'DESCRIPCIÓN',
     },
     status: {
       completed: 'completado',
     },
     actions: {
       github: 'Ver código en GitHub',
+      website: 'Ver sitio web',
+      instagram: 'Ver en Instagram',
       figma: 'Ver diseño en Figma',
       projectLinks: 'Enlaces de',
     },
@@ -89,18 +93,40 @@ describe('Projects', () => {
     const fixture = TestBed.createComponent(Projects);
     expect(fixture.componentInstance.projects.map((project) => project.id)).toEqual([
       'devhelper',
-      'spot',
       'devformfx',
+      'spot',
     ]);
   });
 
-  it('should use the shared placeholder image path', () => {
+  it('should use real project image paths', () => {
     const fixture = TestBed.createComponent(Projects);
-    expect(
-      fixture.componentInstance.projects.every(
-        (project) => project.imageSrc === '/images/projects/project-placeholder.svg',
-      ),
-    ).toBe(true);
+    expect(fixture.componentInstance.projects.map((project) => project.imageSrc)).toEqual([
+      '/images/projects/devhelper.webp',
+      '/images/projects/devformfx.webp',
+      '/images/projects/spot.webp',
+    ]);
+  });
+
+  it('should expose configurable links per project', () => {
+    const fixture = TestBed.createComponent(Projects);
+    const byId = new Map(
+      fixture.componentInstance.projects.map((project) => [project.id, project] as const),
+    );
+
+    expect(byId.get('devhelper')?.links.map((link) => link.kind)).toEqual([
+      'website',
+      'github',
+      'instagram',
+      'figma',
+    ]);
+    expect(byId.get('devhelper')?.links.map((link) => link.url)).toEqual([
+      'https://devhelper.didierpiracoca.com/',
+      'https://github.com/DidierPiracocaCampos/DevHelper',
+      'https://www.instagram.com/devhelper_startup/',
+      expect.stringContaining('figma.com'),
+    ]);
+    expect(byId.get('devformfx')?.links.map((link) => link.kind)).toEqual(['github']);
+    expect(byId.get('spot')?.links.map((link) => link.kind)).toEqual(['github', 'instagram']);
   });
 
   it('should render the section heading and three project articles', async () => {
@@ -129,17 +155,19 @@ describe('Projects', () => {
     );
 
     expect(order).toEqual(['projects__preview', 'projects__panel']);
-    expect(article.querySelector('figcaption')?.textContent?.trim()).toBe('DevHelper');
+    expect(article.querySelector('figcaption')).toBeFalsy();
     expect(article.querySelector('dl')).toBeTruthy();
     expect(article.querySelectorAll('dt').length).toBe(3);
     expect(article.querySelectorAll('dd').length).toBe(3);
+    const dts = Array.from(article.querySelectorAll('dt')).map((el) => el.textContent?.trim());
+    expect(dts).toEqual(['STATUS', 'TECH', 'DESCRIPTION']);
     const dds = Array.from(article.querySelectorAll('dd')).map((el) => el.textContent?.trim());
     expect(dds[0]).toBe('completed');
     expect(dds[1]).toBe('Angular, Tailwind, Firebase');
     expect(dds[2]).toBe('Desktop application for application development.');
   });
 
-  it('should keep image alt translated and caption in place', async () => {
+  it('should keep image alt translated without caption banner', async () => {
     const fixture = TestBed.createComponent(Projects);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -148,7 +176,8 @@ describe('Projects', () => {
     const img = firstArticle.querySelector('img') as HTMLImageElement;
     expect(img.getAttribute('alt')).toBe('DevHelper preview');
     expect(firstArticle.querySelector('figure')).toBeTruthy();
-    expect(firstArticle.querySelector('figcaption')?.textContent?.trim()).toBe('DevHelper');
+    expect(firstArticle.querySelector('figcaption')).toBeFalsy();
+    expect(firstArticle.querySelector('.projects__caption')).toBeFalsy();
   });
 
   it('should switch project heading, status and description to Spanish', async () => {
@@ -168,6 +197,11 @@ describe('Projects', () => {
     expect(fixture.nativeElement.textContent).toContain(
       'Aplicación de escritorio para el desarrollo de aplicaciones.',
     );
+    const dts = Array.from(fixture.nativeElement.querySelectorAll('dt')).map((el) =>
+      (el as HTMLElement).textContent?.trim(),
+    );
+    expect(dts).toContain('DESCRIPCIÓN');
+    expect(dts).not.toContain('ENLACE');
   });
 
   it('should expose the expected visual hooks', async () => {
@@ -193,7 +227,31 @@ describe('Projects', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(fixture.nativeElement.querySelectorAll('.projects__action').length).toBe(0);
+    // After refactor every project defines at least one link.
+    // DevHelper 4, DevFormFX 1, SPOT 2 = 7 icon-only actions.
+    expect(fixture.nativeElement.querySelectorAll('.projects__action').length).toBe(7);
+  });
+
+  it('should render icon-only project links with accessible labels', async () => {
+    const fixture = TestBed.createComponent(Projects);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const articles = fixture.nativeElement.querySelectorAll('article');
+    const firstLinks = articles[0].querySelectorAll('.projects__action') as NodeListOf<HTMLElement>;
+    expect(firstLinks.length).toBe(4);
+    expect(firstLinks[0].getAttribute('href')).toBe('https://devhelper.didierpiracoca.com/');
+    expect(firstLinks[1].getAttribute('href')).toBe(
+      'https://github.com/DidierPiracocaCampos/DevHelper',
+    );
+    expect(firstLinks[0].getAttribute('target')).toBe('_blank');
+    expect(firstLinks[0].getAttribute('rel')).toContain('noopener');
+    expect(firstLinks[1].getAttribute('aria-label')).toBe('View code on GitHub DevHelper');
+    expect(articles[0].querySelector('nav.projects__actions')?.getAttribute('aria-label')).toBe(
+      'Links for DevHelper',
+    );
+    expect(articles[1].querySelectorAll('.projects__action').length).toBe(1);
+    expect(articles[2].querySelectorAll('.projects__action').length).toBe(2);
   });
 
   it('should render each card with accessible article label', async () => {
@@ -203,7 +261,7 @@ describe('Projects', () => {
 
     const articles = fixture.nativeElement.querySelectorAll('article');
     expect(articles[0].getAttribute('aria-labelledby')).toBe('project-devhelper-title');
-    expect(articles[1].getAttribute('aria-labelledby')).toBe('project-spot-title');
-    expect(articles[2].getAttribute('aria-labelledby')).toBe('project-devformfx-title');
+    expect(articles[1].getAttribute('aria-labelledby')).toBe('project-devformfx-title');
+    expect(articles[2].getAttribute('aria-labelledby')).toBe('project-spot-title');
   });
 });

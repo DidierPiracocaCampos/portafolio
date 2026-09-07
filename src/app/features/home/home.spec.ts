@@ -110,13 +110,15 @@ describe('Home', () => {
         labels: {
           status: 'STATUS',
           tech: 'TECH',
-          link: 'LINK',
+          description: 'DESCRIPTION',
         },
         status: {
           completed: 'completed',
         },
         actions: {
           github: 'View code on GitHub',
+          website: 'View live site',
+          instagram: 'View on Instagram',
           figma: 'View design on Figma',
           projectLinks: 'Links for',
         },
@@ -212,13 +214,15 @@ describe('Home', () => {
         labels: {
           status: 'ESTADO',
           tech: 'TECNOLOGÍAS',
-          link: 'ENLACE',
+          description: 'DESCRIPCIÓN',
         },
         status: {
           completed: 'completado',
         },
         actions: {
           github: 'Ver código en GitHub',
+          website: 'Ver sitio web',
+          instagram: 'Ver en Instagram',
           figma: 'Ver diseño en Figma',
           projectLinks: 'Enlaces de',
         },

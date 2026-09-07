@@ -101,28 +101,30 @@
     "labels": {
       "status": "STATUS",
       "tech": "TECH",
-      "link": "LINK"
+      "description": "DESCRIPTION"
     },
     "status": {
       "completed": "completed"
     },
     "actions": {
       "github": "View code on GitHub",
+      "website": "View live site",
+      "instagram": "View on Instagram",
       "figma": "View design on Figma",
       "projectLinks": "Links for"
     },
     "items": {
       "devhelper": {
-        "description": "Desktop application focused on the development and maintenance of software projects.",
-        "imageAlt": "DevHelper preview, desktop application for developers"
+        "description": "Encrypted technical memory for developers. Centralizes errors, solutions, passwords and files in one workspace with an AES-GCM vault unlocked by PIN or Passkey.",
+        "imageAlt": "DevHelper preview, encrypted workspace for developers"
       },
       "spot": {
-        "description": "Multiplatform application built to manage and organize projects.",
-        "imageAlt": "SPOT preview, multiplatform application"
+        "description": "Mobile app for skaters: discover skateparks and spots, connect with the community, share tricks, build your profile and browse the integrated shop.",
+        "imageAlt": "SPOT preview, mobile app for skaters"
       },
       "devformfx": {
-        "description": "Desktop application for creating and managing application interfaces and components.",
-        "imageAlt": "DevFormFX preview, desktop application"
+        "description": "Java library for dynamic JavaFX forms. Define layouts with rows and columns via DevFormBuilder and plug in custom inputs and actions.",
+        "imageAlt": "DevFormFX preview, Java library for dynamic forms"
       }
     }
   },

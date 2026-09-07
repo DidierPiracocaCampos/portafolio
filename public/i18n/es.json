@@ -101,28 +101,30 @@
     "labels": {
       "status": "ESTADO",
       "tech": "TECNOLOGÍAS",
-      "link": "ENLACE"
+      "description": "DESCRIPCIÓN"
     },
     "status": {
       "completed": "completado"
     },
     "actions": {
       "github": "Ver código en GitHub",
+      "website": "Ver sitio web",
+      "instagram": "Ver en Instagram",
       "figma": "Ver diseño en Figma",
       "projectLinks": "Enlaces de"
     },
     "items": {
       "devhelper": {
-        "description": "Aplicación de escritorio orientada al desarrollo y mantenimiento de proyectos de software.",
-        "imageAlt": "Vista previa de DevHelper, aplicación de escritorio para desarrolladores"
+        "description": "Memoria técnica cifrada para desarrolladores. Centraliza errores, soluciones, passwords y ficheros en un workspace con vault AES-GCM por PIN o Passkey.",
+        "imageAlt": "Vista previa de DevHelper, workspace cifrado para desarrolladores"
       },
       "spot": {
-        "description": "Aplicación multiplataforma desarrollada para gestionar y organizar proyectos.",
-        "imageAlt": "Vista previa de SPOT, aplicación multiplataforma"
+        "description": "App móvil para skaters: descubre skateparks y spots, conecta con la comunidad, comparte trucos, crea tu perfil y explora la tienda integrada.",
+        "imageAlt": "Vista previa de SPOT, app móvil para skaters"
       },
       "devformfx": {
-        "description": "Aplicación de escritorio para crear y gestionar interfaces y componentes de aplicaciones.",
-        "imageAlt": "Vista previa de DevFormFX, aplicación de escritorio"
+        "description": "Librería Java para formularios dinámicos en JavaFX. Define el layout con filas y columnas con DevFormBuilder e integra inputs y acciones a medida.",
+        "imageAlt": "Vista previa de DevFormFX, librería Java para formularios dinámicos"
       }
     }
   },
