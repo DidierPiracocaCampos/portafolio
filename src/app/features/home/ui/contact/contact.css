@@ -6,7 +6,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
+  padding-block: 0 clamp(1.5rem, 5vw, 2.5rem);
+  padding-inline: clamp(1rem, 4vw, 2rem);
   background: var(--color-base-100);
   color: var(--color-base-content);
 }
@@ -25,7 +26,7 @@
   font-family: var(--font-sans), ui-monospace, monospace;
   font-size: clamp(0.85rem, 2vw, 1rem);
   line-height: 1.5;
-  text-align: center;
+  text-align: left;
 }
 
 .contact__form {
@@ -72,8 +73,14 @@
 
 .contact__field input:focus-visible,
 .contact__field textarea:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-primary);
   outline-offset: 3px;
+  border-color: var(--color-primary);
+}
+
+.contact__field input:focus,
+.contact__field textarea:focus {
+  border-color: var(--color-primary);
 }
 
 .contact__field input[aria-invalid='true'],
@@ -122,12 +129,40 @@
   gap: 0.45rem;
   margin-block-start: 1rem;
   color: var(--color-base-content);
+  font-family: var(--font-sans), ui-monospace, monospace;
   font-size: clamp(0.85rem, 2vw, 1rem);
   line-height: 1.5;
+  text-align: left;
+}
+
+/* Sin estado que mostrar: colapsa el bloque para no dejar
+   1rem de margen vacío debajo del botón en móvil. */
+.contact__feedback:not(:has(p)) {
+  display: none;
+  margin-block-start: 0;
 }
 
 .contact__feedback p {
   margin: 0;
+}
+
+.contact__status {
+  overflow-wrap: anywhere;
+}
+
+.contact__status--submitting,
+.contact__status--cooldown {
+  color: color-mix(in oklch, var(--color-base-content) 82%, transparent);
+}
+
+.contact__status--success {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+.contact__status--error {
+  color: var(--color-error);
+  font-weight: 700;
 }
 
 @media (max-width: 360px) {

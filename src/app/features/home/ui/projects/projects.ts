@@ -57,7 +57,7 @@ const PROJECTS: readonly Project[] = [
     imageSrc: '/images/projects/spot.webp',
     imageAltKey: 'projects.items.spot.imageAlt',
     statusKey: 'projects.status.completed',
-    technologies: 'Android, Java, Gradle',
+    technologies: 'Android, Java, Gradle, Firebase',
     descriptionKey: 'projects.items.spot.description',
     links: [
       { kind: 'github', url: 'https://github.com/DidierPiracocaCampos/SPOT' },

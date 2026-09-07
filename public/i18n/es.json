@@ -115,7 +115,7 @@
     },
     "items": {
       "devhelper": {
-        "description": "Memoria técnica cifrada para desarrolladores. Centraliza errores, soluciones, passwords y ficheros en un workspace con vault AES-GCM por PIN o Passkey.",
+        "description": "Tu memoria técnica cifrada en un solo lugar. Centraliza proyectos, errores, soluciones, passwords y ficheros con cifrado client-side desbloqueado por PIN o Passkey.",
         "imageAlt": "Vista previa de DevHelper, workspace cifrado para desarrolladores"
       },
       "spot": {
@@ -149,15 +149,23 @@
       "messageTooLong": "El mensaje debe tener 2.000 caracteres o menos."
     },
     "status": {
-      "submitting": "Enviando...",
-      "success": "Mensaje enviado correctamente.",
-      "error": "No se pudo enviar el mensaje. Intentalo de nuevo.",
-      "cooldown": "Espera {{seconds}} segundos antes de volver a enviar."
+      "submitting": "> enviando mensaje...",
+      "success": "> mensaje enviado [OK]",
+      "error": "> error: envío fallido [FAIL] — reintenta",
+      "cooldown": "> espera {{seconds}}s para reenviar..."
     }
   },
   "seo": {
     "title": "Desarrollador de Aplicaciones Multiplataforma | Angular, Java y Spring",
     "description": "Portfolio de Didier Piracoca, desarrollador de aplicaciones multiplataforma especializado en Angular y desarrollo frontend. Experiencia con Java, Spring MVC, Ionic, SQL, Firebase y desarrollo full-stack."
+  },
+  "footer": {
+    "navLabel": "Enlaces de contacto",
+    "emailLabel": "Enviar correo a piracocadidier@gmail.com",
+    "githubLabel": "Ver GitHub de Didier",
+    "linkedinLabel": "Ver LinkedIn de Didier",
+    "rights": "Todos los derechos reservados.",
+    "builtWith": "Hecho con Angular"
   },
   "theme": {
     "toggle": "Cambiar tema"

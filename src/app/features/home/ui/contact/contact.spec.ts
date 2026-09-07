@@ -26,10 +26,10 @@ const translations = {
       messageTooLong: 'Message must be 2,000 characters or fewer.',
     },
     status: {
-      submitting: 'Sending...',
-      success: 'Message sent successfully.',
-      error: 'The message could not be sent. Please try again.',
-      cooldown: 'Wait {{seconds}} seconds before sending again.',
+      submitting: '> sending message...',
+      success: '> message sent [OK]',
+      error: '> error: send failed [FAIL] — retry',
+      cooldown: '> wait {{seconds}}s to resend...',
     },
   },
 };
@@ -56,10 +56,10 @@ const esTranslations = {
       messageTooLong: 'El mensaje debe tener 2.000 caracteres o menos.',
     },
     status: {
-      submitting: 'Enviando...',
-      success: 'Mensaje enviado correctamente.',
-      error: 'No se pudo enviar el mensaje. Intentalo de nuevo.',
-      cooldown: 'Espera {{seconds}} segundos antes de volver a enviar.',
+      submitting: '> enviando mensaje...',
+      success: '> mensaje enviado [OK]',
+      error: '> error: envío fallido [FAIL] — reintenta',
+      cooldown: '> espera {{seconds}}s para reenviar...',
     },
   },
 };
@@ -272,7 +272,7 @@ describe('Contact', () => {
       message: 'Hello from the form',
     });
     expect(fixture.componentInstance.submitState()).toBe('success');
-    expect(fixture.nativeElement.textContent).toContain('Message sent successfully');
+    expect(fixture.nativeElement.textContent).toContain('message sent [OK]');
     fixture.destroy();
   });
 
@@ -296,7 +296,7 @@ describe('Contact', () => {
 
     expect(submit).not.toHaveBeenCalled();
     expect(fixture.componentInstance.cooldownRemaining()).toBeGreaterThan(0);
-    expect(fixture.nativeElement.textContent).toContain('Wait');
+    expect(fixture.nativeElement.textContent).toContain('to resend');
     fixture.destroy();
   });
 
@@ -346,7 +346,7 @@ describe('Contact', () => {
     await fixture.whenStable();
 
     expect(fixture.componentInstance.submitState()).toBe('error');
-    expect(fixture.nativeElement.textContent).toContain('could not be sent');
+    expect(fixture.nativeElement.textContent).toContain('send failed [FAIL]');
     fixture.destroy();
   });
 

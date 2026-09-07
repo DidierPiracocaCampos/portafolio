@@ -115,7 +115,7 @@
     },
     "items": {
       "devhelper": {
-        "description": "Encrypted technical memory for developers. Centralizes errors, solutions, passwords and files in one workspace with an AES-GCM vault unlocked by PIN or Passkey.",
+        "description": "Your encrypted technical memory in one place. Centralizes projects, errors, solutions, passwords and files with client-side encryption unlocked by PIN or Passkey.",
         "imageAlt": "DevHelper preview, encrypted workspace for developers"
       },
       "spot": {
@@ -149,15 +149,23 @@
       "messageTooLong": "Message must be 2,000 characters or fewer."
     },
     "status": {
-      "submitting": "Sending...",
-      "success": "Message sent successfully.",
-      "error": "The message could not be sent. Please try again.",
-      "cooldown": "Wait {{seconds}} seconds before sending again."
+      "submitting": "> sending message...",
+      "success": "> message sent [OK]",
+      "error": "> error: send failed [FAIL] — retry",
+      "cooldown": "> wait {{seconds}}s to resend..."
     }
   },
   "seo": {
     "title": "Multiplatform Application Developer | Angular, Java and Spring",
     "description": "Portfolio of Didier Piracoca, multiplatform application developer specialized in Angular and frontend development. Experience with Java, Spring MVC, Ionic, SQL, Firebase and full-stack development."
+  },
+  "footer": {
+    "navLabel": "Contact links",
+    "emailLabel": "Send email to piracocadidier@gmail.com",
+    "githubLabel": "View Didier's GitHub",
+    "linkedinLabel": "View Didier's LinkedIn",
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Angular"
   },
   "theme": {
     "toggle": "Toggle theme"

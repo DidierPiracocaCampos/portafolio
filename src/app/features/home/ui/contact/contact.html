@@ -70,16 +70,22 @@
 
     <div class="contact__feedback" aria-live="polite" aria-atomic="true">
       @if (submitState() === 'submitting') {
-        <p role="status">{{ 'contact.status.submitting' | translate }}</p>
+        <p class="contact__status contact__status--submitting" role="status">
+          {{ 'contact.status.submitting' | translate }}
+        </p>
       }
       @if (submitState() === 'success') {
-        <p role="status">{{ 'contact.status.success' | translate }}</p>
+        <p class="contact__status contact__status--success" role="status">
+          {{ 'contact.status.success' | translate }}
+        </p>
       }
       @if (submitState() === 'error') {
-        <p role="alert">{{ 'contact.status.error' | translate }}</p>
+        <p class="contact__status contact__status--error" role="alert">
+          {{ 'contact.status.error' | translate }}
+        </p>
       }
       @if (cooldownRemaining() > 0) {
-        <p role="status">
+        <p class="contact__status contact__status--cooldown" role="status">
           {{ 'contact.status.cooldown' | translate: { seconds: cooldownRemaining() } }}
         </p>
       }

@@ -158,11 +158,19 @@ describe('Home', () => {
           messageTooLong: 'Message must be 2,000 characters or fewer.',
         },
         status: {
-          submitting: 'Sending...',
-          success: 'Message sent successfully.',
-          error: 'The message could not be sent. Please try again.',
-          cooldown: 'Wait {{seconds}} seconds before sending again.',
+          submitting: '> sending message...',
+          success: '> message sent [OK]',
+          error: '> error: send failed [FAIL] — retry',
+          cooldown: '> wait {{seconds}}s to resend...',
         },
+      },
+      footer: {
+        navLabel: 'Contact links',
+        emailLabel: 'Send email to piracocadidier@gmail.com',
+        githubLabel: "View Didier's GitHub",
+        linkedinLabel: "View Didier's LinkedIn",
+        rights: 'All rights reserved.',
+        builtWith: 'Built with Angular',
       },
     });
     translate.setTranslation('es', {
@@ -262,11 +270,19 @@ describe('Home', () => {
           messageTooLong: 'El mensaje debe tener 2.000 caracteres o menos.',
         },
         status: {
-          submitting: 'Enviando...',
-          success: 'Mensaje enviado correctamente.',
-          error: 'No se pudo enviar el mensaje. Intentalo de nuevo.',
-          cooldown: 'Espera {{seconds}} segundos antes de volver a enviar.',
+          submitting: '> enviando mensaje...',
+          success: '> mensaje enviado [OK]',
+          error: '> error: envío fallido [FAIL] — reintenta',
+          cooldown: '> espera {{seconds}}s para reenviar...',
         },
+      },
+      footer: {
+        navLabel: 'Enlaces de contacto',
+        emailLabel: 'Enviar correo a piracocadidier@gmail.com',
+        githubLabel: 'Ver GitHub de Didier',
+        linkedinLabel: 'Ver LinkedIn de Didier',
+        rights: 'Todos los derechos reservados.',
+        builtWith: 'Hecho con Angular',
       },
     });
     await firstValueFrom(translate.use('en'));
