@@ -130,3 +130,18 @@
     transition: none;
   }
 }
+
+/* Contacto: altura natural en vez de forzar 100dvh.
+   Evita el hueco vacío debajo del formulario en móvil,
+   donde el contenido es más corto que el viewport. */
+:host:has(.contact) {
+  min-height: 0;
+}
+
+:host:has(.contact) .terminal-section {
+  min-height: 0;
+}
+
+:host:has(.contact) .terminal-section__content {
+  flex: 0 1 auto;
+}
