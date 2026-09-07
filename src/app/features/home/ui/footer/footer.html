@@ -1,0 +1,62 @@
+<footer class="footer footer-center footer__root">
+  <nav class="footer__links" [attr.aria-label]="'footer.navLabel' | translate">
+    <a
+      class="link link-hover footer__link text-primary!"
+      href="mailto:piracocadidier@gmail.com"
+      [attr.aria-label]="'footer.emailLabel' | translate"
+    >
+      <svg
+        class="footer__icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3.5 7 8.5 6 8.5-6" />
+      </svg>
+      <span class="footer__link-text">piracocadidier@gmail.com</span>
+    </a>
+
+    <a
+      class="link link-hover footer__link text-secondary"
+      href="https://github.com/DidierPiracocaCampos"
+      target="_blank"
+      rel="noopener noreferrer"
+      [attr.aria-label]="'footer.githubLabel' | translate"
+    >
+      <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path
+          fill="currentColor"
+          d="M12 2.5a9.5 9.5 0 0 0-3 18.51c.47.09.64-.2.64-.45v-1.73c-2.61.57-3.16-1.25-3.16-1.25-.43-1.1-1.04-1.39-1.04-1.39-.85-.58.06-.57.06-.57.94.07 1.44.97 1.44.97.83 1.43 2.18 1.02 2.71.78.08-.61.33-1.02.59-1.25-2.08-.24-4.27-1.04-4.27-4.62 0-1.02.36-1.85.97-2.5-.1-.24-.42-1.2.09-2.5 0 0 .79-.25 2.6.96a8.94 8.94 0 0 1 4.74 0c1.8-1.21 2.59-.96 2.59-.96.51 1.3.19 2.26.1 2.5.6.65.96 1.48.96 2.5 0 3.59-2.2 4.38-4.29 4.61.34.29.64.85.64 1.72v2.54c0 .25.17.55.65.45A9.5 9.5 0 0 0 12 2.5Z"
+        />
+      </svg>
+      <span class="footer__link-text">GitHub</span>
+    </a>
+
+    <a
+      class="link link-hover footer__link text-info"
+      href="https://www.linkedin.com/in/didier-estiben-piracoca-campos-460828216/"
+      target="_blank"
+      rel="noopener noreferrer"
+      [attr.aria-label]="'footer.linkedinLabel' | translate"
+    >
+      <svg class="footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path
+          fill="currentColor"
+          d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.55V9h3.57v11.45Z"
+        />
+      </svg>
+      <span class="footer__link-text">LinkedIn</span>
+    </a>
+  </nav>
+
+  <aside class="footer__copy">
+    <p class="footer__line">© 2026 Didier Piracoca — {{ 'footer.rights' | translate }}</p>
+    <p class="footer__line footer__built">{{ 'footer.builtWith' | translate }}</p>
+  </aside>
+</footer>

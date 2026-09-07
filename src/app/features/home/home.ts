@@ -3,6 +3,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import TerminalSection from '../../shared/ui/terminal-section/terminal-section';
 import Contact from './ui/contact/contact';
 import AboutMe from './ui/about-me/about-me';
+import Footer from './ui/footer/footer';
 import Presentation from './ui/presentation/presentation';
 import Projects from './ui/projects/projects';
 
@@ -19,7 +20,7 @@ type SequenceStep = (typeof SEQUENCE_STEP)[keyof typeof SEQUENCE_STEP];
 
 @Component({
   selector: 'app-home',
-  imports: [TerminalSection, Presentation, AboutMe, Projects, Contact, TranslatePipe],
+  imports: [TerminalSection, Presentation, AboutMe, Projects, Contact, Footer, TranslatePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
