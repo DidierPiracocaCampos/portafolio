@@ -26,8 +26,8 @@ describe('CvDownload', () => {
     fixture.detectChanges();
     const anchor = fixture.nativeElement.querySelector('a.cv-download') as HTMLAnchorElement;
     expect(anchor).toBeTruthy();
-    expect(anchor.getAttribute('href')).toBe('/documents/cv-didier_piracoca.pdf');
-    expect(anchor.getAttribute('download')).toBe('cv-didier_piracoca.pdf');
+    expect(anchor.getAttribute('href')).toBe('/documents/cv_didier_piracoca.pdf');
+    expect(anchor.getAttribute('download')).toBe('cv_didier_piracoca.pdf');
     expect(anchor.getAttribute('rel')).toBe('noopener');
     expect(anchor.classList.contains('btn')).toBe(true);
     expect(anchor.classList.contains('btn-primary')).toBe(true);
