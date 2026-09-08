@@ -169,5 +169,8 @@
   },
   "theme": {
     "toggle": "Toggle theme"
+  },
+  "cv": {
+    "downloadLabel": "Download CV"
   }
 }

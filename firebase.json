@@ -30,7 +30,7 @@
         ]
       },
       {
-        "source": "/@(images|i18n|fonts)/**",
+        "source": "/@(images|i18n|fonts|documents)/**",
         "headers": [
           {
             "key": "Cache-Control",

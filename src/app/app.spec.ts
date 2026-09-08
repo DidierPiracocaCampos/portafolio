@@ -39,6 +39,7 @@ describe('App', () => {
     );
     expect(compiled.querySelector('.app-shell__prompt')).toBeFalsy();
     expect(compiled.querySelector('.app-shell__cursor')).toBeFalsy();
+    expect(compiled.querySelector('.app-shell__actions app-cv-download')).toBeTruthy();
     expect(compiled.querySelector('.app-shell__actions app-language-switcher')).toBeTruthy();
     expect(compiled.querySelector('.app-shell__main')).toBeTruthy();
     expect(compiled.querySelector('.app-shell__frame')).toBeTruthy();
@@ -64,6 +65,7 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const actions = compiled.querySelector('.app-shell__actions');
     expect(actions).toBeTruthy();
+    expect(actions?.querySelector('app-cv-download')).toBeTruthy();
     expect(actions?.querySelector('app-theme-toggle')).toBeTruthy();
     expect(actions?.querySelector('app-language-switcher')).toBeTruthy();
     expect(compiled.querySelectorAll('.app-shell__header').length).toBe(1);
@@ -88,5 +90,27 @@ describe('App', () => {
     expect(switcher).toBeTruthy();
     // Theme toggle is rendered before language switcher
     expect(toggle?.nextElementSibling).toBe(switcher);
+  });
+
+  it('should render cv download inside header actions before theme toggle', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const actions = compiled.querySelector('.app-shell__actions');
+    expect(actions).toBeTruthy();
+    const cv = actions?.querySelector('app-cv-download');
+    const toggle = actions?.querySelector('app-theme-toggle');
+    const switcher = actions?.querySelector('app-language-switcher');
+    expect(cv).toBeTruthy();
+    expect(toggle).toBeTruthy();
+    expect(switcher).toBeTruthy();
+    // CV download is first, then theme toggle, then language switcher
+    expect(cv?.nextElementSibling).toBe(toggle);
+    expect(toggle?.nextElementSibling).toBe(switcher);
+    const link = cv?.querySelector('a.cv-download') as HTMLAnchorElement | null;
+    expect(link).toBeTruthy();
+    expect(link?.getAttribute('href')).toBe('/documents/cv-didier_piracoca.pdf');
+    expect(link?.getAttribute('download')).toBe('cv-didier_piracoca.pdf');
+    expect(link?.getAttribute('rel')).toBe('noopener');
   });
 });

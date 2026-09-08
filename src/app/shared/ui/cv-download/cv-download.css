@@ -1,0 +1,9 @@
+:host {
+  display: inline-flex;
+}
+
+.cv-download {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
