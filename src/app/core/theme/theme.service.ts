@@ -6,6 +6,8 @@ export type AppTheme = (typeof THEMES)[number];
 
 const STORAGE_KEY = 'theme';
 const DEFAULT_THEME: AppTheme = 'gold';
+/** Color de la barra del navegador móvil (base-100 de cada tema). Mantener en sync con index.html. */
+const THEME_COLOR: Record<AppTheme, string> = { gold: '#0b0b0d', goldlight: '#f7f5f1' };
 
 function isAppTheme(value: string | null): value is AppTheme {
   return value === 'gold' || value === 'goldlight';
@@ -82,6 +84,9 @@ export class ThemeService {
     if (!isPlatformBrowser(this.platformId)) return;
     try {
       document.documentElement.setAttribute('data-theme', theme);
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', THEME_COLOR[theme]);
     } catch {
       // ignore
     }

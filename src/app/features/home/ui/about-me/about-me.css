@@ -87,8 +87,10 @@
   transition: transform 0.3s ease;
 }
 
-.about-me__frame:hover {
-  transform: translateY(-4px) rotate(-0.5deg);
+@media (hover: hover) {
+  .about-me__frame:hover {
+    transform: translateY(-4px) rotate(-0.5deg);
+  }
 }
 
 .about-me__frame img {
@@ -116,7 +118,7 @@
   font-family: var(--font-sans), ui-monospace, monospace;
   font-size: 0.8rem;
   letter-spacing: 0.02em;
-  color: color-mix(in oklch, var(--color-base-content) 65%, transparent);
+  color: var(--text-faint);
 }
 
 .about-me__inner {
@@ -235,14 +237,16 @@
   outline-offset: 3px;
 }
 
-button.about-me__node:hover .about-me__short {
-  text-decoration: underline;
-  text-decoration-color: var(--color-success);
-  text-underline-offset: 4px;
-}
+@media (hover: hover) {
+  button.about-me__node:hover .about-me__short {
+    text-decoration: underline;
+    text-decoration-color: var(--color-success);
+    text-underline-offset: 4px;
+  }
 
-button.about-me__node:hover::before {
-  box-shadow: 0 0 8px var(--color-success);
+  button.about-me__node:hover::before {
+    box-shadow: 0 0 8px var(--color-success);
+  }
 }
 
 .about-me__node--active::before {

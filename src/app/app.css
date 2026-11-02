@@ -82,7 +82,7 @@
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: color-mix(in oklch, var(--color-base-content) 72%, transparent);
+  color: var(--text-faint);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -118,13 +118,29 @@
 }
 
 @media (max-width: 640px) {
+  /* En móvil la "ventana" a pantalla completa: sin marco ni márgenes que roben ancho útil. */
   .app-shell {
-    padding: 0.75rem;
+    padding: 0;
+  }
+
+  .app-shell__window {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .app-shell__frame {
+    border-radius: 0;
   }
 
   .app-shell__windowbar {
-    padding: 0.5rem 0.65rem;
+    padding: 0.4rem 0.75rem;
     gap: 0.55rem;
+  }
+
+  .app-shell__actions {
+    flex-wrap: nowrap;
+    gap: 0.25rem;
   }
 
   .app-shell__title {
@@ -138,5 +154,11 @@
 
   .app-shell__content {
     padding: 0.35rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .app-shell__window-controls {
+    display: none;
   }
 }

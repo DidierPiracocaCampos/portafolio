@@ -28,7 +28,7 @@
 .skills-graph__hint {
   margin: 0.35rem 0 0;
   font-size: 0.78rem;
-  color: color-mix(in oklch, var(--color-base-content) 62%, transparent);
+  color: var(--text-faint);
 }
 
 .skills-graph__hint-swipe {
@@ -149,6 +149,11 @@
 
   .skills-graph__hint-swipe {
     display: inline;
+  }
+
+  /* Degradado en el borde derecho: indica que el grafo continúa con scroll horizontal. */
+  .skills-graph__scroll {
+    mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
   }
 }
 

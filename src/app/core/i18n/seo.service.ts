@@ -1,44 +1,57 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+
+/**
+ * Origen de producción. Se usa siempre (también en los canales de preview `pr-<n>`)
+ * para que canonical, hreflang y og:url nunca apunten a un dominio temporal.
+ */
+export const SITE_ORIGIN = 'https://portafolio-71784.web.app';
+
+const SUPPORTED = ['es', 'en'] as const;
+type SeoLang = (typeof SUPPORTED)[number];
+
+/** `/` sólo redirige a `/<lang>`: se trata como duplicado de la versión por defecto. */
+const DEFAULT_LANG: SeoLang = 'en';
+
+/** Imagen de preview al compartir el enlace, con el texto en el idioma de la URL. */
+const OG_IMAGE: Record<SeoLang, string> = {
+  es: `${SITE_ORIGIN}/images/og-image-es.png`,
+  en: `${SITE_ORIGIN}/images/og-image.png`,
+};
+
+const FALLBACK_DESCRIPTION: Record<SeoLang, string> = {
+  es: 'Portafolio de Didier Piracoca, desarrollador de aplicaciones multiplataforma especializado en Angular y desarrollo frontend. Experiencia con Java, Spring MVC, Ionic, SQL, Firebase y desarrollo full-stack.',
+  en: 'Portfolio of Didier Piracoca, multiplatform application developer specialized in Angular and frontend development. Experience with Java, Spring MVC, Ionic, SQL, Firebase and full-stack development.',
+};
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
   private readonly document = inject(DOCUMENT);
   private readonly title = inject(Title);
   private readonly translate = inject(TranslateService);
-  private readonly router = inject(Router);
-
-  private readonly supported = ['es', 'en'] as const;
-  private readonly origin = this.resolveOrigin();
 
   update(lang: string): void {
     const normalized = this.normalize(lang);
+    const url = `${SITE_ORIGIN}/${normalized}`;
+
     this.setHtmlLang(normalized);
     this.setTitleAndDescription(normalized);
-    this.setHreflang(normalized);
-    this.setCanonical(normalized);
-    this.setOgLocale(normalized);
+    this.setHreflang();
+    // Canonical siempre a la URL del idioma; `/` (que redirige) apunta a la versión por idioma.
+    this.upsertLink('canonical', null, url);
+    this.upsertMeta('property', 'og:url', url);
+    this.setImage(normalized);
+    this.upsertMeta('property', 'og:locale', normalized === 'es' ? 'es_ES' : 'en_US');
+    this.upsertMeta('property', 'og:locale:alternate', normalized === 'es' ? 'en_US' : 'es_ES');
   }
 
-  private normalize(lang: string): string {
-    return this.supported.includes(lang as never) ? lang : 'en';
+  private normalize(lang: string): SeoLang {
+    return (SUPPORTED as readonly string[]).includes(lang) ? (lang as SeoLang) : DEFAULT_LANG;
   }
 
-  private resolveOrigin(): string {
-    try {
-      if (typeof window !== 'undefined' && window.location?.origin) {
-        return window.location.origin;
-      }
-    } catch {
-      // ignore
-    }
-    return 'https://portafolio-71784.web.app';
-  }
-
-  private setHtmlLang(lang: string): void {
+  private setHtmlLang(lang: SeoLang): void {
     try {
       this.document.documentElement.lang = lang;
     } catch {
@@ -46,87 +59,42 @@ export class SeoService {
     }
   }
 
-  private setTitleAndDescription(lang: string): void {
-    const titleKey = 'seo.title';
-    const descKey = 'seo.description';
+  private setTitleAndDescription(lang: SeoLang): void {
+    const title = this.translated('seo.title');
+    const description = this.translated('seo.description') ?? FALLBACK_DESCRIPTION[lang];
 
-    // Use instant if translations already loaded, otherwise fallback will be overwritten on next lang change
-    const title = this.translate.instant(titleKey);
-    const description = this.translate.instant(descKey);
-
-    const hasTitle = typeof title === 'string' && title !== titleKey;
-    const hasDescription = typeof description === 'string' && description !== descKey;
-
-    if (hasTitle) {
+    if (title) {
       this.title.setTitle(title);
-    }
-    if (hasDescription) {
-      this.upsertMeta('name', 'description', description);
-      this.upsertMeta('property', 'og:description', description);
-    }
-    if (hasTitle) {
       this.upsertMeta('property', 'og:title', title);
+      this.upsertMeta('name', 'twitter:title', title);
     }
-    this.upsertMeta('property', 'og:locale', lang === 'es' ? 'es_ES' : 'en_US');
-    // Ensure description meta exists even before translations load (fallback)
-    if (!hasDescription) {
-      const fallbackDesc =
-        lang === 'es'
-          ? 'Programador Angular y desarrollador frontend especializado en Angular, desarrollo web moderno, Java, Spring MVC, SQL y Firebase. Portafolio de Didier Piracoca.'
-          : 'Angular and frontend developer specialized in Angular, modern web development, Java, Spring MVC, SQL and Firebase. Portfolio by Didier Piracoca.';
-      this.upsertMeta('name', 'description', fallbackDesc);
+    this.upsertMeta('name', 'description', description);
+    this.upsertMeta('property', 'og:description', description);
+    this.upsertMeta('name', 'twitter:description', description);
+  }
+
+  private setImage(lang: SeoLang): void {
+    const image = OG_IMAGE[lang];
+    this.upsertMeta('property', 'og:image', image);
+    this.upsertMeta('property', 'og:image:secure_url', image);
+    this.upsertMeta('name', 'twitter:image', image);
+    const alt = this.translated('seo.imageAlt');
+    if (alt) {
+      this.upsertMeta('property', 'og:image:alt', alt);
+      this.upsertMeta('name', 'twitter:image:alt', alt);
     }
   }
 
-  private setHreflang(_currentLang: string): void {
-    const origin = this.origin;
-    const links: Array<{ hreflang: string; href: string }> = [
-      { hreflang: 'es', href: `${origin}/es` },
-      { hreflang: 'en', href: `${origin}/en` },
-      { hreflang: 'x-default', href: `${origin}/` },
-    ];
-
-    for (const { hreflang, href } of links) {
-      this.upsertLink('alternate', hreflang, href);
-    }
+  private translated(key: string): string | null {
+    const value = this.translate.instant(key);
+    return typeof value === 'string' && value !== key ? value : null;
   }
 
-  private   setCanonical(lang: string): void {
-    const origin = this.origin;
-    // For SEO best-practice: canonical points to language-specific URL
-    // x-default (/) is kept as alternate, but canonical is per-language
-    const href = lang === 'x-default' ? `${origin}/` : `${origin}/${lang}`;
-    // If current path is '/', keep canonical as '/', otherwise use language URL
-    let canonicalHref = href;
-    try {
-      const path = this.getCurrentPath();
-      if (path === '/' || path === '') {
-        canonicalHref = `${origin}/`;
-      } else if (path.startsWith('/es') || path.startsWith('/en')) {
-        canonicalHref = `${origin}/${lang}`;
-      }
-    } catch {
-      // ignore
+  private setHreflang(): void {
+    for (const lang of SUPPORTED) {
+      this.upsertLink('alternate', lang, `${SITE_ORIGIN}/${lang}`);
     }
-    this.upsertLink('canonical', null, canonicalHref);
-  }
-
-  private getCurrentPath(): string {
-    try {
-      if (typeof window !== 'undefined' && window.location?.pathname) {
-        return window.location.pathname.split('?')[0].split('#')[0] || '/';
-      }
-    } catch {
-      // fallback to Router when running in SSR/prerender
-    }
-    return (this.router.url.split('?')[0].split('#')[0] || '/');
-  }
-
-  private setOgLocale(lang: string): void {
-    this.upsertMeta('property', 'og:locale', lang === 'es' ? 'es_ES' : 'en_US');
-    // Alternate locales
-    const alternate = lang === 'es' ? 'en_US' : 'es_ES';
-    this.upsertMeta('property', 'og:locale:alternate', alternate);
+    this.upsertLink('alternate', 'x-default', `${SITE_ORIGIN}/${DEFAULT_LANG}`);
   }
 
   private upsertMeta(attrName: 'name' | 'property', attrValue: string, content: string): void {
@@ -157,9 +125,6 @@ export class SeoService {
         this.document.head.appendChild(el);
       }
       el.setAttribute('href', href);
-      if (hreflang && !el.getAttribute('hreflang')) {
-        el.setAttribute('hreflang', hreflang);
-      }
     } catch {
       // ignore
     }

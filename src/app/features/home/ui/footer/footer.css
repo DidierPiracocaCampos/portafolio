@@ -66,12 +66,12 @@
 
 .footer__line {
   margin: 0;
-  color: color-mix(in oklch, var(--color-base-content) 72%, transparent);
+  color: var(--text-faint);
   font-family: var(--font-sans), ui-monospace, monospace;
   font-size: clamp(0.78rem, 2vw, 0.85rem);
   line-height: 1.5;
 }
 
 .footer__built {
-  color: color-mix(in oklch, var(--color-base-content) 60%, transparent);
+  color: var(--text-faint);
 }

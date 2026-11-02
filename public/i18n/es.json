@@ -161,8 +161,9 @@
     }
   },
   "seo": {
-    "title": "Desarrollador de Aplicaciones Multiplataforma | Angular, Java y Spring",
-    "description": "Portfolio de Didier Piracoca, desarrollador de aplicaciones multiplataforma especializado en Angular y desarrollo frontend. Experiencia con Java, Spring MVC, Ionic, SQL, Firebase y desarrollo full-stack."
+    "title": "Didier Piracoca · Desarrollador de Aplicaciones Multiplataforma | Angular, Java y Spring",
+    "description": "Portfolio de Didier Piracoca, desarrollador de aplicaciones multiplataforma especializado en Angular y desarrollo frontend. Experiencia con Java, Spring MVC, Ionic, SQL, Firebase y desarrollo full-stack.",
+    "imageAlt": "Didier Piracoca — portafolio de desarrollador Angular y de aplicaciones multiplataforma"
   },
   "footer": {
     "navLabel": "Enlaces de contacto",

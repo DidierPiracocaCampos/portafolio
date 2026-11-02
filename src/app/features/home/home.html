@@ -4,68 +4,42 @@
     commandKey="terminal.commands.presentation"
     (completed)="onPresentationTerminalCompleted()"
   >
-    <app-presentation
-      [animationStarted]="presentationAnimationStarted()"
-      (animationCompleted)="onPresentationCompleted()"
-    />
+    <app-presentation [animationStarted]="presentationAnimationStarted()" />
   </app-terminal-section>
 
-  @if (aboutMeUnlocked()) {
-    @defer (on immediate) {
-      <app-terminal-section
-        sectionId="about-me"
-        commandKey="terminal.commands.aboutMe"
-        [immediate]="true"
-        (completed)="onAboutMeCompleted()"
-      >
-        <app-about-me />
-      </app-terminal-section>
-    } @placeholder {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @loading {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @error {
-      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
-    }
+  <!--
+    Las secciones inferiores se prerenderizan completas (SEO / previews sin JS) y se hidratan
+    de forma incremental al acercarse al viewport. Cada terminal-section teclea su comando
+    cuando entra en pantalla. En CSR puro (`index.csr.html`) se cargan con `on viewport`.
+  -->
+  @defer (on viewport; hydrate on viewport) {
+    <app-terminal-section sectionId="about-me" commandKey="terminal.commands.aboutMe">
+      <app-about-me />
+    </app-terminal-section>
+  } @placeholder {
+    <span class="home__defer-marker" aria-hidden="true"></span>
+  } @error {
+    <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
   }
 
-  @if (projectsUnlocked()) {
-    @defer (on immediate) {
-      <app-terminal-section
-        sectionId="projects"
-        commandKey="terminal.commands.projects"
-        [immediate]="true"
-        (completed)="onProjectsCompleted()"
-      >
-        <app-projects />
-      </app-terminal-section>
-    } @placeholder {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @loading {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @error {
-      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
-    }
+  @defer (on viewport; hydrate on viewport) {
+    <app-terminal-section sectionId="projects" commandKey="terminal.commands.projects">
+      <app-projects />
+    </app-terminal-section>
+  } @placeholder {
+    <span class="home__defer-marker" aria-hidden="true"></span>
+  } @error {
+    <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
   }
 
-  @if (contactUnlocked()) {
-    @defer (on immediate) {
-      <app-terminal-section
-        sectionId="contact"
-        commandKey="terminal.commands.contact"
-        [immediate]="true"
-        (completed)="onContactCompleted()"
-      >
-        <app-contact />
-      </app-terminal-section>
-    } @placeholder {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @loading {
-      <span class="home__defer-marker" aria-hidden="true"></span>
-    } @error {
-      <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
-    }
-
+  @defer (on viewport; hydrate on viewport) {
+    <app-terminal-section sectionId="contact" commandKey="terminal.commands.contact">
+      <app-contact />
+    </app-terminal-section>
     <app-footer />
+  } @placeholder {
+    <span class="home__defer-marker" aria-hidden="true"></span>
+  } @error {
+    <p class="home__defer-error" role="alert">{{ 'home.sequence.loadError' | translate }}</p>
   }
 </div>
