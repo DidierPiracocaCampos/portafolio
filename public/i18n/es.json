@@ -111,6 +111,7 @@
       "website": "Ver sitio web",
       "instagram": "Ver en Instagram",
       "figma": "Ver diseño en Figma",
+      "npm": "Ver paquete en npm",
       "projectLinks": "Enlaces de"
     },
     "items": {
@@ -125,6 +126,10 @@
       "devformfx": {
         "description": "Librería Java para formularios dinámicos en JavaFX. Define el layout con filas y columnas con DevFormBuilder e integra inputs y acciones a medida.",
         "imageAlt": "Vista previa de DevFormFX, librería Java para formularios dinámicos"
+      },
+      "astroblog": {
+        "description": "Integración de Astro que convierte un proyecto vacío en un blog estático completo: SEO, RSS, búsqueda con Pagefind, páginas legales y consentimiento listo para AdSense, desplegable en Cloudflare Pages.",
+        "imageAlt": "Vista previa de astroblog, blog estático generado con Astro"
       }
     }
   },

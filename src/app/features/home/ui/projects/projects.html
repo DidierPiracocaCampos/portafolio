@@ -52,7 +52,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     [attr.aria-label]="
-                      (('projects.actions.' + link.kind | translate) + ' ' + project.name)
+                      ('projects.actions.' + link.kind | translate) + ' ' + project.name
                     "
                   >
                     @switch (link.kind) {
@@ -105,6 +105,15 @@
                           <circle cx="9" cy="11" r="3" fill="currentColor" />
                           <circle cx="15" cy="11" r="3" fill="currentColor" />
                           <circle cx="9" cy="17" r="3" fill="currentColor" />
+                        </svg>
+                      }
+                      @case ('npm') {
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                          <path
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                            d="M3 3h18v18H3V3Zm3.5 3.5v11h3.25V9.75h4.5v7.75h3.25v-11h-11Z"
+                          />
                         </svg>
                       }
                     }

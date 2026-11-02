@@ -109,8 +109,8 @@ describe('App', () => {
     expect(toggle?.nextElementSibling).toBe(switcher);
     const link = cv?.querySelector('a.cv-download') as HTMLAnchorElement | null;
     expect(link).toBeTruthy();
-    expect(link?.getAttribute('href')).toBe('/documents/cv-didier_piracoca.pdf');
-    expect(link?.getAttribute('download')).toBe('cv-didier_piracoca.pdf');
+    expect(link?.getAttribute('href')).toBe('/documents/cv_didier_piracoca.pdf');
+    expect(link?.getAttribute('download')).toBe('cv_didier_piracoca.pdf');
     expect(link?.getAttribute('rel')).toBe('noopener');
   });
 });

@@ -111,6 +111,7 @@
       "website": "View live site",
       "instagram": "View on Instagram",
       "figma": "View design on Figma",
+      "npm": "View package on npm",
       "projectLinks": "Links for"
     },
     "items": {
@@ -125,6 +126,10 @@
       "devformfx": {
         "description": "Java library for dynamic JavaFX forms. Define layouts with rows and columns via DevFormBuilder and plug in custom inputs and actions.",
         "imageAlt": "DevFormFX preview, Java library for dynamic forms"
+      },
+      "astroblog": {
+        "description": "Astro integration that turns an empty project into a complete static blog: SEO, RSS, Pagefind search, legal pages and AdSense-ready consent, deployable to Cloudflare Pages.",
+        "imageAlt": "astroblog preview, static blog generated with Astro"
       }
     }
   },

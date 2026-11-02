@@ -3,7 +3,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import SectionTitle from '../../../../shared/ui/section-title/section-title';
 
-type ProjectLinkKind = 'github' | 'website' | 'instagram' | 'figma';
+type ProjectLinkKind = 'github' | 'website' | 'instagram' | 'figma' | 'npm';
 
 type ProjectLink = {
   readonly kind: ProjectLinkKind;
@@ -11,7 +11,7 @@ type ProjectLink = {
 };
 
 type Project = {
-  readonly id: 'devhelper' | 'spot' | 'devformfx';
+  readonly id: 'devhelper' | 'spot' | 'devformfx' | 'astroblog';
   readonly name: string;
   readonly imageSrc: string;
   readonly imageAltKey: string;
@@ -62,6 +62,19 @@ const PROJECTS: readonly Project[] = [
     links: [
       { kind: 'github', url: 'https://github.com/DidierPiracocaCampos/SPOT' },
       { kind: 'instagram', url: 'https://www.instagram.com/spot.skate_app/' },
+    ],
+  },
+  {
+    id: 'astroblog',
+    name: 'astroblog',
+    imageSrc: '/images/projects/astroblog.webp',
+    imageAltKey: 'projects.items.astroblog.imageAlt',
+    statusKey: 'projects.status.completed',
+    technologies: 'Astro, TypeScript, Tailwind, daisyUI',
+    descriptionKey: 'projects.items.astroblog.description',
+    links: [
+      { kind: 'github', url: 'https://github.com/DidierPiracocaCampos/astroblog' },
+      { kind: 'npm', url: 'https://www.npmjs.com/package/@didierp/astroblog' },
     ],
   },
 ];
