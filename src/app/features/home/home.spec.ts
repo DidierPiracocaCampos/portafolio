@@ -37,6 +37,15 @@ async function renderAllDeferBlocks(
 
 describe('Home', () => {
   beforeEach(async () => {
+    // jsdom no implementa IntersectionObserver (lo usan los triggers `on viewport`).
+    globalThis.IntersectionObserver ??= class {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+      takeRecords(): IntersectionObserverEntry[] {
+        return [];
+      }
+    } as unknown as typeof IntersectionObserver;
     localStorage.clear();
     await TestBed.configureTestingModule({
       deferBlockBehavior: DeferBlockBehavior.Manual,
@@ -316,43 +325,39 @@ describe('Home', () => {
     expect(el.querySelector('.home__header')).toBeFalsy();
   });
 
-  it('should initially hide lower sections until presentation completes', async () => {
-    const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('app-about-me')).toBeFalsy();
-    expect(el.querySelector('app-projects')).toBeFalsy();
-    expect(el.querySelector('app-contact')).toBeFalsy();
-  });
-
-  it('should render about-me after presentation', async () => {
+  it('should start the presentation animation only after its terminal command completes', async () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
     const home = fixture.componentInstance as Home;
+    expect(home.presentationAnimationStarted()).toBe(false);
     home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
+    expect(home.presentationAnimationStarted()).toBe(true);
+  });
+
+  it('should declare one deferred block per lower section without waiting for the presentation', async () => {
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const blocks = await fixture.getDeferBlocks();
+    expect(blocks.length).toBe(3);
+  });
+
+  it('should render sections in order: presentation, about-me, projects, contact', async () => {
+    const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
     const el = fixture.nativeElement as HTMLElement;
-    const presentation = el.querySelector('app-presentation');
-    const aboutMe = el.querySelector('app-about-me');
-    expect(presentation).toBeTruthy();
-    expect(aboutMe).toBeTruthy();
-    expect(presentation?.closest('app-terminal-section')?.nextElementSibling).toBe(
-      aboutMe?.closest('app-terminal-section'),
+    const ids = Array.from(el.querySelectorAll('app-terminal-section')).map((s) =>
+      s.getAttribute('data-section'),
     );
+    expect(ids).toEqual(['presentation', 'about-me', 'projects', 'contact']);
+    expect(el.querySelector('app-footer')).toBeTruthy();
   });
 
   it('should render about-me heading and bilingual content', async () => {
     const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
@@ -367,34 +372,8 @@ describe('Home', () => {
     expect(el.textContent).toContain('Desarrollador Angular');
   });
 
-  it('should render projects after about-me', async () => {
-    const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
-    home.onAboutMeCompleted();
-    fixture.detectChanges();
-    await fixture.whenStable();
-    await renderAllDeferBlocks(fixture);
-    const el = fixture.nativeElement as HTMLElement;
-    const aboutMe = el.querySelector('app-about-me');
-    const projects = el.querySelector('app-projects');
-    expect(projects).toBeTruthy();
-    expect(aboutMe?.closest('app-terminal-section')?.nextElementSibling).toBe(
-      projects?.closest('app-terminal-section'),
-    );
-  });
-
   it('should render projects heading and bilingual content', async () => {
     const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
-    home.onAboutMeCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
@@ -413,36 +392,8 @@ describe('Home', () => {
     );
   });
 
-  it('should render contact after projects', async () => {
-    const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
-    home.onAboutMeCompleted();
-    home.onProjectsCompleted();
-    fixture.detectChanges();
-    await fixture.whenStable();
-    await renderAllDeferBlocks(fixture);
-    const el = fixture.nativeElement as HTMLElement;
-    const projects = el.querySelector('app-projects');
-    const contact = el.querySelector('app-contact');
-    expect(contact).toBeTruthy();
-    expect(projects?.closest('app-terminal-section')?.nextElementSibling).toBe(
-      contact?.closest('app-terminal-section'),
-    );
-  });
-
   it('should render contact heading and bilingual content', async () => {
     const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
-    home.onAboutMeCompleted();
-    home.onProjectsCompleted();
     fixture.detectChanges();
     await fixture.whenStable();
     await renderAllDeferBlocks(fixture);
@@ -455,30 +406,5 @@ describe('Home', () => {
     await fixture.whenStable();
     expect(el.querySelector('#contact-title')?.textContent?.trim()).toBe('CONTACTO');
     expect(el.textContent).toContain('inicializando modulo de contacto');
-  });
-
-  it('should not skip steps when events fire out of order', async () => {
-    const fixture = TestBed.createComponent(Home);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const home = fixture.componentInstance as Home;
-    // Try to skip directly to projects without presentation
-    home.onProjectsCompleted();
-    fixture.detectChanges();
-    await fixture.whenStable();
-    let blocks = await fixture.getDeferBlocks();
-    // No blocks should be rendered because sequence hasn't advanced
-    expect(blocks.length).toBe(0);
-    expect(fixture.nativeElement.querySelector('app-projects')).toBeFalsy();
-
-    // Now correctly advance step by step
-    home.onPresentationTerminalCompleted();
-    home.onPresentationCompleted();
-    home.onAboutMeCompleted();
-    home.onProjectsCompleted();
-    fixture.detectChanges();
-    await fixture.whenStable();
-    await renderAllDeferBlocks(fixture);
-    expect(fixture.nativeElement.querySelector('app-projects')).toBeTruthy();
   });
 });

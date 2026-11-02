@@ -12,11 +12,18 @@
   color: var(--color-base-content);
 }
 
-.language-switcher__trigger:hover,
 .language-switcher[open] > .language-switcher__trigger {
   border-color: color-mix(in oklch, var(--color-primary) 35%, transparent);
   color: var(--color-primary);
   background: color-mix(in oklch, var(--color-base-100) 98%, transparent);
+}
+
+@media (hover: hover) {
+  .language-switcher__trigger:hover {
+    border-color: color-mix(in oklch, var(--color-primary) 35%, transparent);
+    color: var(--color-primary);
+    background: color-mix(in oklch, var(--color-base-100) 98%, transparent);
+  }
 }
 
 /* Hide native details marker */

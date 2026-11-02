@@ -26,11 +26,11 @@ const BRANCH = 'main';
   templateUrl: './terminal-section.html',
   styleUrl: './terminal-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.data-section]': 'sectionId()' },
 })
 export default class TerminalSection implements OnInit {
   readonly sectionId = input.required<string>();
   readonly commandKey = input.required<string>();
-  readonly immediate = input(false);
   readonly completed = output<void>();
 
   readonly user = USER;
@@ -55,17 +55,14 @@ export default class TerminalSection implements OnInit {
     this.observe();
   }
 
+  /**
+   * Teclea el comando cuando la sección entra en pantalla. Si la sección ya quedó por encima
+   * del viewport (scroll rápido, ancla, restauración de scroll) se revela al instante.
+   */
   private observe(): void {
-    if (this.immediate()) {
-      this.run();
-      return;
-    }
-
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-
-    const target = this.host.nativeElement;
 
     if (typeof IntersectionObserver === 'undefined') {
       this.run();
@@ -77,24 +74,29 @@ export default class TerminalSection implements OnInit {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             this.run();
-            this.observer?.disconnect();
-            break;
+          } else if (entry.boundingClientRect.bottom <= 0) {
+            this.run(true);
+          } else {
+            continue;
           }
+          this.observer?.disconnect();
+          this.observer = null;
+          break;
         }
       },
-      { threshold: 0 },
+      { threshold: 0, rootMargin: '0px 0px -15% 0px' },
     );
 
-    this.observer.observe(target);
+    this.observer.observe(this.host.nativeElement);
   }
 
-  private run(): void {
+  private run(instant = false): void {
     if (this.started) {
       return;
     }
     this.started = true;
 
-    if (this.reduceMotion()) {
+    if (instant || this.reduceMotion()) {
       this.finish();
       return;
     }

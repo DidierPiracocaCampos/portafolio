@@ -2,29 +2,113 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Angular Developer and Frontend Developer | Portfolio</title>
+    <title>Didier Piracoca · Multiplatform Application Developer | Angular, Java and Spring</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Aplica el tema antes del primer pintado para evitar el flash oscuro→claro.
+         Debe coincidir con ThemeService (clave 'theme', valores 'gold' | 'goldlight'). -->
+    <script>
+      (function () {
+        var theme = 'gold';
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'gold' || stored === 'goldlight') {
+            theme = stored;
+          } else if (window.matchMedia && !matchMedia('(prefers-color-scheme: dark)').matches) {
+            theme = 'goldlight';
+          }
+        } catch (e) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'goldlight' ? '#f7f5f1' : '#0b0b0d');
+      })();
+    </script>
+    <meta name="theme-color" content="#0b0b0d" />
     <meta
       name="description"
-      content="Angular and frontend developer specialized in Angular, modern web development, Java, Spring MVC, SQL and Firebase. Portfolio by Didier Piracoca."
+      content="Portfolio of Didier Piracoca, multiplatform application developer specialized in Angular and frontend development. Experience with Java, Spring MVC, Ionic, SQL, Firebase and full-stack development."
     />
-    <meta property="og:title" content="Angular Developer and Frontend Developer | Portfolio" />
-    <meta
-      property="og:description"
-      content="Angular and frontend developer specialized in Angular, modern web development, Java, Spring MVC, SQL and Firebase. Portfolio by Didier Piracoca."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="es_ES" />
+    <meta name="author" content="Didier Piracoca" />
+    <link rel="canonical" href="https://portafolio-71784.web.app/en" />
     <link rel="alternate" hreflang="es" href="https://portafolio-71784.web.app/es" />
     <link rel="alternate" hreflang="en" href="https://portafolio-71784.web.app/en" />
-    <link rel="alternate" hreflang="x-default" href="https://portafolio-71784.web.app/" />
-    <link rel="canonical" href="https://portafolio-71784.web.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://portafolio-71784.web.app/en" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Didier Piracoca · Portfolio" />
+    <meta
+      property="og:title"
+      content="Didier Piracoca · Multiplatform Application Developer | Angular, Java and Spring"
+    />
+    <meta
+      property="og:description"
+      content="Portfolio of Didier Piracoca, multiplatform application developer specialized in Angular and frontend development. Experience with Java, Spring MVC, Ionic, SQL, Firebase and full-stack development."
+    />
+    <meta property="og:url" content="https://portafolio-71784.web.app/en" />
+    <!-- Preview al compartir (WhatsApp, LinkedIn, Telegram…): URL absoluta HTTPS, PNG < 300 kB.
+         SeoService la sustituye por la versión del idioma (og-image-es.png en /es). -->
+    <meta property="og:image" content="https://portafolio-71784.web.app/images/og-image.png" />
+    <meta
+      property="og:image:secure_url"
+      content="https://portafolio-71784.web.app/images/og-image.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Didier Piracoca — Angular developer portfolio" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Didier Piracoca · Multiplatform Application Developer | Angular, Java and Spring"
+    />
+    <meta
+      name="twitter:description"
+      content="Portfolio of Didier Piracoca, multiplatform application developer specialized in Angular and frontend development. Experience with Java, Spring MVC, Ionic, SQL, Firebase and full-stack development."
+    />
+    <meta name="twitter:image" content="https://portafolio-71784.web.app/images/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Didier Piracoca",
+        "alternateName": "Didier Estiben Piracoca Campos",
+        "url": "https://portafolio-71784.web.app/",
+        "image": "https://portafolio-71784.web.app/images/og-image.png",
+        "jobTitle": "Multiplatform Application Developer",
+        "worksFor": { "@type": "Organization", "name": "AXPE Consulting" },
+        "knowsAbout": ["Angular", "TypeScript", "Frontend development", "Java", "Spring MVC", "Ionic", "SQL", "Firebase"],
+        "sameAs": [
+          "https://github.com/DidierPiracocaCampos",
+          "https://www.linkedin.com/in/didier-estiben-piracoca-campos-460828216/"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;500;600;700&display=swap"
+    />
     <link rel="icon" href="favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <meta name="theme-color" content="#0b0b0d" />
+    <!-- Sin JavaScript las secciones se quedarían en opacity: 0 esperando su animación. -->
+    <noscript>
+      <style>
+        .terminal-section__content,
+        .presentation__reveal,
+        .presentation__prompt-line,
+        .presentation__prompt-dots i,
+        .skills-graph__canvas {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <app-root></app-root>

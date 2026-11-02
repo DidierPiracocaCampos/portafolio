@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import TerminalSection from '../../shared/ui/terminal-section/terminal-section';
 import Contact from './ui/contact/contact';
@@ -7,17 +7,11 @@ import Footer from './ui/footer/footer';
 import Presentation from './ui/presentation/presentation';
 import Projects from './ui/projects/projects';
 
-const SEQUENCE_STEP = {
-  presentationTerminal: 0,
-  presentationAnimation: 1,
-  aboutMe: 2,
-  projects: 3,
-  contact: 4,
-  complete: 5,
-} as const;
-
-type SequenceStep = (typeof SEQUENCE_STEP)[keyof typeof SEQUENCE_STEP];
-
+/**
+ * Sólo la portada sigue una secuencia temporizada (comando → animación de presentación).
+ * El resto de secciones está siempre en el DOM y anima por su cuenta al entrar en el viewport
+ * (ver TerminalSection).
+ */
 @Component({
   selector: 'app-home',
   imports: [TerminalSection, Presentation, AboutMe, Projects, Contact, Footer, TranslatePipe],
@@ -26,39 +20,9 @@ type SequenceStep = (typeof SEQUENCE_STEP)[keyof typeof SEQUENCE_STEP];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Home {
-  readonly sequenceStep = signal<SequenceStep>(SEQUENCE_STEP.presentationTerminal);
-
-  readonly presentationAnimationStarted = computed(
-    () => this.sequenceStep() >= SEQUENCE_STEP.presentationAnimation,
-  );
-
-  readonly aboutMeUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.aboutMe);
-  readonly projectsUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.projects);
-  readonly contactUnlocked = computed(() => this.sequenceStep() >= SEQUENCE_STEP.contact);
+  readonly presentationAnimationStarted = signal(false);
 
   onPresentationTerminalCompleted(): void {
-    this.advance(SEQUENCE_STEP.presentationTerminal, SEQUENCE_STEP.presentationAnimation);
-  }
-
-  onPresentationCompleted(): void {
-    this.advance(SEQUENCE_STEP.presentationAnimation, SEQUENCE_STEP.aboutMe);
-  }
-
-  onAboutMeCompleted(): void {
-    this.advance(SEQUENCE_STEP.aboutMe, SEQUENCE_STEP.projects);
-  }
-
-  onProjectsCompleted(): void {
-    this.advance(SEQUENCE_STEP.projects, SEQUENCE_STEP.contact);
-  }
-
-  onContactCompleted(): void {
-    this.advance(SEQUENCE_STEP.contact, SEQUENCE_STEP.complete);
-  }
-
-  private advance(from: SequenceStep, to: SequenceStep): void {
-    if (this.sequenceStep() === from) {
-      this.sequenceStep.set(to);
-    }
+    this.presentationAnimationStarted.set(true);
   }
 }
