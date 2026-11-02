@@ -19,6 +19,7 @@ const enTranslations = {
       website: 'View live site',
       instagram: 'View on Instagram',
       figma: 'View design on Figma',
+      npm: 'View package on npm',
       projectLinks: 'Links for',
     },
     items: {
@@ -33,6 +34,10 @@ const enTranslations = {
       devformfx: {
         description: 'Desktop application for application development.',
         imageAlt: 'DevFormFX preview',
+      },
+      astroblog: {
+        description: 'Astro integration for static blogs.',
+        imageAlt: 'astroblog preview',
       },
     },
   },
@@ -54,6 +59,7 @@ const esTranslations = {
       website: 'Ver sitio web',
       instagram: 'Ver en Instagram',
       figma: 'Ver diseño en Figma',
+      npm: 'Ver paquete en npm',
       projectLinks: 'Enlaces de',
     },
     items: {
@@ -68,6 +74,10 @@ const esTranslations = {
       devformfx: {
         description: 'Aplicación de escritorio para el desarrollo de aplicaciones.',
         imageAlt: 'Vista previa de DevFormFX',
+      },
+      astroblog: {
+        description: 'Integración de Astro para blogs estáticos.',
+        imageAlt: 'Vista previa de astroblog',
       },
     },
   },
@@ -89,12 +99,13 @@ describe('Projects', () => {
     await setupTranslate();
   });
 
-  it('should create with three stable projects', () => {
+  it('should create with four stable projects', () => {
     const fixture = TestBed.createComponent(Projects);
     expect(fixture.componentInstance.projects.map((project) => project.id)).toEqual([
       'devhelper',
       'devformfx',
       'spot',
+      'astroblog',
     ]);
   });
 
@@ -104,6 +115,7 @@ describe('Projects', () => {
       '/images/projects/devhelper.webp',
       '/images/projects/devformfx.webp',
       '/images/projects/spot.webp',
+      '/images/projects/astroblog.webp',
     ]);
   });
 
@@ -127,9 +139,14 @@ describe('Projects', () => {
     ]);
     expect(byId.get('devformfx')?.links.map((link) => link.kind)).toEqual(['github']);
     expect(byId.get('spot')?.links.map((link) => link.kind)).toEqual(['github', 'instagram']);
+    expect(byId.get('astroblog')?.links.map((link) => link.kind)).toEqual(['github', 'npm']);
+    expect(byId.get('astroblog')?.links.map((link) => link.url)).toEqual([
+      'https://github.com/DidierPiracocaCampos/astroblog',
+      'https://www.npmjs.com/package/@didierp/astroblog',
+    ]);
   });
 
-  it('should render the section heading and three project articles', async () => {
+  it('should render the section heading and four project articles', async () => {
     const fixture = TestBed.createComponent(Projects);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -141,7 +158,7 @@ describe('Projects', () => {
     expect(section.getAttribute('aria-labelledby')).toBe('projects-title');
     expect(heading.id).toBe('projects-title');
     expect(heading.textContent.trim()).toBe('PROJECTS');
-    expect(articles.length).toBe(3);
+    expect(articles.length).toBe(4);
   });
 
   it('should render semantic project metadata in the expected order', async () => {
@@ -228,8 +245,8 @@ describe('Projects', () => {
     await fixture.whenStable();
 
     // After refactor every project defines at least one link.
-    // DevHelper 4, DevFormFX 1, SPOT 2 = 7 icon-only actions.
-    expect(fixture.nativeElement.querySelectorAll('.projects__action').length).toBe(7);
+    // DevHelper 4, DevFormFX 1, SPOT 2, astroblog 2 = 9 icon-only actions.
+    expect(fixture.nativeElement.querySelectorAll('.projects__action').length).toBe(9);
   });
 
   it('should render icon-only project links with accessible labels', async () => {
@@ -263,5 +280,18 @@ describe('Projects', () => {
     expect(articles[0].getAttribute('aria-labelledby')).toBe('project-devhelper-title');
     expect(articles[1].getAttribute('aria-labelledby')).toBe('project-devformfx-title');
     expect(articles[2].getAttribute('aria-labelledby')).toBe('project-spot-title');
+    expect(articles[3].getAttribute('aria-labelledby')).toBe('project-astroblog-title');
+  });
+
+  it('should render the npm link with icon and accessible label', async () => {
+    const fixture = TestBed.createComponent(Projects);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const articles = fixture.nativeElement.querySelectorAll('article');
+    const npmLink = articles[3].querySelectorAll('.projects__action')[1] as HTMLElement;
+    expect(npmLink.getAttribute('href')).toBe('https://www.npmjs.com/package/@didierp/astroblog');
+    expect(npmLink.getAttribute('aria-label')).toBe('View package on npm astroblog');
+    expect(npmLink.querySelector('svg')).toBeTruthy();
   });
 });
