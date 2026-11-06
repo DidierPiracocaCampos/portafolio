@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
  * Origen de producción. Se usa siempre (también en los canales de preview `pr-<n>`)
  * para que canonical, hreflang y og:url nunca apunten a un dominio temporal.
  */
-export const SITE_ORIGIN = 'https://portafolio-71784.web.app';
+export const SITE_ORIGIN = 'https://didierpiracoca.com';
 
 const SUPPORTED = ['es', 'en'] as const;
 type SeoLang = (typeof SUPPORTED)[number];

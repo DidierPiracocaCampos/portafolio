@@ -24,7 +24,7 @@ pnpm format                # prettier (printWidth 100, singleQuote, parser angul
 ## Arquitectura
 
 ### Render y rutas
-- `outputMode: "static"`: las rutas `''`, `/es` y `/en` se prerenderizan (`app.routes.server.ts`); el resto es CSR. Firebase Hosting reescribe todo a `/index.csr.html`. Todas las rutas cargan el mismo componente `features/home/home`.
+- `outputMode: "static"`: las rutas `''`, `/es` y `/en` se prerenderizan (`app.routes.server.ts`); cualquier otra URL devuelve un 404 real con `public/404.html` (Firebase Hosting no tiene `rewrites`). Una ruta nueva debe prerenderizarse o necesitará un rewrite. Todas las rutas cargan el mismo componente `features/home/home`.
 - El código corre también en el servidor durante el prerender: el acceso a `window`/`localStorage`/`navigator` debe ir protegido (`isPlatformBrowser` o `typeof window`), como hacen `LanguageService` y `ThemeService`.
 
 ### Arranque (`app.config.ts`)
